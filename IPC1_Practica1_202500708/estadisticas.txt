@@ -1,0 +1,3 @@
+partidas=2
+lineasTotales=0
+mejorPuntaje=172
