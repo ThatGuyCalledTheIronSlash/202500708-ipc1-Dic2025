@@ -602,29 +602,60 @@ public static void verpuntajes() {
     try (java.io.BufferedReader br = new java.io.BufferedReader(
             new java.io.FileReader("mejores_puntajes.txt"))) {
 
-        String linea;
-        int contador = 1;
-        while ((linea = br.readLine()) != null && contador <= 10) {
-            String[] partes = linea.split(";");
-            if (partes.length >= 5) {
-                String nombre = partes[0];
-                String puntos = partes[1];
-                String nivelTxt = partes[2];
-                String lineasTxt = partes[3];
-                String fecha = partes[4];
+        String[] lineas = new String[100];
+        int[] puntos = new int[100];
+        int cantidad = 0;
 
-                System.out.println(contador + ". " + nombre +
-                        " | Pts: " + puntos +
-                        " | Nivel: " + nivelTxt +
-                        " | Lineas: " + lineasTxt +
-                        " | " + fecha);
-                contador++;
+        String linea;
+        while ((linea = br.readLine()) != null && cantidad < 100) {
+            String[] partes = linea.split(";");
+            if (partes.length >= 2) {
+                lineas[cantidad] = linea;
+                try {
+                    puntos[cantidad] = Integer.parseInt(partes[1]); // puntos en posición 1
+                } catch (NumberFormatException e) {
+                    puntos[cantidad] = 0;
+                }
+                cantidad++;
+            }
+        }
+        // Ordenar por puntaje de mayor a menor (burbuja simple)
+        for (int i = 0; i < cantidad - 1; i++) {
+            for (int j = 0; j < cantidad - 1 - i; j++) {
+                if (puntos[j] < puntos[j + 1]) {
+                    int tmpP = puntos[j];
+                    puntos[j] = puntos[j + 1];
+                    puntos[j + 1] = tmpP;
+
+                    String tmpL = lineas[j];
+                    lineas[j] = lineas[j + 1];
+                    lineas[j + 1] = tmpL;
+                }
+            }
+        }
+        // Mostrar hasta 10 mejores
+        if (cantidad == 0) {
+            System.out.println("No hay puntajes registrados aún.");
+        } else {
+            int limite = (cantidad < 10) ? cantidad : 10;
+            for (int i = 0; i < limite; i++) {
+                String[] partes = lineas[i].split(";");
+                if (partes.length >= 5) {
+                    String nombre = partes[0];
+                    String puntosTxt = partes[1];
+                    String nivelTxt = partes[2];
+                    String lineasTxt = partes[3];
+                    String fecha = partes[4];
+
+                    System.out.println((i + 1) + ". " + nombre +
+                            " | Pts: " + puntosTxt +
+                            " | Nivel: " + nivelTxt +
+                            " | Lineas: " + lineasTxt +
+                            " | " + fecha);
+                }
             }
         }
 
-        if (contador == 1) {
-            System.out.println("No hay puntajes registrados aún.");
-        }
     } catch (java.io.IOException e) {
         System.out.println("No se pudo leer el archivo mejores_puntajes.txt");
     }
