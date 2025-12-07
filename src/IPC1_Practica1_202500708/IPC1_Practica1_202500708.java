@@ -66,16 +66,16 @@ public static void main(String[] args) {
     boolean salir = false;
     cargarEstadisticas();  // leer estadisticas.txt
     while(!salir){  
-    System.out.println("==========================");    
-    System.out.println("=         Carnet 202500708         =");
-    System.out.println("==========================");
+    System.out.println("|==================================|");    
+    System.out.println("|         Carnet 202500708         |");
+    System.out.println("|==================================|");
     
-    System.out.println("|MENU PRINCIPAL                       |");
-    System.out.println("|1. Jugar Partida Nueva               |");
-    System.out.println("|2. Ver Mejores Puntajes             |");
-    System.out.println("|3. Ver Estadisticas Generales    |");
-    System.out.println("|4. Salir                                        |");
-    System.out.println("==========================");
+    System.out.println("|MENU PRINCIPAL                    |");
+    System.out.println("|1. Jugar Partida Nueva            |");
+    System.out.println("|2. Ver Mejores Puntajes           |");
+    System.out.println("|3. Ver Estadisticas Generales     |");
+    System.out.println("|4. Salir                          |");
+    System.out.println("|==================================|");
     System.out.print("Elija una opcion: ");
     String entrada = sc.nextLine();
  try{
@@ -366,17 +366,17 @@ public static void iniciartablero(){
 //----------------------------------------------------------------------
 public static void mostrartablero(int[][] piezaActiva, int filaPieza, int colPieza, int[][] piezaSiguiente){
     // Barra superior
-    System.out.println("================================");
-    System.out.println("=     TETRIS - CARNE: 202500708        =");
-    System.out.println("================================");
+    System.out.println("========================================");
+    System.out.println("=       TETRIS - CARNE: 202500708      =");
+    System.out.println("========================================");
     System.out.println();
 
     // Borde superior del tablero
-    System.out.print(" + ");
+    System.out.print(" +-");
     for (int i = 0; i < Columnas; i++) {
-        System.out.print("---");
+        System.out.print("--");
     }
-    System.out.println(" + ");
+    System.out.println("+");
 
     // Filas del tablero
     for (int j = 0; j < Filas; j++) {
@@ -396,11 +396,11 @@ public static void mostrartablero(int[][] piezaActiva, int filaPieza, int colPie
             }
 
             if (esPiezaActiva) {
-                System.out.print("  #");
+                System.out.print(" #");
             } else if (Tablero[j][x] == 0) {
-                System.out.print("   .");
+                System.out.print(" .");
             } else {
-                System.out.print("  =");
+                System.out.print(" =");
             }
         }
         System.out.print(" |");
@@ -409,16 +409,16 @@ public static void mostrartablero(int[][] piezaActiva, int filaPieza, int colPie
         if (j == 0) {
             System.out.print("    SIGUIENTE");
         } else if (j == 1) {
-            System.out.print("    +------------+");
+            System.out.print("    +---------+");
         } else if (j >= 2 && j <= 5) {
             System.out.print("    |");
             if (piezaSiguiente != null) {
                 int filaPrev = j - 2; // 0..3
                 for (int k = 0; k < 4; k++) {
                     if (piezaSiguiente[filaPrev][k] == 1) {
-                        System.out.print("  =");
+                        System.out.print(" =");
                     } else {
-                        System.out.print("   .");
+                        System.out.print(" .");
                     }
                 }
             } else {
@@ -426,11 +426,11 @@ public static void mostrartablero(int[][] piezaActiva, int filaPieza, int colPie
             }
             System.out.print(" |");
         } else if (j == 6) {
-            System.out.print("    +------------+");
+            System.out.print("    +---------+");
         } else if (j == 8) {
             System.out.print("  PUNTUACION");
         } else if (j == 9) {
-            System.out.print("  -------------------");
+            System.out.print("  --------------");
         } else if (j == 10) {
             System.out.print("  " + puntaje + " pts");
         } else if (j == 12) {
@@ -443,11 +443,11 @@ public static void mostrartablero(int[][] piezaActiva, int filaPieza, int colPie
     }
 
     // Borde inferior del tablero
-    System.out.print(" + ");
+    System.out.print(" +-");
     for (int i = 0; i < Columnas; i++) {
-        System.out.print("---");
+        System.out.print("--");
     }
-    System.out.println(" + ");
+    System.out.println("+");
 
     System.out.println();
     System.out.println("CONTROLES: A/D (izq/der) | S (abajo rapido) | W (rotar) | ESPACIO (hard drop) | P (pausa) | 1 (salir)");
@@ -669,14 +669,14 @@ public static void cargarEstadisticas() {
 }
 //----------------------------------------------------------------------
 public static void verEstadisticasGenerales() {
-    System.out.println("=================================");    
-    System.out.println("=                 Carnet 202500708               =");
-    System.out.println("=================================");
-    System.out.println("|==== ESTADISTICAS GENERALES ==== |");
-    System.out.println("|Partidas jugadas: " + partidasJugadas + "                                  |");
-    System.out.println("|Lineas totales eliminadas: " + lineasTotalesHistoricas + "                     |");
-    System.out.println("|Mejor puntaje historico: " + mejorPuntajeHistorico + "                     |");
-    System.out.println("|================================ |");
+    System.out.println("|=============================================|");    
+    System.out.println("|               Carnet 202500708              |");
+    System.out.println("|=============================================|");
+    System.out.println("|================== GENERALES ================|");
+    System.out.println("|Partidas jugadas: " + partidasJugadas + "                          |");
+    System.out.println("|Lineas totales eliminadas: " + lineasTotalesHistoricas + "                 |");
+    System.out.println("|Mejor puntaje historico: " + mejorPuntajeHistorico + "                 |");
+    System.out.println("|=============================================|");
 
     System.out.println("\nPresione ENTER para volver al menú...");
     sc.nextLine();
