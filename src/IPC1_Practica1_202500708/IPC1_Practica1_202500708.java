@@ -697,7 +697,7 @@ public static void cargarEstadisticas() {
 
         String linea;
         while ((linea = br.readLine()) != null) {
-            String[] partes = linea.split("=");
+            String[] partes = linea.split(":");
             if (partes.length == 2) {
                 String clave = partes[0];
                 int valor;
