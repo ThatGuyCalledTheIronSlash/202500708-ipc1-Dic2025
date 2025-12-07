@@ -1,3 +1,0 @@
-partidas=1
-lineasTotales=15
-mejorPuntaje=2842
