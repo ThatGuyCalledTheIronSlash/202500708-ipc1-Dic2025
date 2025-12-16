@@ -1,5 +1,5 @@
 
-package ejemploestudiante;
+package Repositorios;
  import modelos.Bibliotecario;
 
 public class RepositorioBiblioteca {
@@ -17,20 +17,21 @@ public class RepositorioBiblioteca {
 //----------------------------------------------   
     public void eliminarBibliotecario(String IDEmpleado) {
         for (int i = 0; i < bibliotecarios.length; i++) {
-            if (bibliotecarios[i] != null && bibliotecarios[i].getIDEmpleado().equals(IDEmpleado)) {
+            if (bibliotecarios[i] != null &&
+                bibliotecarios[i].getIDEmpleado().equals(IDEmpleado)) {
                 bibliotecarios[i] = null;
+                break;
             }
         }
     }
 
 //----------------------------------------------   
     public void mostrarBibliotecario(String IDEmpleado) {
-        for (int i = 0; i < bibliotecarios.length; i++) {
-            if (bibliotecarios[i] != null && bibliotecarios[i].getIDEmpleado().equals(IDEmpleado)) {
-                System.out.println(bibliotecarios[i].toString());
+        Bibliotecario b = retornarBibliotecario(IDEmpleado);
+        if (b != null) {
+            System.out.println(b.toString());
             }
         }
-    }
 //----------------------------------------------   
     public Bibliotecario retornarBibliotecario(String IDEmpleado) {
         for (int i = 0; i < bibliotecarios.length; i++) {
@@ -44,7 +45,7 @@ public class RepositorioBiblioteca {
     public boolean encontrarBibliotecario(String IDEmpleado, String contrasena){
         for (int i = 0; i < bibliotecarios.length; i++) {
             if (bibliotecarios[i] != null && bibliotecarios[i].getIDEmpleado().equals(IDEmpleado) &&
-                    bibliotecarios[i].getcontrasena().equals(contrasena)) {
+                    bibliotecarios[i].getContrasena().equals(contrasena)) {
                 return true;
             }
         }
@@ -52,6 +53,17 @@ public class RepositorioBiblioteca {
     }
 //---------------------------------------------- 
  public Bibliotecario[] todosLosBibliotecarios(){
-        return bibliotecarios;
+  int contador = 0;
+        for (Bibliotecario b : bibliotecarios) {
+            if (b != null) contador++;
+        }
+        Bibliotecario[] copia = new Bibliotecario[contador];
+        int idx = 0;
+        for (Bibliotecario b : bibliotecarios) {
+            if (b != null) {
+                copia[idx++] = b;
+            }
+        }
+        return copia;
+    }
  }
-}

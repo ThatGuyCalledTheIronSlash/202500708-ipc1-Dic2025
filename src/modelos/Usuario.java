@@ -2,7 +2,7 @@ package modelos;
 
 
 public abstract class Usuario {
-   private String nombre;
+    private String nombre;
     private String CUI;
     private String correo;
     private String contrasena;
@@ -33,15 +33,15 @@ public abstract class Usuario {
         return nombre;
     }
     
-    public void SetNombre(String nombre){
+    public void setNombre(String nombre){
         this.nombre= nombre;
     }
 //----------------------------------------------------------------------       
     public String getCUI(){
         return CUI;
-    }
- //----------------------------------------------------------------------      
-    public void SetCUI(String CUI){
+    }  
+    
+    public void setCUI(String CUI){
         this.CUI=CUI;
     }
 //----------------------------------------------------------------------       
@@ -53,7 +53,7 @@ public abstract class Usuario {
         this.correo = correo;
     }
 //----------------------------------------------------------------------       
-    public String getcontrasena(){
+    public String getContrasena(){
         return contrasena;
     }
     
@@ -103,7 +103,17 @@ public abstract class Usuario {
 //----------------------------------------------------------------------   
     @Override
     public String toString() {
-        return "Usuario{" + "nombre=" + nombre + ", CUI=" + CUI + ", correo=" + correo + ", contrasena=" + contrasena + ", usuario=" + usuario + ", genero=" + genero + ", telefono=" + telefono + ", edad=" + edad + ", estadoCivil=" + estadoCivil + '}';
+        return "Usuario{" + 
+                "nombre=" + nombre + 
+                ", CUI=" + CUI + 
+                ", correo=" + correo + 
+                ", contrasena=" + contrasena + 
+                ", usuario=" + usuario + 
+                ", genero=" + genero + 
+                ", telefono=" + telefono + 
+                ", edad=" + edad + 
+                ", estadoCivil=" + 
+                estadoCivil + '}';
     }
     
     

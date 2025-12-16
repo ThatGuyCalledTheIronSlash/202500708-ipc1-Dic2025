@@ -60,7 +60,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" pref="658" max="32767" attributes="0"/>
+              <Component id="jTabbedPane1" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -227,13 +227,13 @@
                       <EmptySpace pref="53" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="btnmodificarbibliotecario" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btndesactivarbibliotecario" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnmodificarbibliotecario" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnrecargarpaginabibliotecario" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnagregarbibliotecario" min="-2" max="-2" attributes="0"/>
                           <Component id="jScrollPane2" min="-2" pref="839" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
@@ -244,7 +244,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnagregarbibliotecario" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="512" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
@@ -329,21 +329,33 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Recargar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnrecargarpaginabibliotecarioActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btndesactivarbibliotecario">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Desactivar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btndesactivarbibliotecarioActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnmodificarbibliotecario">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Modificar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnmodificarbibliotecarioActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="btnagregarbibliotecario">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Agregar Bibliotecario"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnagregarbibliotecarioActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -361,7 +373,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButton2" min="-2" pref="165" max="-2" attributes="0"/>
+                      <Component id="btnagregarlibro" min="-2" pref="165" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -384,14 +396,16 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnagregarlibro" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane6" min="-2" pref="506" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnrecargarlibros" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnBorrarLibro" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnModificarLibro" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="btnrecargarlibros" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnModificarLibro" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -471,20 +485,29 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="javax.swing.JButton" name="btnagregarlibro">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Agregar Libros"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnagregarlibroActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnBorrarLibro">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Deshabilitar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrarLibroActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnModificarLibro">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Modificar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModificarLibroActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnrecargarlibros">
               <Properties>
@@ -512,7 +535,7 @@
                       <EmptySpace pref="42" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="jButton3" min="-2" pref="165" max="-2" attributes="0"/>
+                              <Component id="btnagregarestudiante" min="-2" pref="165" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
@@ -536,14 +559,16 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnagregarestudiante" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane9" min="-2" pref="506" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnrecargarestudiantes" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnDeshabilitarEstudiante" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnModificarEstudiante" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="btnrecargarestudiantes" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnModificarEstudiante" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace pref="39" max="32767" attributes="0"/>
                   </Group>
@@ -551,10 +576,13 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="jButton3">
+            <Component class="javax.swing.JButton" name="btnagregarestudiante">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Agregar Estudiantes"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnagregarestudianteActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane9">
               <AuxValues>
@@ -640,11 +668,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Deshabilitar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeshabilitarEstudianteActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnModificarEstudiante">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Modificar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModificarEstudianteActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -744,6 +778,7 @@
                       <SubComponents>
                         <Component class="javax.swing.JTextArea" name="vistaResultado">
                           <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
                             <Property name="columns" type="int" value="20"/>
                             <Property name="rows" type="int" value="5"/>
                           </Properties>

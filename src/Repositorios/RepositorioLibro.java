@@ -1,10 +1,11 @@
-package ejemploestudiante;
+package Repositorios;
 
 import modelos.Libro;
-
+   
 public class RepositorioLibro {
-
+    
     private Libro[] libros = new Libro[200];
+    
 //---------------------------------------------
     public void agregarLibro(Libro libroNuevo) {
         for (int i = 0; i < libros.length; i++) {
@@ -19,6 +20,7 @@ public class RepositorioLibro {
         for (int i = 0; i < libros.length; i++) {
             if (libros[i] != null && libros[i].getISBN().equals(ISBN)) {
                 libros[i]= null;
+                break;
             }
         }
     }
@@ -33,12 +35,7 @@ public class RepositorioLibro {
     }
 //---------------------------------------------
     public boolean verificarLibro(String ISBN) {
-        for (int i = 0; i < libros.length; i++) {
-            if (libros[i] != null && libros[i].getISBN().equals(ISBN)) {
-                return true;
-            }
-        }
-        return false;
+            return buscarLibro(ISBN) != null;
     } 
 //---------------------------------------------    
     public void mostarTodosLibros(){
@@ -50,7 +47,18 @@ public class RepositorioLibro {
     }
 //---------------------------------------------
     public Libro[] todosLosLibros() {
-        return libros;
+        int contador = 0;
+        for (Libro libro : libros) {
+            if (libro != null) contador++;
+        }
+        Libro[] copia = new Libro[contador];
+        int idx = 0;
+        for (Libro libro : libros) {
+            if (libro != null) {
+                copia[idx++] = libro;
+            }
+        }
+        return copia;
     }
 //---------------------------------------------
     public void ordenarPorTitulo() {

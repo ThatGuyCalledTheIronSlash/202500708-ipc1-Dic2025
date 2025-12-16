@@ -25,6 +25,7 @@ public Estudiante(String carrera, int semestre, String facultad, String carnet,S
 //-----------------------------------------------------
     public Estudiante(){
         super();
+        this.activo = true;
     }
 //-----------------------------------------------------    
     public String getCarrera(){
@@ -51,7 +52,7 @@ public Estudiante(String carrera, int semestre, String facultad, String carnet,S
         this.facultad=facultad;
     }
 //-----------------------------------------------------    
-        public void setCarnet(String carne){
+    public void setCarnet(String carne){
         this.carnet = carnet;
     }
     public String getCarnet(){
@@ -68,7 +69,13 @@ public Estudiante(String carrera, int semestre, String facultad, String carnet,S
 //-----------------------------------------------------
     @Override
     public String toString() {
-        return "Estudiante{" + "carrera=" + carrera + ", semestre=" + semestre + ", facultad=" + facultad + ", carne=" + carnet + ", activo=" + activo + super.toString()+'}';
+        return "Estudiante{" + 
+                "carrera=" + carrera + 
+                ", semestre=" + semestre + 
+                ", facultad=" + facultad + 
+                ", carne=" + carnet + 
+                ", activo=" + activo + 
+                super.toString();
     }
        
 }

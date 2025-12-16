@@ -1,30 +1,21 @@
 package InterfacesGraficas;
 
-import ejemploestudiante.ControladorAdmin;
-import ejemploestudiante.RepositorioEstudiante;
-import ejemploestudiante.RepositorioBiblioteca;
-import ejemploestudiante.RepositorioLibro;
-import javax.swing.JOptionPane;
+import Controladores.ControladorLogin;
 
 
 public class VentanaLogin extends javax.swing.JFrame {
-    private final RepositorioBiblioteca repoBibliotecarios;
-    private final RepositorioEstudiante repoEstudiantes;
-    private final RepositorioLibro repoLibros; 
     
-        public VentanaLogin(RepositorioBiblioteca repoBibliotecarios,RepositorioEstudiante repoEstudiantes,RepositorioLibro repoLibros) {
-            initComponents();
-            setLocationRelativeTo(null);
-                this.repoBibliotecarios = repoBibliotecarios;
-                this.repoEstudiantes = repoEstudiantes;
-                this.repoLibros = repoLibros;
+        private final ControladorLogin controladorLogin;
+        private static final java.util.logging.Logger logger =
+            java.util.logging.Logger.getLogger(VentanaLogin.class.getName());
+    
+    
+    public VentanaLogin(ControladorLogin controladorLogin) {
+        this.controladorLogin = controladorLogin;
+        initComponents();
+        setLocationRelativeTo(null);
     }
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaLogin.class.getName());
-
-
-
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -32,7 +23,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         CampoUsuario = new javax.swing.JTextField();
-        campocontrasena = new javax.swing.JPasswordField();
+        campoContrasena = new javax.swing.JPasswordField();
         iniciarsesion = new javax.swing.JButton();
         salirboton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -45,7 +36,7 @@ public class VentanaLogin extends javax.swing.JFrame {
 
         CampoUsuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        campocontrasena.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        campoContrasena.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         iniciarsesion.setText("INICIAR SESION");
         iniciarsesion.addActionListener(this::iniciarsesionActionPerformed);
@@ -61,96 +52,73 @@ public class VentanaLogin extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(166, 166, 166)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(155, 155, 155)
-                        .addComponent(jLabel2))
+                        .addGap(172, 172, 172)
+                        .addComponent(iniciarsesion, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(salirboton)
-                        .addGap(26, 26, 26)
+                        .addComponent(salirboton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(204, 204, 204)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(157, 157, 157)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(CampoUsuario)
-                            .addComponent(campocontrasena, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-                            .addComponent(iniciarsesion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(104, Short.MAX_VALUE))
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(campoContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                            .addComponent(CampoUsuario)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(219, 219, 219)
+                        .addComponent(jLabel1)))
+                .addContainerGap(178, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CampoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(campocontrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(iniciarsesion)
-                    .addComponent(salirboton))
-                .addGap(17, 17, 17))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(CampoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(campoContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(iniciarsesion)
+                        .addContainerGap(34, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(salirboton)
+                        .addContainerGap())))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void iniciarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarsesionActionPerformed
-    String usuario = CampoUsuario.getText().trim();
-    String contrasena = new String(campocontrasena.getPassword());
-
-        if (usuario.equals("admin") && contrasena.equals("admin123")) {
-            ControladorAdmin controladorAdmin = new ControladorAdmin(repoBibliotecarios, repoEstudiantes, repoLibros);   
-                VentanaAdmin ventanaAdmin = new VentanaAdmin(controladorAdmin);
-                ventanaAdmin.setVisible(true);
-                this.dispose();
-                return;
-        }
-        //buscar estudiante
-        if (repoEstudiantes.encontrarEstudiante(usuario, contrasena)) {
-            JOptionPane.showMessageDialog(this, "Bienvenido Estudiante: " + usuario);
-            return;
-        }
-        //buscar bibliotecario
-        if (repoBibliotecarios.encontrarBibliotecario(usuario, contrasena)) {
-            JOptionPane.showMessageDialog(this, "Bienvenido Bibliotecario: " + usuario);
-            return;
-        }
-        //nada coincide
-        JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.");
-    }//GEN-LAST:event_iniciarsesionActionPerformed
-
-    private void salirbotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirbotonActionPerformed
-            System.exit(0);
-    
-    }//GEN-LAST:event_salirbotonActionPerformed
-
-    public static void main(String args[]) {
-  
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-    
-
+//--------------------------------------------
+    public void limpiarCampos() {
+        CampoUsuario.setText("");
+        campoContrasena.setText("");
     }
+//--------------------------------------------
+    private void iniciarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarsesionActionPerformed
+    String usuario = CampoUsuario.getText();
+    String contrasena = new String(campoContrasena.getPassword());
+         controladorLogin.iniciarSesion(usuario, contrasena);
+    }//GEN-LAST:event_iniciarsesionActionPerformed
+//----------------------------------------------
+    private void salirbotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirbotonActionPerformed
+            System.exit(0);    
+    }//GEN-LAST:event_salirbotonActionPerformed
+//---------------------------------------------
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CampoUsuario;
-    private javax.swing.JPasswordField campocontrasena;
+    private javax.swing.JPasswordField campoContrasena;
     private javax.swing.JButton iniciarsesion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -1,10 +1,10 @@
-package ejemploestudiante;
+package Repositorios;
 
 import modelos.Estudiante;
 
 public class RepositorioEstudiante {
     private Estudiante[] estudiantes = new Estudiante[100];
-    
+//-----------------------------------    
     public void agregarEstudiante(Estudiante estudianteAgregar){
         for(int i=0; i<estudiantes.length;i++){
             if(estudiantes[i]==null){
@@ -13,7 +13,7 @@ public class RepositorioEstudiante {
             }
         }
     }
-    
+//----------------------------------        
     public void eliminarEstudiante(String carnet){
         for(int i=0;i<estudiantes.length;i++){
             if(estudiantes[i]!=null && estudiantes[i].getCarnet().equals(carnet)){
@@ -21,7 +21,7 @@ public class RepositorioEstudiante {
             }
         }
     }
-    
+//----------------------------------        
     public void mostrarEstudiante(String carnet){
         for(int i=0;i<estudiantes.length;i++){
             if(estudiantes[i]!=null && estudiantes[i].getCarnet().equals(carnet) && 
@@ -30,7 +30,7 @@ public class RepositorioEstudiante {
             }
         }
     }
-    
+//----------------------------------        
     public Estudiante retornarEstudiante(String carnet){
         for(int i=0;i<estudiantes.length;i++){
             if(estudiantes[i]!=null && estudiantes[i].getCarnet().equals(carnet)){
@@ -39,20 +39,51 @@ public class RepositorioEstudiante {
         }
         return null;
     }
-    
+//----------------------------------        
     public boolean encontrarEstudiante(String carnet, String contrasena){
         for(int i=0;i<estudiantes.length;i++){
             if(estudiantes[i] != null && estudiantes[i].getCarnet().equals(carnet) && 
-                    estudiantes[i].getcontrasena().equals(contrasena)){
+                    estudiantes[i].getContrasena().equals(contrasena)){
                 return true;
             }
         }
         return false;
     }
-    
+//----------------------------------       
     public Estudiante[] todoslosestudiantes(){
-        return estudiantes;
+        int contador = 0;
+        for (Estudiante e : estudiantes) {
+            if (e != null) contador++;
+        }
+        Estudiante[] copia = new Estudiante[contador];
+        int idx = 0;
+        for (Estudiante e : estudiantes) {
+            if (e != null) {
+                copia[idx++] = e;
+            }
+        }
+        return copia;
     }
+//----------------------------------    
+    public Estudiante buscarPorCarne(String carne) {
+    for (int i = 0; i < estudiantes.length; i++) {
+        if (estudiantes[i] != null
+            && estudiantes[i].getCarnet().equals(carne)) {
+            return estudiantes[i];
+        }
+    }
+    return null;
+    }
+//----------------------------------
+    public void eliminarPorCarne(String carne) {
+    for (int i = 0; i < estudiantes.length; i++) {
+        if (estudiantes[i] != null &&
+            estudiantes[i].getCarnet().equals(carne)) {
+            estudiantes[i] = null;
+            break;
+        }
+    }
+}
 }
 
     
