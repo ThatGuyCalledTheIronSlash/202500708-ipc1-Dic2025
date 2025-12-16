@@ -142,10 +142,16 @@ private void cargarbibliotecariosalatabla(){
         jScrollPane6 = new javax.swing.JScrollPane();
         TablaLibros = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
+        btnBorrarLibro = new javax.swing.JButton();
+        btnModificarLibro = new javax.swing.JButton();
+        btnrecargarlibros = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jScrollPane9 = new javax.swing.JScrollPane();
         TablaEstudiantes = new javax.swing.JTable();
+        btnrecargarestudiantes = new javax.swing.JButton();
+        btnDeshabilitarEstudiante = new javax.swing.JButton();
+        btnModificarEstudiante = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel6 = new javax.swing.JPanel();
@@ -169,7 +175,6 @@ private void cargarbibliotecariosalatabla(){
         vistaprevia3 = new javax.swing.JScrollPane();
         jScrollPane8 = new javax.swing.JScrollPane();
         vistaResultado3 = new javax.swing.JTextArea();
-        btnrecargarbibliotecarios = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -230,7 +235,7 @@ private void cargarbibliotecariosalatabla(){
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(41, Short.MAX_VALUE)
+                .addContainerGap(72, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -244,7 +249,7 @@ private void cargarbibliotecariosalatabla(){
                     .addComponent(label6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Dashboard", jPanel1);
@@ -276,19 +281,16 @@ private void cargarbibliotecariosalatabla(){
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(53, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnmodificarbibliotecario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btndesactivarbibliotecario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnrecargarpaginabibliotecario)
-                        .addGap(98, 98, 98))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 839, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(38, 38, 38))))
+                        .addComponent(btnrecargarpaginabibliotecario))
+                    .addComponent(jButton1)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 839, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,11 +299,11 @@ private void cargarbibliotecariosalatabla(){
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
+                .addGap(23, 23, 23)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnrecargarpaginabibliotecario)
+                    .addComponent(btnmodificarbibliotecario)
                     .addComponent(btndesactivarbibliotecario)
-                    .addComponent(btnmodificarbibliotecario))
+                    .addComponent(btnrecargarpaginabibliotecario))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -322,28 +324,46 @@ private void cargarbibliotecariosalatabla(){
 
         jButton2.setText("Agregar Libros");
 
+        btnBorrarLibro.setText("Deshabilitar");
+
+        btnModificarLibro.setText("Modificar");
+
+        btnrecargarlibros.setText("Refrescar");
+        btnrecargarlibros.addActionListener(this::btnrecargarlibrosActionPerformed);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 848, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnBorrarLibro)
+                        .addGap(14, 14, 14)
+                        .addComponent(btnModificarLibro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnrecargarlibros))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 848, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(7, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnrecargarlibros)
+                    .addComponent(btnBorrarLibro)
+                    .addComponent(btnModificarLibro))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Libros", jPanel3);
@@ -363,6 +383,13 @@ private void cargarbibliotecariosalatabla(){
         ));
         jScrollPane9.setViewportView(TablaEstudiantes);
 
+        btnrecargarestudiantes.setText("Refrescar");
+        btnrecargarestudiantes.addActionListener(this::btnrecargarestudiantesActionPerformed);
+
+        btnDeshabilitarEstudiante.setText("Deshabilitar");
+
+        btnModificarEstudiante.setText("Modificar");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -374,7 +401,14 @@ private void cargarbibliotecariosalatabla(){
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(53, 53, 53))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 848, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(btnDeshabilitarEstudiante)
+                                .addGap(14, 14, 14)
+                                .addComponent(btnModificarEstudiante)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnrecargarestudiantes))
+                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 848, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(40, 40, 40))))
         );
         jPanel4Layout.setVerticalGroup(
@@ -384,7 +418,12 @@ private void cargarbibliotecariosalatabla(){
                 .addComponent(jButton3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnrecargarestudiantes)
+                    .addComponent(btnDeshabilitarEstudiante)
+                    .addComponent(btnModificarEstudiante))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Estudiantes", jPanel4);
@@ -397,7 +436,7 @@ private void cargarbibliotecariosalatabla(){
 
         jLabel2.setText("Resultado");
 
-        Iniciarcargalibros.setText("Cargar");
+        Iniciarcargalibros.setText("Cargar Libros");
         Iniciarcargalibros.addActionListener(this::IniciarcargalibrosActionPerformed);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -415,7 +454,7 @@ private void cargarbibliotecariosalatabla(){
                                 .addComponent(vistaprevia, javax.swing.GroupLayout.PREFERRED_SIZE, 833, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel2)))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(363, 363, 363)
+                        .addGap(370, 370, 370)
                         .addComponent(Iniciarcargalibros, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(63, Short.MAX_VALUE))
         );
@@ -455,15 +494,15 @@ private void cargarbibliotecariosalatabla(){
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(296, 296, 296)
-                        .addComponent(botoncargarestudiantes))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(vistaprevia2, javax.swing.GroupLayout.PREFERRED_SIZE, 833, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 833, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))))
+                            .addComponent(jLabel3)))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(388, 388, 388)
+                        .addComponent(botoncargarestudiantes)))
                 .addContainerGap(60, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -477,9 +516,9 @@ private void cargarbibliotecariosalatabla(){
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addGap(18, 18, 18)
                 .addComponent(botoncargarestudiantes)
-                .addGap(32, 32, 32))
+                .addGap(57, 57, 57))
         );
 
         jTabbedPane2.addTab("Cargar Estudiantes", jPanel7);
@@ -509,7 +548,7 @@ private void cargarbibliotecariosalatabla(){
                             .addComponent(vistaprevia3, javax.swing.GroupLayout.PREFERRED_SIZE, 833, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 833, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(294, 294, 294)
+                        .addGap(361, 361, 361)
                         .addComponent(botoncargarbibliotecarios)))
                 .addContainerGap(55, Short.MAX_VALUE))
         );
@@ -524,9 +563,9 @@ private void cargarbibliotecariosalatabla(){
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(18, 18, 18)
                 .addComponent(botoncargarbibliotecarios)
-                .addGap(45, 45, 45))
+                .addGap(60, 60, 60))
         );
 
         jTabbedPane2.addTab("Cargar Bibliotecarios", jPanel8);
@@ -550,9 +589,6 @@ private void cargarbibliotecariosalatabla(){
 
         jTabbedPane1.addTab("Carga Masiva", jPanel5);
 
-        btnrecargarbibliotecarios.setText("Refrescar");
-        btnrecargarbibliotecarios.addActionListener(this::btnrecargarbibliotecariosActionPerformed);
-
         jMenu1.setText("Archivo");
         jMenuBar1.add(jMenu1);
 
@@ -569,19 +605,13 @@ private void cargarbibliotecariosalatabla(){
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 930, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnrecargarbibliotecarios)
-                .addGap(19, 19, 19))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnrecargarbibliotecarios)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -684,9 +714,13 @@ private void cargarbibliotecariosalatabla(){
             cargarbibliotecariosalatabla();
     }//GEN-LAST:event_botoncargarbibliotecariosActionPerformed
 
-    private void btnrecargarbibliotecariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrecargarbibliotecariosActionPerformed
+    private void btnrecargarestudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrecargarestudiantesActionPerformed
         cargarbibliotecariosalatabla();
-    }//GEN-LAST:event_btnrecargarbibliotecariosActionPerformed
+    }//GEN-LAST:event_btnrecargarestudiantesActionPerformed
+
+    private void btnrecargarlibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrecargarlibrosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnrecargarlibrosActionPerformed
    
 //-------------------------
     public static void main(String args[]) {
@@ -700,9 +734,14 @@ private void cargarbibliotecariosalatabla(){
     private javax.swing.JTable TablaLibros;
     private javax.swing.JButton botoncargarbibliotecarios;
     private javax.swing.JButton botoncargarestudiantes;
+    private javax.swing.JButton btnBorrarLibro;
+    private javax.swing.JButton btnDeshabilitarEstudiante;
+    private javax.swing.JButton btnModificarEstudiante;
+    private javax.swing.JButton btnModificarLibro;
     private javax.swing.JButton btndesactivarbibliotecario;
     private javax.swing.JButton btnmodificarbibliotecario;
-    private javax.swing.JButton btnrecargarbibliotecarios;
+    private javax.swing.JButton btnrecargarestudiantes;
+    private javax.swing.JButton btnrecargarlibros;
     private javax.swing.JButton btnrecargarpaginabibliotecario;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
