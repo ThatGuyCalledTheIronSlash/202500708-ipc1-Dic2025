@@ -40,13 +40,19 @@ public class RepositorioEstudiante {
         return null;
     }
 //----------------------------------        
-    public boolean encontrarEstudiante(String carnet, String contrasena){
-        for(int i=0;i<estudiantes.length;i++){
-            if(estudiantes[i] != null && estudiantes[i].getCarnet().equals(carnet) && 
-                    estudiantes[i].getContrasena().equals(contrasena)){
-                return true;
-            }
+    public boolean encontrarEstudiante(String usuario, String contrasena){
+        if (usuario == null || contrasena == null) {
+            return false;
         }
+                usuario = usuario.trim();
+                contrasena = contrasena.trim();
+        for (Estudiante e : estudiantes) {
+            if (e != null &&
+                e.getUsuario().equals(usuario) &&
+                e.getContrasena().equals(contrasena)) {
+                return true;
+                }
+            }
         return false;
     }
 //----------------------------------       

@@ -73,6 +73,7 @@ public class ControladorPrincipal {
 
     public void mostrarVistaEstudiante() {
         ocultarTodasLasVistas();
+        vEstudiante.recargarCatalogo();
         vEstudiante.setVisible(true);
     }
 

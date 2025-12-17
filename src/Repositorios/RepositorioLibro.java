@@ -79,7 +79,68 @@ public class RepositorioLibro {
         }
     }
 }
+    //-------------con recursividad-------------------
+    public Libro[] buscarLibros(String texto, String filtro) {
+        if (texto == null) texto = "";
+        texto = texto.trim().toLowerCase();
+        if (texto.isEmpty()) {
+            return todosLosLibros();
+        }
+            int conteo = contarCoincidenciasRecursivo(texto, filtro, 0);
+                Libro[] resultados = new Libro[conteo];
+            llenarResultadosRecursivo(texto, filtro, 0, resultados, 0);
+                return resultados;
     
+        }
     
+//--------------------------------------------------------
+    private int contarCoincidenciasRecursivo(String texto, String filtro, int indice) {
+        if (indice >= libros.length) {
+            return 0;
+        }
+           Libro actual = libros[indice];
+               int suma = coincideConFiltro(actual, texto, filtro) ? 1 : 0;
+                    return suma + contarCoincidenciasRecursivo(texto, filtro, indice + 1);
+        }
+//----------------------------------------------------------
+    private int llenarResultadosRecursivo(String texto, String filtro,
+    int indiceArreglo, Libro[] resultados, int indiceResultado) {
+        if (indiceArreglo >= libros.length || indiceResultado >= resultados.length) {
+            return indiceResultado;
+        }
+    Libro actual = libros[indiceArreglo];
+        if (coincideConFiltro(actual, texto, filtro)) {
+            resultados[indiceResultado] = actual;
+            return llenarResultadosRecursivo(texto, filtro, indiceArreglo + 1, resultados, indiceResultado + 1);
+    } else {
+            return llenarResultadosRecursivo(texto, filtro, indiceArreglo + 1, resultados, indiceResultado);
+         }
+    }
+
+//--------------------------------------------------------------
+private boolean coincideConFiltro(Libro libro, String texto, String filtro) {
+    if (libro == null) return false;
+
+    switch (filtro.toLowerCase()) {
+        case "titulo":
+            return contieneSeguro(libro.getTitulo(), texto);
+        case "autor":
+            return contieneSeguro(libro.getAutor(), texto);
+        case "categoria":
+            return contieneSeguro(libro.getCategoria(), texto);
+        case "isbn":
+            return contieneSeguro(libro.getISBN(), texto);
+        default:
+            // Si el filtro no es válido, buscar en título por defecto
+            return contieneSeguro(libro.getTitulo(), texto);
+    }
 }
+//------------------------------------------------------
+    private boolean contieneSeguro(String campo, String texto) {
+        if (campo == null) return false;
+            return campo.toLowerCase().contains(texto);
+        }
+//---------------------------------------------------------
+}
+
 

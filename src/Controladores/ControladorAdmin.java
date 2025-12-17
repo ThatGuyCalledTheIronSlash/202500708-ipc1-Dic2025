@@ -34,20 +34,19 @@ public class ControladorAdmin {
     public RepositorioEstudiante getRepoEstudiantes() { return estudiantes; }
     public RepositorioLibro getRepoLibros() { return libros; }
 
-    // ==== utilidades ====
-//---------------------------------------------------------------
+//----------------Obtener Datos ------------------------
     public Libro[] obtenerLibros() {
         return libros.todosLosLibros();
     }
-//------------------------------------------------------------------
+//--
     public Estudiante[] obtenerEstudiantes() {
         return estudiantes.todoslosestudiantes();
     }
-//-----------------------------------------------------------------
+//--
     public Bibliotecario[] obtenerBibliotecarios() {
         return bibliotecarios.todosLosBibliotecarios();
     }
-//----------------------------------------------------------------    
+//--   
     public String generarVistaPrevia(File archivo, int maxLineas) {
         StringBuilder previa = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
@@ -65,7 +64,8 @@ public class ControladorAdmin {
         }
         return previa.toString();
     }
-//-----------------------------------------------------------------
+    
+//---------------- CARGA DE ARCHIVOS CSV --------------------
     public String cargarLibrosCSV(File archivo) {
         int exitosos = 0;
         int errores = 0;
@@ -142,7 +142,7 @@ public class ControladorAdmin {
         reporte.append("Total de líneas procesadas: ").append(exitosos + errores).append("\n");
         return reporte.toString();
     }
-//------------------------------------------------------------------
+//--
     public String cargarEstudiantesCSV(File archivo) {
         int exitosos = 0;
     int errores = 0;
@@ -218,7 +218,7 @@ public class ControladorAdmin {
     return reporte.toString();
     
     }
-//-------------------------------------------------------------------
+//--
     public String cargarBibliotecariosCSV(File archivo) {
         int exitosos = 0;
     int errores = 0;
@@ -261,7 +261,14 @@ public class ControladorAdmin {
                 int telefono = Integer.parseInt(datos[9].trim());
                 double salario = Double.parseDouble(datos[10].trim());
                 char estadoCivil = datos[11].trim().isEmpty() ? 'N' : datos[11].trim().charAt(0);
-
+                //Validacion para evitar duplicados
+                if (bibliotecarios.retornarBibliotecario(idEmpleado) != null) {
+                    reporte.append("Linea ").append(numeroLinea)
+                           .append(": ID duplicado (").append(idEmpleado).append(")\n");
+                    errores++;
+                    continue;
+                }
+               
                 Bibliotecario nuevo = new Bibliotecario(
                         idEmpleado, turno, areaTrabajo,
                         nombre, cui, correo, usuario, contrasena,
@@ -294,14 +301,72 @@ public class ControladorAdmin {
     
     
     }
-//---------------------------------------------------------------------
+//--
+    public String cargarLibrosConDialogo() {
+        javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
+        javax.swing.filechooser.FileNameExtensionFilter filter =
+                new javax.swing.filechooser.FileNameExtensionFilter("Archivos CSV", "csv");
+            fileChooser.setFileFilter(filter);
+
+         int resultado = fileChooser.showOpenDialog(null);
+         if (resultado != javax.swing.JFileChooser.APPROVE_OPTION) {
+             return "Operación cancelada por el usuario.";
+         }
+
+         File archivoSeleccionado = fileChooser.getSelectedFile();
+
+         String preview = generarVistaPrevia(archivoSeleccionado, 15);
+         String reporte = cargarLibrosCSV(archivoSeleccionado);
+
+         return preview + "\n\n" + reporte;
+    }
+//--
+    public String cargarEstudiantesConDialogo() {
+        javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
+        javax.swing.filechooser.FileNameExtensionFilter filter =
+                new javax.swing.filechooser.FileNameExtensionFilter("Archivos CSV", "csv");
+        fileChooser.setFileFilter(filter);
+
+    int resultado = fileChooser.showOpenDialog(null);
+    if (resultado != javax.swing.JFileChooser.APPROVE_OPTION) {
+        return "Operación cancelada por el usuario.";
+    }
+
+    File archivoSeleccionado = fileChooser.getSelectedFile();
+
+    // 1) Vista previa + 2) Resultado
+    String preview = generarVistaPrevia(archivoSeleccionado, 15);
+    String reporte = cargarEstudiantesCSV(archivoSeleccionado);
+
+    return preview + "\n\n" + reporte;
+}
+//--
+    public String cargarBibliotecariosConDialogo() {
+        javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
+        javax.swing.filechooser.FileNameExtensionFilter filter =
+                new javax.swing.filechooser.FileNameExtensionFilter("Archivos CSV", "csv");
+            fileChooser.setFileFilter(filter);
+
+                int resultado = fileChooser.showOpenDialog(null);
+                if (resultado != javax.swing.JFileChooser.APPROVE_OPTION) {
+                    return "Operación cancelada por el usuario.";
+                }
+
+                java.io.File archivoSeleccionado = fileChooser.getSelectedFile(); 
+                String preview = generarVistaPrevia(archivoSeleccionado, 15);
+                String reporte = cargarBibliotecariosCSV(archivoSeleccionado);
+
+                return preview + "\n\n" + reporte;
+    }
+    
+//------------------  Utilidades -----------------------------
     public Libro buscarLibroPorISBN(String isbn){
         if (isbn == null) return null;
             isbn = isbn.trim();
             if (isbn.isEmpty()) return null;
             return libros.buscarLibro(isbn);
     }
-//-----------------------------------------------------------------
+//--
     public String eliminarLibroPorISBN(String isbn){
         if (isbn == null) {
         return "Operación cancelada.";
@@ -319,14 +384,14 @@ public class ControladorAdmin {
                     libros.eliminarLibro(isbn);
                         return "Libro \"" + libro.getTitulo() + "\" eliminado correctamente.";
     }
-//-----------------------------------------------------------------
+//--
     public Estudiante buscarEstudiantePorCarne(String carne) {
     if (carne == null) return null;
     carne = carne.trim();
     if (carne.isEmpty()) return null;
     return estudiantes.buscarPorCarne(carne);
 }
-//-----------------------------------------------------------------
+//--
     public String eliminarEstudiantePorCarne(String carne) {
     if (carne == null) {
         return "Operación cancelada.";
@@ -344,14 +409,14 @@ public class ControladorAdmin {
     estudiantes.eliminarPorCarne(carne);
     return "Estudiante \"" + est.getNombre() + "\" eliminado correctamente.";
 }
-//-----------------------------------------------------------------
+//--
     public Bibliotecario buscarBibliotecarioPorID(String idEmpleado) {
     if (idEmpleado == null) return null;
     idEmpleado = idEmpleado.trim();
     if (idEmpleado.isEmpty()) return null;
     return bibliotecarios.retornarBibliotecario(idEmpleado);
 }
-//-----------------------------------------------------------------
+//--
     public String eliminarBibliotecarioPorID(String idEmpleado) {
         if (idEmpleado == null) {
             return "Operación cancelada.";
@@ -369,5 +434,12 @@ public class ControladorAdmin {
         bibliotecarios.eliminarBibliotecario(idEmpleado);
         return "Bibliotecario \"" + bib.getNombre() + "\" eliminado correctamente.";
 }
-    
+//--
+    public void cerrarSesion() {
+        controladorPrincipal.mostrarLogin();
+    }
+//--
+    public Libro[] buscarLibros(String texto, String filtro) {
+        return libros.buscarLibros(texto, filtro);
+    }
 }

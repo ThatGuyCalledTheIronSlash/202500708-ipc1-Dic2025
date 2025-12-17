@@ -24,19 +24,19 @@ public class Proyecto1_IPC2025 {
 
     private static void cargarDatosIniciales() {
         Estudiante nuevoEstudiante = new Estudiante(
-                "Sistemas",   //Carrera
-                5,            //Semestre
-                "Ingenieria", //Facultad
-                "202500708",  //Carnet
-                "David",      //nombre
-                "1234567",    //CUI
-                "estudiantes@gmail.coom",
-                "estudiante1", 
-                "estudianteusuario",
-                'M', 
-                20, 
-                213213, 
-                'S'
+                "Sistemas",                 //Carrera
+                5,                          //Semestre
+                "Ingenieria",               //Facultad
+                "202500708",                //Carnet
+                "David",                    //nombre
+                "3121733340413",            //CUI
+                "estudiantes@gmail.coom",   //Correo
+                "est123",                   //contraseña
+                "est",                      //Usuario
+                'M',                        //Genero
+                47235645,                   //Numero de telefono
+                18,                         //Edad
+                'S'                         //Estado
         );
         estudiantes.agregarEstudiante(nuevoEstudiante);
 
