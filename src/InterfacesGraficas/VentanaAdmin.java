@@ -90,8 +90,8 @@ private void cargarbibliotecariosalatabla(){
    Bibliotecario[] bibliotecarios = controladorAdmin.getRepoBibliotecarios().todosLosBibliotecarios();
         javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(
         new Object[] {
-            "ID", "Nombre", "Usuario", "CUI", "Turno",
-            "Area Trabajo", "Telefono", "Edad", "Estado"
+            "ID", "Nombre", "Usuario", "DPI", "Turno",
+            "Area Trabajo", "Telefono", "Salario", "Estado"
         }, 0
     ); 
         
@@ -107,7 +107,7 @@ private void cargarbibliotecariosalatabla(){
                     bib.getTurno(),
                     bib.getAreaTrabajo(),
                     bib.getTelefono(),
-                    bib.getEdad(),
+                    bib.getSalario(),
                     bib.getEstadoCivil()
                 };
                 modelo.addRow(fila);
@@ -258,13 +258,13 @@ private void cargarbibliotecariosalatabla(){
 
         TablaBibliotecarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Usuario", "DPI", "Turno", "Salario", "Estado"
+                "ID", "Nombre", "Usuario", "DPI", "Turno", "Area Trabajo", "Telefono", "Salario", "Estado"
             }
         ));
         jScrollPane2.setViewportView(TablaBibliotecarios);
@@ -286,7 +286,7 @@ private void cargarbibliotecariosalatabla(){
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
+                .addContainerGap(27, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btndesactivarbibliotecario)
@@ -295,7 +295,7 @@ private void cargarbibliotecariosalatabla(){
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnrecargarpaginabibliotecario))
                     .addComponent(btnagregarbibliotecario)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 839, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 865, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38))
         );
         jPanel2Layout.setVerticalGroup(
@@ -383,13 +383,13 @@ private void cargarbibliotecariosalatabla(){
 
         TablaEstudiantes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ISBN", "Titulo", "Autor", "Editorial", "Año", "Categoria", "Cantidad", "Ubicación"
+                "Carnet", "Nombre", "Usuario", "Carrera", "Semestre", "Facultad", "CUI", "Correo", "Genero", "Telefono", "Edad", "Estado"
             }
         ));
         jScrollPane9.setViewportView(TablaEstudiantes);
@@ -408,21 +408,21 @@ private void cargarbibliotecariosalatabla(){
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
+                .addContainerGap(16, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(btnagregarestudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(53, 53, 53))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(btnDeshabilitarEstudiante)
-                                .addGap(14, 14, 14)
-                                .addComponent(btnModificarEstudiante)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnrecargarestudiantes))
-                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 848, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40))))
+                        .addComponent(btnDeshabilitarEstudiante)
+                        .addGap(14, 14, 14)
+                        .addComponent(btnModificarEstudiante)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnrecargarestudiantes)
+                        .addGap(40, 40, 40))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

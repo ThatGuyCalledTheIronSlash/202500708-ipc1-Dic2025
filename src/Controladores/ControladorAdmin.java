@@ -259,13 +259,13 @@ public class ControladorAdmin {
                 String contrasena = datos[7].trim();
                 char genero = datos[8].trim().isEmpty() ? 'N' : datos[8].trim().charAt(0);
                 int telefono = Integer.parseInt(datos[9].trim());
-                int edad = Integer.parseInt(datos[10].trim());
+                double salario = Double.parseDouble(datos[10].trim());
                 char estadoCivil = datos[11].trim().isEmpty() ? 'N' : datos[11].trim().charAt(0);
 
                 Bibliotecario nuevo = new Bibliotecario(
-                        idEmpleado, turno, areaTrabajo, nombre,
-                        cui, correo, usuario, contrasena,
-                        genero, telefono, edad, estadoCivil
+                        idEmpleado, turno, areaTrabajo,
+                        nombre, cui, correo, usuario, contrasena,
+                        genero, telefono, estadoCivil, salario
                 );
                 bibliotecarios.agregarBibliotecarios(nuevo);
                 exitosos++;

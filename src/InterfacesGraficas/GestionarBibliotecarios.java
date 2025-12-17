@@ -32,7 +32,7 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
 
 //------------------------------------
     private void cargarDatosEnFormulario() {
-        if (bibliotecarioEditando == null) {
+    if (bibliotecarioEditando == null) {
             return;
         }
         textoIDEmpleado.setText(bibliotecarioEditando.getIDEmpleado());
@@ -43,10 +43,9 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
         textoCorreo.setText(bibliotecarioEditando.getCorreo());
         textoTurno.setText(bibliotecarioEditando.getTurno());
         textoTelefono.setText(String.valueOf(bibliotecarioEditando.getTelefono()));
-        textoEdad.setText(String.valueOf(bibliotecarioEditando.getEdad()));
         textoEdad1.setText(String.valueOf(bibliotecarioEditando.getGenero()));
         textoEstadoCivil.setText(String.valueOf(bibliotecarioEditando.getEstadoCivil()));
-        textoSalario.setText("");
+        textoSalario.setText(String.valueOf(bibliotecarioEditando.getSalario()));
 
         textoIDEmpleado.setEnabled(false);
     }
@@ -61,30 +60,31 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
         String cui = textoCUI.getText().trim();
         String correo = textoCorreo.getText().trim();
         String turno = textoTurno.getText().trim();
-        String telefonoTexto = textoTelefono.getText().trim();
-        String edadTexto = textoEdad.getText().trim();
         String generoTexto = textoEdad1.getText().trim();
+        String telefonoTexto = textoTelefono.getText().trim();
+        String salarioTexto = textoSalario.getText().trim();
         String estadoCivilTexto = textoEstadoCivil.getText().trim();
-        String salarioTexto = textoSalario.getText().trim(); // si lo necesitas
+        
 
-        if (idEmpleado.isEmpty() || nombre.isEmpty() || usuario.isEmpty()
-                || contrasena.isEmpty() || cui.isEmpty() || correo.isEmpty()
-                || turno.isEmpty() || telefonoTexto.isEmpty()
-                || edadTexto.isEmpty() || generoTexto.isEmpty()
-                || estadoCivilTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.");
-            return;
-        }
-
-        int telefono;
-        int edad;
-        try {
-            telefono = Integer.parseInt(telefonoTexto);
-            edad = Integer.parseInt(edadTexto);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Teléfono y edad deben ser números enteros.");
-            return;
-        }
+            if (idEmpleado.isEmpty() || nombre.isEmpty() || usuario.isEmpty()
+                   || contrasena.isEmpty() || cui.isEmpty() || correo.isEmpty()
+                   || turno.isEmpty() || generoTexto.isEmpty()
+                   || telefonoTexto.isEmpty() || salarioTexto.isEmpty()
+                   || estadoCivilTexto.isEmpty()) {
+               JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.");
+               return;
+           }
+                    int telefono;
+                    int edad;
+                    double salario;
+                try {
+                    telefono = Integer.parseInt(telefonoTexto);
+                    salario = Double.parseDouble(salarioTexto);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this,
+                            "Teléfono, edad y salario deben ser números válidos.");
+                    return;
+                }
 
         char genero = generoTexto.charAt(0);
         char estadoCivil = estadoCivilTexto.charAt(0);
@@ -95,22 +95,24 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Ya existe un bibliotecario con ese ID.");
             return;
         }
+        
+        String areaTrabajo = "Area";
 
         if (bibliotecarioEditando == null) {
-            // crea uno nuevo (ajusta al constructor real de Bibliotecario)
             Bibliotecario nuevo = new Bibliotecario(
-                    idEmpleado,
-                    turno,
-                    "Area",   // si tienes campo areaTrabajo, ponlo aquí o agrega otro JTextField
-                    nombre,
-                    cui,
-                    correo,
-                    usuario,
-                    contrasena,
-                    genero,
-                    telefono,
-                    edad,
-                    estadoCivil
+                idEmpleado,
+                turno,
+                areaTrabajo,
+                nombre,
+                cui,
+                correo,
+                usuario,
+                contrasena,
+                genero,
+                telefono,
+                estadoCivil,
+                salario
+            
             );
             repoBiblioteca.agregarBibliotecarios(nuevo);
             JOptionPane.showMessageDialog(this, "Bibliotecario agregado correctamente.");
@@ -123,9 +125,10 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
             bibliotecarioEditando.setCorreo(correo);
             bibliotecarioEditando.setTurno(turno);
             bibliotecarioEditando.setTelefono(telefono);
-            bibliotecarioEditando.setEdad(edad);
+            bibliotecarioEditando.setSalario(salario);
             bibliotecarioEditando.setGenero(genero);
             bibliotecarioEditando.setEstadoCivil(estadoCivil);
+            
             JOptionPane.showMessageDialog(this, "Bibliotecario modificado correctamente.");
         }
 
@@ -153,12 +156,10 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
         textoNombre = new javax.swing.JTextField();
         btnguardarnuevoestudiante = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
         textoEstadoCivil = new javax.swing.JTextField();
         textoTelefono = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        textoEdad = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         textoSalario = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
@@ -188,8 +189,6 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
         cancelar.setText("Cancelar");
         cancelar.addActionListener(this::cancelarActionPerformed);
 
-        jLabel10.setText("Edad");
-
         textoTelefono.addActionListener(this::textoTelefonoActionPerformed);
 
         jLabel11.setText("Telefono");
@@ -216,7 +215,6 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
                             .addComponent(jLabel2)
                             .addComponent(jLabel7)
                             .addComponent(jLabel11)
-                            .addComponent(jLabel10)
                             .addComponent(jLabel12)
                             .addComponent(jLabel1)
                             .addComponent(jLabel13)
@@ -228,7 +226,6 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
                             .addComponent(textoUsuario)
                             .addComponent(textoContrasena)
                             .addComponent(textoCUI)
-                            .addComponent(textoEdad)
                             .addComponent(textoEstadoCivil)
                             .addComponent(textoTelefono)
                             .addComponent(textoTurno)
@@ -279,13 +276,9 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
                     .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(textoEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(textoEdad1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(textoEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -293,19 +286,15 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(textoSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
+                .addGap(90, 90, 90)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelar)
                     .addComponent(btnguardarnuevoestudiante))
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void textoContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoContrasenaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textoContrasenaActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
             dispose();
@@ -318,6 +307,10 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
     private void textoTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoTelefonoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textoTelefonoActionPerformed
+
+    private void textoContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoContrasenaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoContrasenaActionPerformed
 //-------------------------------------------------------------------
     /**
      * @param args the command line arguments
@@ -327,7 +320,6 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
     private javax.swing.JButton btnguardarnuevoestudiante;
     private javax.swing.JButton cancelar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -341,7 +333,6 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
     private javax.swing.JTextField textoCUI;
     private javax.swing.JTextField textoContrasena;
     private javax.swing.JTextField textoCorreo;
-    private javax.swing.JTextField textoEdad;
     private javax.swing.JTextField textoEdad1;
     private javax.swing.JTextField textoEstadoCivil;
     private javax.swing.JTextField textoIDEmpleado;

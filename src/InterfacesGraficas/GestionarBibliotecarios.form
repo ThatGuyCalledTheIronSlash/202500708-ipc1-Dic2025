@@ -35,7 +35,6 @@
                           <Component id="jLabel2" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel11" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel10" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel13" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -48,7 +47,6 @@
                           <Component id="textoUsuario" alignment="0" max="32767" attributes="0"/>
                           <Component id="textoContrasena" alignment="0" max="32767" attributes="0"/>
                           <Component id="textoCUI" alignment="0" max="32767" attributes="0"/>
-                          <Component id="textoEdad" alignment="0" max="32767" attributes="0"/>
                           <Component id="textoEstadoCivil" alignment="0" max="32767" attributes="0"/>
                           <Component id="textoTelefono" alignment="0" max="32767" attributes="0"/>
                           <Component id="textoTurno" alignment="0" max="32767" attributes="0"/>
@@ -113,15 +111,10 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="textoEdad" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="textoEdad1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="textoEstadoCivil" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -131,12 +124,12 @@
                   <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="textoSalario" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="cancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnguardarnuevoestudiante" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="102" max="32767" attributes="0"/>
+              <EmptySpace pref="97" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -210,11 +203,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel10">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Edad"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JTextField" name="textoEstadoCivil">
     </Component>
     <Component class="javax.swing.JTextField" name="textoTelefono">
@@ -231,8 +219,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Estado Civil"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="textoEdad">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel13">
       <Properties>

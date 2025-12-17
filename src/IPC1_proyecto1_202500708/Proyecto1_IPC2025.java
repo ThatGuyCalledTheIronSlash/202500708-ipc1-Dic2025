@@ -24,12 +24,12 @@ public class Proyecto1_IPC2025 {
 
     private static void cargarDatosIniciales() {
         Estudiante nuevoEstudiante = new Estudiante(
-                "Sistemas", 
-                5, 
-                "Ingenieria", 
-                "202500708",
-                "David", 
-                "1234567", 
+                "Sistemas",   //Carrera
+                5,            //Semestre
+                "Ingenieria", //Facultad
+                "202500708",  //Carnet
+                "David",      //nombre
+                "1234567",    //CUI
                 "estudiantes@gmail.coom",
                 "estudiante1", 
                 "estudianteusuario",
@@ -41,18 +41,18 @@ public class Proyecto1_IPC2025 {
         estudiantes.agregarEstudiante(nuevoEstudiante);
 
         Bibliotecario nuevoBibliotecario = new Bibliotecario(
-                "emple001", 
-                "matutina", 
-                "Secretaria",
-                "Maria", 
-                "12345545", 
-                "maria@gmail.com",
-                "maria123", 
-                "bibliotecaria001",
-                'F', 
-                30, 
-                123123, 
-                'S'
+                "emple001",        // IDEmpleado
+                "matutina",        // turno
+                "Secretaria",      // areaTrabajo
+                "Maria",           // nombre
+                "12345545",        // CUI (DPI)
+                "maria@gmail.com", // correo
+                "maria123",        // usuario
+                "bibliotecaria001",// contrasena
+                'F',               // genero
+                123123,            // telefono
+                'S',               // estadoCivil
+                4500.0             // salario
         );
         bibliotecarios.agregarBibliotecarios(nuevoBibliotecario);
     }
