@@ -66,4 +66,23 @@ public class RepositorioBiblioteca {
         }
         return copia;
     }
+//---
+public String generarNuevoID() {
+    int max = 0;
+    for (Bibliotecario b : bibliotecarios) {
+        if (b != null) {
+            try {
+                int valor = Integer.parseInt(b.getIDEmpleado());
+                if (valor > max) {
+                    max = valor;
+                }
+            } catch (NumberFormatException e) {
+                // ignora IDs que no sean numéricos
+            }
+        }
+    }
+    int siguiente = max + 1;
+    // formatear, por ejemplo, a 4 dígitos: 0001, 0002, ...
+    return String.format("%04d", siguiente);
+}
  }

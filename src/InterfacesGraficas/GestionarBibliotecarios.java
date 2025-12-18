@@ -35,7 +35,6 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
     if (bibliotecarioEditando == null) {
             return;
         }
-        textoIDEmpleado.setText(bibliotecarioEditando.getIDEmpleado());
         textoNombre.setText(bibliotecarioEditando.getNombre());
         textoUsuario.setText(bibliotecarioEditando.getUsuario());
         textoContrasena.setText(bibliotecarioEditando.getContrasena());
@@ -47,13 +46,11 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
         textoEstadoCivil.setText(String.valueOf(bibliotecarioEditando.getEstadoCivil()));
         textoSalario.setText(String.valueOf(bibliotecarioEditando.getSalario()));
 
-        textoIDEmpleado.setEnabled(false);
     }
 
 //------------------------------------
     private void guardarBibliotecario() {
-
-        String idEmpleado = textoIDEmpleado.getText().trim();
+        String id = repoBiblioteca.generarNuevoID();
         String nombre = textoNombre.getText().trim();
         String usuario = textoUsuario.getText().trim();
         String contrasena = textoContrasena.getText().trim();
@@ -66,7 +63,7 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
         String estadoCivilTexto = textoEstadoCivil.getText().trim();
         
 
-            if (idEmpleado.isEmpty() || nombre.isEmpty() || usuario.isEmpty()
+            if (nombre.isEmpty() || usuario.isEmpty()
                    || contrasena.isEmpty() || cui.isEmpty() || correo.isEmpty()
                    || turno.isEmpty() || generoTexto.isEmpty()
                    || telefonoTexto.isEmpty() || salarioTexto.isEmpty()
@@ -89,9 +86,9 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
         char genero = generoTexto.charAt(0);
         char estadoCivil = estadoCivilTexto.charAt(0);
 
-        // Si es nuevo, validar ID único si tienes método verificar
+       
         if (bibliotecarioEditando == null
-                && repoBiblioteca.retornarBibliotecario(idEmpleado) != null) {
+                && repoBiblioteca.retornarBibliotecario(id) != null) {
             JOptionPane.showMessageDialog(this, "Ya existe un bibliotecario con ese ID.");
             return;
         }
@@ -100,7 +97,7 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
 
         if (bibliotecarioEditando == null) {
             Bibliotecario nuevo = new Bibliotecario(
-                idEmpleado,
+                id,
                 turno,
                 areaTrabajo,
                 nombre,
@@ -140,7 +137,6 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -152,7 +148,6 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
         textoCUI = new javax.swing.JTextField();
         textoCorreo = new javax.swing.JTextField();
         textoTurno = new javax.swing.JTextField();
-        textoIDEmpleado = new javax.swing.JTextField();
         textoNombre = new javax.swing.JTextField();
         btnguardarnuevoestudiante = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
@@ -166,8 +161,6 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
         textoEdad1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jLabel1.setText("ID");
 
         jLabel2.setText("Nombre");
 
@@ -206,7 +199,7 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
+                        .addGap(48, 48, 48)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel9)
                             .addComponent(jLabel8)
@@ -216,13 +209,11 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
                             .addComponent(jLabel7)
                             .addComponent(jLabel11)
                             .addComponent(jLabel12)
-                            .addComponent(jLabel1)
                             .addComponent(jLabel13)
                             .addComponent(jLabel14))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(textoNombre)
-                            .addComponent(textoIDEmpleado)
                             .addComponent(textoUsuario)
                             .addComponent(textoContrasena)
                             .addComponent(textoCUI)
@@ -233,20 +224,16 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
                             .addComponent(textoEdad1)
                             .addComponent(textoSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(119, 119, 119)
+                        .addGap(110, 110, 110)
                         .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(29, 29, 29)
                         .addComponent(btnguardarnuevoestudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(textoIDEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(textoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -286,11 +273,11 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(textoSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(90, 90, 90)
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelar)
                     .addComponent(btnguardarnuevoestudiante))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
@@ -319,7 +306,6 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnguardarnuevoestudiante;
     private javax.swing.JButton cancelar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -335,7 +321,6 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
     private javax.swing.JTextField textoCorreo;
     private javax.swing.JTextField textoEdad1;
     private javax.swing.JTextField textoEstadoCivil;
-    private javax.swing.JTextField textoIDEmpleado;
     private javax.swing.JTextField textoNombre;
     private javax.swing.JTextField textoSalario;
     private javax.swing.JTextField textoTelefono;

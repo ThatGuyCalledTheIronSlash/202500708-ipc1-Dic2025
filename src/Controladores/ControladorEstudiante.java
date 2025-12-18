@@ -3,11 +3,13 @@ package Controladores;
 
 import modelos.Libro;
 import Repositorios.RepositorioLibro;
+import modelos.Estudiante;
 
 public class ControladorEstudiante {
     
     private ControladorPrincipal controladorPrincipal;
     private RepositorioLibro libros;
+    private Estudiante estudianteActual;
     
  //----------------------------------------------   
     public ControladorEstudiante(ControladorPrincipal controladorPrincipal,
@@ -26,5 +28,13 @@ public class ControladorEstudiante {
 //----------------------------------------------
     public Libro[] buscarLibros(String texto, String filtro) {
         return libros.buscarLibros(texto, filtro);
+    }
+//------------------------------------------------
+    public void setEstudianteActual(modelos.Estudiante estudiante) {
+        this.estudianteActual = estudiante;
+    }
+//-----------------------------------------------
+    public modelos.Estudiante getEstudianteActual() {
+        return estudianteActual;
     }
 }

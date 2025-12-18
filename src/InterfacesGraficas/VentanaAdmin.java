@@ -263,7 +263,7 @@ private void cargarbibliotecariosalatabla(){
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(83, Short.MAX_VALUE)
+                .addContainerGap(66, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -277,7 +277,7 @@ private void cargarbibliotecariosalatabla(){
                     .addComponent(label6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Dashboard", jPanel1);
@@ -336,7 +336,7 @@ private void cargarbibliotecariosalatabla(){
                     .addComponent(btnmodificarbibliotecario)
                     .addComponent(btndesactivarbibliotecario)
                     .addComponent(btnrecargarpaginabibliotecario))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Bibliotecarios", jPanel2);
@@ -418,7 +418,7 @@ private void cargarbibliotecariosalatabla(){
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnrecargarlibros)
                         .addComponent(btnModificarLibro)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Libros", jPanel3);
@@ -482,7 +482,7 @@ private void cargarbibliotecariosalatabla(){
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnrecargarestudiantes)
                         .addComponent(btnModificarEstudiante)))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Estudiantes", jPanel4);
@@ -676,8 +676,8 @@ private void cargarbibliotecariosalatabla(){
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 682, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btncerrarsesion)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );

@@ -6,6 +6,7 @@ import Repositorios.RepositorioLibro;
 import InterfacesGraficas.VentanaLogin;
 import InterfacesGraficas.VentanaAdmin;
 import InterfacesGraficas.VentanaEstudiante;
+import modelos.Estudiante;
 
 public class ControladorPrincipal {
 
@@ -14,7 +15,7 @@ public class ControladorPrincipal {
     private RepositorioEstudiante estudiantes;
     private RepositorioLibro libros;
 
-    // Vistas (se crean una vez)
+    // Vistas 
     private VentanaLogin vLogin;
     private VentanaAdmin vAdmin;
     private VentanaEstudiante vEstudiante;
@@ -23,6 +24,7 @@ public class ControladorPrincipal {
     private ControladorLogin controladorLogin;
     private ControladorAdmin controladorAdmin;
     private ControladorEstudiante controladorEstudiante;
+    private ControladorBiblioteca controladorBiblioteca;
 
     public ControladorPrincipal(RepositorioBiblioteca bibliotecarios,
                                 RepositorioEstudiante estudiantes,
@@ -41,6 +43,7 @@ public class ControladorPrincipal {
         controladorLogin = new ControladorLogin(this, bibliotecarios, estudiantes);
         controladorAdmin = new ControladorAdmin(this, bibliotecarios, estudiantes, libros);
         controladorEstudiante = new ControladorEstudiante(this, libros);
+        controladorBiblioteca = new ControladorBiblioteca(this, bibliotecarios);
     }
 
     //------------ Vistas ----------------
@@ -58,6 +61,10 @@ public class ControladorPrincipal {
         vEstudiante.setLocationRelativeTo(null);
         vEstudiante.setVisible(false);
     }
+    //----------EstabelecerEstudianteActual----------------
+    public void setEstudianteActual(Estudiante est) {
+        controladorEstudiante.setEstudianteActual(est);
+    }
 
     //------------ Métodos para cambiar de vista -------------
     public void mostrarLogin() {
@@ -73,6 +80,8 @@ public class ControladorPrincipal {
 
     public void mostrarVistaEstudiante() {
         ocultarTodasLasVistas();
+        Estudiante est = controladorEstudiante.getEstudianteActual();
+        vEstudiante.cargarPerfil(est);
         vEstudiante.recargarCatalogo();
         vEstudiante.setVisible(true);
     }
@@ -82,8 +91,10 @@ public class ControladorPrincipal {
         if (vEstudiante != null) vEstudiante.setVisible(false);
         if (vAdmin != null) vAdmin.setVisible(false);
     }
+    
+    
 
-    // Opcional: getters por si algún controlador necesita los repos
+
     public RepositorioBiblioteca getRepoBibliotecarios() { return bibliotecarios; }
     public RepositorioEstudiante getRepoEstudiantes() { return estudiantes; }
     public RepositorioLibro getRepoLibros() { return libros; }

@@ -82,14 +82,25 @@ public class RepositorioEstudiante {
     }
 //----------------------------------
     public void eliminarPorCarne(String carne) {
-    for (int i = 0; i < estudiantes.length; i++) {
-        if (estudiantes[i] != null &&
-            estudiantes[i].getCarnet().equals(carne)) {
-            estudiantes[i] = null;
-            break;
+        for (int i = 0; i < estudiantes.length; i++) {
+            if (estudiantes[i] != null &&
+                estudiantes[i].getCarnet().equals(carne)) {
+                estudiantes[i] = null;
+                break;
+            }
         }
     }
-}
+//---------------------------------
+    public Estudiante buscarPorCredenciales(String usuario, String contrasena) {
+        for (Estudiante e : estudiantes) {
+            if (e != null &&
+                e.getUsuario().equals(usuario) &&
+                e.getContrasena().equals(contrasena)) {
+                return e;
+            }
+        }
+        return null;
+    }
 }
 
     

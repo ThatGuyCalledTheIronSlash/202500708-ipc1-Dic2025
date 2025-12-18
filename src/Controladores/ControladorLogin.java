@@ -2,6 +2,7 @@ package Controladores;
 
 import Repositorios.RepositorioBiblioteca;
 import Repositorios.RepositorioEstudiante;
+import modelos.Estudiante;
 
 public class ControladorLogin {
 
@@ -28,8 +29,10 @@ public class ControladorLogin {
         }
 
         // Estudiante
-        if (estudiantes.encontrarEstudiante(usuario, contrasena)) {
+        Estudiante est = estudiantes.buscarPorCredenciales(usuario, contrasena);
+        if (est != null) {
             System.out.println("Bienvenido a Estudiante");
+            controladorPrincipal.setEstudianteActual(est);  // << importante
             controladorPrincipal.mostrarVistaEstudiante();
             return;
         }
@@ -37,7 +40,7 @@ public class ControladorLogin {
         // Bibliotecario
         if (bibliotecarios.encontrarBibliotecario(usuario, contrasena)) {
             System.out.println("Bienvenido a Bibliotecario");
-            // Aún no tienes vista de bibliotecario, de momento podrías reusar Admin
+            // En progreso
             controladorPrincipal.mostrarVistaAdmin();
             return;
         }
