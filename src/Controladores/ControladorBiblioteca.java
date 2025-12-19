@@ -7,6 +7,7 @@ public class ControladorBiblioteca {
 
     private ControladorPrincipal controladorPrincipal;
     private RepositorioBiblioteca repoBiblioteca;
+    private Bibliotecario bibliotecarioActual;
 
     public ControladorBiblioteca(ControladorPrincipal controladorPrincipal,
                                  RepositorioBiblioteca repoBiblioteca) {
@@ -17,6 +18,13 @@ public class ControladorBiblioteca {
  //Acceso al repositorio
     public Bibliotecario[] obtenerBibliotecarios() {
         return repoBiblioteca.todosLosBibliotecarios();
+    }
+ //Obtiene el bibliotecarioactual
+    public void setBibliotecarioActual(Bibliotecario bibliotecario) {
+        this.bibliotecarioActual = bibliotecario;
+    }
+    public Bibliotecario getBibliotecarioActual() {
+       return bibliotecarioActual;
     }
 //--Utilidades
     public Bibliotecario buscarPorID(String idEmpleado) {
@@ -47,4 +55,6 @@ public class ControladorBiblioteca {
     public void cerrarSesion() {
         controladorPrincipal.mostrarLogin();
     }
+//--
+    
 }

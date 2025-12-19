@@ -80,4 +80,15 @@ public class RepositorioBiblioteca {
             int siguiente = max + 1;
         return String.format("%04d", siguiente);
     }
+//--
+    public Bibliotecario buscarPorCredenciales(String usuario, String contrasena) {
+        for (Bibliotecario b : bibliotecarios) {
+            if (b != null &&
+                b.getUsuario().equals(usuario) &&
+                b.getContrasena().equals(contrasena)) {
+                return b;
+            }
+        }
+        return null;
+    }
 }

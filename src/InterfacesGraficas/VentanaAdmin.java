@@ -149,6 +149,30 @@ private void cargarestudiantesalatabla(){
         }
     }
 //--
+private void cargarestudiantesalatablaConParametro(Estudiante[] estudiantes) {
+    modeloEstudiantes.setRowCount(0);
+        if (estudiantes == null) return;
+            for (Estudiante est : estudiantes) {
+                if (est != null) {
+                    Object[] fila = new Object[] {
+                        est.getCarnet(),
+                        est.getNombre(),
+                        est.getUsuario(),
+                        est.getCarrera(),
+                        est.getSemestre(),
+                        est.getFacultad(),
+                        est.getCUI(),
+                        est.getCorreo(),
+                        est.getGenero(),
+                        est.getTelefono(),
+                        est.getEdad(),
+                        est.getEstadoCivil()
+                    };
+                    modeloEstudiantes.addRow(fila);
+                }
+            }
+        }
+//--
 private void cargarbibliotecariosalatabla(){
    modeloBibliotecarios.setRowCount(0);  //limpia las filas anteriores
    
@@ -217,6 +241,8 @@ private void cargarbibliotecariosalatabla(){
         btnrecargarestudiantes = new javax.swing.JButton();
         btnDeshabilitarEstudiante = new javax.swing.JButton();
         btnModificarEstudiante = new javax.swing.JButton();
+        btnbuscarestudiante = new javax.swing.JButton();
+        textobuscarestudiante = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel6 = new javax.swing.JPanel();
@@ -392,9 +418,8 @@ private void cargarbibliotecariosalatabla(){
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(322, Short.MAX_VALUE))
         );
 
@@ -567,6 +592,9 @@ private void cargarbibliotecariosalatabla(){
         btnModificarEstudiante.setText("Modificar");
         btnModificarEstudiante.addActionListener(this::btnModificarEstudianteActionPerformed);
 
+        btnbuscarestudiante.setText("Buscar");
+        btnbuscarestudiante.addActionListener(this::btnbuscarestudianteActionPerformed);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -574,9 +602,6 @@ private void cargarbibliotecariosalatabla(){
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap(16, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(btnagregarestudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(53, 53, 53))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(btnDeshabilitarEstudiante)
                         .addGap(14, 14, 14)
@@ -586,13 +611,23 @@ private void cargarbibliotecariosalatabla(){
                         .addGap(40, 40, 40))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14))))
+                        .addGap(14, 14, 14))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(textobuscarestudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnbuscarestudiante)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnagregarestudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnagregarestudiante)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnagregarestudiante)
+                    .addComponent(btnbuscarestudiante)
+                    .addComponent(textobuscarestudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1007,6 +1042,12 @@ private void cargarbibliotecariosalatabla(){
                     cargarlibrosalatablaconparametro(listaOrdenada);
             }
     }//GEN-LAST:event_seleciltroslibrosActionPerformed
+
+    private void btnbuscarestudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarestudianteActionPerformed
+        String texto = textobuscarestudiante.getText();
+        Estudiante[] lista = controladorAdmin.buscarEstudiantes(texto);
+        cargarestudiantesalatablaConParametro(lista);
+    }//GEN-LAST:event_btnbuscarestudianteActionPerformed
 //============================================
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1024,6 +1065,7 @@ private void cargarbibliotecariosalatabla(){
     private javax.swing.JButton btnagregarestudiante;
     private javax.swing.JButton btnagregarlibro;
     private javax.swing.JButton btnbscarlibro;
+    private javax.swing.JButton btnbuscarestudiante;
     private javax.swing.JButton btncerrarsesion;
     private javax.swing.JButton btndesactivarbibliotecario;
     private javax.swing.JButton btnmodificarbibliotecario;
@@ -1069,6 +1111,7 @@ private void cargarbibliotecariosalatabla(){
     private javax.swing.JLabel lblTotalEstudiantes;
     private javax.swing.JLabel lblTotalLibros;
     private javax.swing.JComboBox<String> seleciltroslibros;
+    private javax.swing.JTextField textobuscarestudiante;
     private javax.swing.JTextField textobuscarlibros;
     private javax.swing.JTextArea vistaResultado;
     private javax.swing.JTextArea vistaResultado2;

@@ -30,11 +30,11 @@ public class ControladorEstudiante {
         return libros.buscarLibros(texto, filtro);
     }
 //--
-    public void setEstudianteActual(modelos.Estudiante estudiante) {
+    public void setEstudianteActual(Estudiante estudiante) {
         this.estudianteActual = estudiante;
     }
 //--
-    public modelos.Estudiante getEstudianteActual() {
+    public Estudiante getEstudianteActual() {
         return estudianteActual;
     }
 //Metodos de Ordenamiento

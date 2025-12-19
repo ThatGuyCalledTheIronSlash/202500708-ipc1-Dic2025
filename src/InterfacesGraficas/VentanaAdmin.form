@@ -724,10 +724,6 @@
                       <EmptySpace pref="16" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="btnagregarestudiante" min="-2" pref="165" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
                               <Component id="btnDeshabilitarEstudiante" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                               <Component id="btnModificarEstudiante" min="-2" max="-2" attributes="0"/>
@@ -739,6 +735,14 @@
                               <Component id="jScrollPane9" min="-2" pref="900" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="textobuscarestudiante" min="-2" pref="576" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="btnbuscarestudiante" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="btnagregarestudiante" min="-2" pref="165" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
               </Group>
@@ -747,7 +751,11 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnagregarestudiante" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnagregarestudiante" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnbuscarestudiante" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textobuscarestudiante" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane9" min="-2" pref="506" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -891,6 +899,16 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModificarEstudianteActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnbuscarestudiante">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Buscar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnbuscarestudianteActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="textobuscarestudiante">
             </Component>
           </SubComponents>
         </Container>

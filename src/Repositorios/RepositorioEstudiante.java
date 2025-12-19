@@ -103,6 +103,57 @@ public class RepositorioEstudiante {
         }
         return null;
     }
+//--
+    public Estudiante[] buscarEstudiantes(String texto) {
+        if (texto == null) texto = "";
+            texto = texto.trim().toLowerCase();
+                if (texto.isEmpty()) {
+                    return todoslosestudiantes(); // ya lo tienes
+            }
+                int conteo = 0;
+                    for (Estudiante e : estudiantes) {
+                        if (e != null && coincidencia(e, texto)) {
+                            conteo++;
+                        }
+                    }
+
+                Estudiante[] resultado = new Estudiante[conteo];
+                    int idx = 0;
+            for (Estudiante e : estudiantes) {
+                if (e != null && coincidencia(e, texto)) {
+                    resultado[idx++] = e;
+                }
+            }
+            return resultado;
+        }
+//--
+    private boolean coincidencia(Estudiante e, String texto) {
+           String nombre = e.getNombre();
+            if (nombre == null) {
+                nombre = "";
+            } else {
+                nombre = nombre.toLowerCase();
+            }
+
+            String carnet = e.getCarnet();
+            if (carnet == null) {
+                carnet = "";
+            } else {
+                carnet = carnet.toLowerCase();
+            }
+
+            String usuario = e.getUsuario();
+            if (usuario == null) {
+                usuario = "";
+            } else {
+                usuario = usuario.toLowerCase();
+            }
+
+            return nombre.contains(texto) || carnet.contains(texto) || usuario.contains(texto);
+        }
 }
+
+
+
 
     

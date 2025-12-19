@@ -46,6 +46,10 @@ public class ControladorAdmin {
     public Bibliotecario[] obtenerBibliotecarios() {
         return bibliotecarios.todosLosBibliotecarios();
     }
+//--
+    public Estudiante[] buscarEstudiantes(String texto) {
+        return estudiantes.buscarEstudiantes(texto);
+    }
 //--   
     public String generarVistaPrevia(File archivo, int maxLineas) {
         StringBuilder previa = new StringBuilder();
