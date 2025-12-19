@@ -11,38 +11,35 @@ import modelos.Estudiante;
 public class ControladorPrincipal {
 
     // Repositorios
-    private RepositorioBiblioteca bibliotecarios;
-    private RepositorioEstudiante estudiantes;
-    private RepositorioLibro libros;
+        private RepositorioBiblioteca bibliotecarios;
+        private RepositorioEstudiante estudiantes;
+        private RepositorioLibro libros;
 
-    // Vistas (se crean una vez)
-    private VentanaLogin vLogin;
-    private VentanaAdmin vAdmin;
-    private VentanaEstudiante vEstudiante;
+    // Vistas
+        private VentanaLogin vLogin;
+        private VentanaAdmin vAdmin;
+        private VentanaEstudiante vEstudiante;
 
     // Controladores
-    private ControladorLogin controladorLogin;
-    private ControladorAdmin controladorAdmin;
-    private ControladorEstudiante controladorEstudiante;
+        private ControladorLogin controladorLogin;
+        private ControladorAdmin controladorAdmin;
+        private ControladorEstudiante controladorEstudiante;
 
-    public ControladorPrincipal(RepositorioBiblioteca bibliotecarios,
-                                RepositorioEstudiante estudiantes,
-                                RepositorioLibro libros) {
-
-        this.bibliotecarios = bibliotecarios;
-        this.estudiantes = estudiantes;
-        this.libros = libros;
-
-        iniciarControladores();
-        iniciarVistas();
-    }
-    //------------ Controladores ----------------
+    public ControladorPrincipal(RepositorioBiblioteca bibliotecarios,RepositorioEstudiante estudiantes,
+        RepositorioLibro libros) {
+            this.bibliotecarios = bibliotecarios;
+            this.estudiantes = estudiantes;
+            this.libros = libros;
+             iniciarControladores();
+             iniciarVistas();
+    }   
+    //Controladores
     private void iniciarControladores() {
         controladorLogin = new ControladorLogin(this, bibliotecarios, estudiantes);
         controladorAdmin = new ControladorAdmin(this, bibliotecarios, estudiantes, libros);
         controladorEstudiante = new ControladorEstudiante(this, libros);
     }
-    //------------ Vistas ----------------
+    //Vistas
     private void iniciarVistas() {
 
         vLogin = new VentanaLogin(controladorLogin);
@@ -57,26 +54,28 @@ public class ControladorPrincipal {
         vEstudiante.setLocationRelativeTo(null);
         vEstudiante.setVisible(false);
     }
-    //----------EstabelecerEstudianteActual----------------
+    //EstabelecerEstudianteActual
     public void setEstudianteActual(Estudiante est) {
         controladorEstudiante.setEstudianteActual(est);
     }
-    //------------ Metodos para cambiar de vista -------------
+    //Metodos para cambiar de vista
     public void mostrarLogin() {
         ocultarTodasLasVistas();
-        vLogin.limpiarCampos();
-        vLogin.setVisible(true);
+            vLogin.limpiarCampos();
+            vLogin.setVisible(true);
     }
 //--
     public void mostrarVistaAdmin() {
         ocultarTodasLasVistas();
-        vAdmin.setVisible(true);
+            vAdmin.setVisible(true);
     }
 //--
     public void mostrarVistaEstudiante() {
         ocultarTodasLasVistas();
-        vEstudiante.recargarCatalogo();
-        vEstudiante.setVisible(true);
+            Estudiante est = controladorEstudiante.getEstudianteActual();
+                vEstudiante.cargarPerfil(est);
+                vEstudiante.recargarCatalogo();
+                vEstudiante.setVisible(true);
     }
 //--
     private void ocultarTodasLasVistas() {
@@ -84,8 +83,16 @@ public class ControladorPrincipal {
         if (vEstudiante != null) vEstudiante.setVisible(false);
         if (vAdmin != null) vAdmin.setVisible(false);
     }
+//Obtener Repositorios
+    public RepositorioBiblioteca getRepoBibliotecarios() {
+        return bibliotecarios; 
+    }
 //--
-    public RepositorioBiblioteca getRepoBibliotecarios() { return bibliotecarios; }
-    public RepositorioEstudiante getRepoEstudiantes() { return estudiantes; }
-    public RepositorioLibro getRepoLibros() { return libros; }
+    public RepositorioEstudiante getRepoEstudiantes() {
+        return estudiantes; 
+    }
+//--
+    public RepositorioLibro getRepoLibros() { 
+        return libros; 
+    }
 }

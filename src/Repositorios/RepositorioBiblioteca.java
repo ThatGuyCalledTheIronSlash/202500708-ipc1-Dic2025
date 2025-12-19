@@ -52,18 +52,18 @@ public class RepositorioBiblioteca {
         return false;        
     }
 //--
- public Bibliotecario[] todosLosBibliotecarios(){
-  int contador = 0;
-        for (Bibliotecario b : bibliotecarios) {
-            if (b != null) contador++;
-        }
-        Bibliotecario[] copia = new Bibliotecario[contador];
-        int idx = 0;
-        for (Bibliotecario b : bibliotecarios) {
-            if (b != null) {
-                copia[idx++] = b;
+    public Bibliotecario[] todosLosBibliotecarios(){
+        int contador = 0;
+            for (Bibliotecario b : bibliotecarios) {
+                if (b != null) contador++;
             }
-        }
+                Bibliotecario[] copia = new Bibliotecario[contador];
+                int idx = 0;
+                for (Bibliotecario b : bibliotecarios) {
+                    if (b != null) {
+                        copia[idx++] = b;
+                    }
+            }
         return copia;
     }
 //--
@@ -74,12 +74,10 @@ public class RepositorioBiblioteca {
                 try {
                     int valor = Integer.parseInt(b.getIDEmpleado());
                     if (valor > max) max = valor;
-                } catch (NumberFormatException e) {
+                    } catch (NumberFormatException e) {}
                 }
             }
-        }
-        int siguiente = max + 1;
+            int siguiente = max + 1;
         return String.format("%04d", siguiente);
-    
- }
+    }
 }

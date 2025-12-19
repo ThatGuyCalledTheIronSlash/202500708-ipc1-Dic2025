@@ -193,13 +193,6 @@ private void cargarbibliotecariosalatabla(){
         jPanel11 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         lblTotalBibliotecarios = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        TablaBibliotecarios = new javax.swing.JTable();
-        btnrecargarpaginabibliotecario = new javax.swing.JButton();
-        btndesactivarbibliotecario = new javax.swing.JButton();
-        btnmodificarbibliotecario = new javax.swing.JButton();
-        btnagregarbibliotecario = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         TablaLibros = new javax.swing.JTable();
@@ -392,72 +385,12 @@ private void cargarbibliotecariosalatabla(){
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(322, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Dashboard", jPanel1);
-
-        TablaBibliotecarios.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "Nombre", "Usuario", "DPI", "Turno", "Area Trabajo", "Telefono", "Salario", "Estado"
-            }
-        ));
-        jScrollPane2.setViewportView(TablaBibliotecarios);
-
-        btnrecargarpaginabibliotecario.setText("Recargar");
-        btnrecargarpaginabibliotecario.addActionListener(this::btnrecargarpaginabibliotecarioActionPerformed);
-
-        btndesactivarbibliotecario.setText("Desactivar");
-        btndesactivarbibliotecario.addActionListener(this::btndesactivarbibliotecarioActionPerformed);
-
-        btnmodificarbibliotecario.setText("Modificar");
-        btnmodificarbibliotecario.addActionListener(this::btnmodificarbibliotecarioActionPerformed);
-
-        btnagregarbibliotecario.setText("Agregar Bibliotecario");
-        btnagregarbibliotecario.addActionListener(this::btnagregarbibliotecarioActionPerformed);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btndesactivarbibliotecario)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnmodificarbibliotecario)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnrecargarpaginabibliotecario))
-                    .addComponent(btnagregarbibliotecario)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 865, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addComponent(btnagregarbibliotecario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnmodificarbibliotecario)
-                    .addComponent(btndesactivarbibliotecario)
-                    .addComponent(btnrecargarpaginabibliotecario))
-                .addContainerGap(43, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("Bibliotecarios", jPanel2);
 
         TablaLibros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -803,37 +736,11 @@ private void cargarbibliotecariosalatabla(){
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//---------------------------- BOTONES -----------------------------
-    private void IniciarcargalibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IniciarcargalibrosActionPerformed
-        String texto = controladorAdmin.cargarLibrosConDialogo();
 
-        String[] partes = texto.split("=== REPORTE DE CARGA DE LIBROS ===", 2);
-        if (partes.length == 2) {
-            vistaprevia.setViewportView(new javax.swing.JTextArea(partes[0]));
-            vistaResultado.setText("=== REPORTE DE CARGA DE LIBROS ===" + partes[1]);
-        } else {
-            vistaResultado.setText(texto);
-        }
-
-        cargarlibrosalatabla(); 
-        actualizarDashboard();
-
-    }//GEN-LAST:event_IniciarcargalibrosActionPerformed
-//---
-    private void botoncargarestudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoncargarestudiantesActionPerformed
-        String texto = controladorAdmin.cargarEstudiantesConDialogo();
-        String[] partes = texto.split("=== REPORTE DE CARGA DE ESTUDIANTES ===", 2);
-        if (partes.length == 2) {
-            vistaprevia2.setViewportView(new javax.swing.JTextArea(partes[0]));
-            vistaResultado2.setText("=== REPORTE DE CARGA DE ESTUDIANTES ===" + partes[1]);
-        } else {
-            vistaResultado2.setText(texto);
-        }
-
-        cargarestudiantesalatabla();
-        actualizarDashboard();
-
-    }//GEN-LAST:event_botoncargarestudiantesActionPerformed
+/---
+    private void btncerrarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncerrarsesionActionPerformed
+        controladorAdmin.cerrarSesion();
+    }//GEN-LAST:event_btncerrarsesionActionPerformed
 
     private void botoncargarbibliotecariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoncargarbibliotecariosActionPerformed
         String texto = controladorAdmin.cargarBibliotecariosConDialogo();
@@ -848,151 +755,69 @@ private void cargarbibliotecariosalatabla(){
 
         cargarbibliotecariosalatabla();
         actualizarDashboard();
-
     }//GEN-LAST:event_botoncargarbibliotecariosActionPerformed
 
-    private void btnrecargarestudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrecargarestudiantesActionPerformed
+    private void botoncargarestudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoncargarestudiantesActionPerformed
+        String texto = controladorAdmin.cargarEstudiantesConDialogo();
+        String[] partes = texto.split("=== REPORTE DE CARGA DE ESTUDIANTES ===", 2);
+        if (partes.length == 2) {
+            vistaprevia2.setViewportView(new javax.swing.JTextArea(partes[0]));
+            vistaResultado2.setText("=== REPORTE DE CARGA DE ESTUDIANTES ===" + partes[1]);
+        } else {
+            vistaResultado2.setText(texto);
+        }
+
         cargarestudiantesalatabla();
-    }//GEN-LAST:event_btnrecargarestudiantesActionPerformed
+        actualizarDashboard();
+    }//GEN-LAST:event_botoncargarestudiantesActionPerformed
 
-    private void btnrecargarlibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrecargarlibrosActionPerformed
-        cargarlibrosalatabla();
-    }//GEN-LAST:event_btnrecargarlibrosActionPerformed
-
-    private void btnagregarlibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarlibroActionPerformed
-    GestionarLibros dialog = new GestionarLibros(
-            this,
-            true,
-            controladorAdmin.getRepoLibros()
-    );
-    dialog.setVisible(true);
-    cargarlibrosalatabla();
-    actualizarDashboard();
-    
-    }//GEN-LAST:event_btnagregarlibroActionPerformed
-
-    private void btnrecargarpaginabibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrecargarpaginabibliotecarioActionPerformed
-        cargarbibliotecariosalatabla();
-    }//GEN-LAST:event_btnrecargarpaginabibliotecarioActionPerformed
-
-    private void btnModificarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarLibroActionPerformed
-        String isbn = JOptionPane.showInputDialog(this,
-                    "Ingrese el ISBN del libro a modificar:");
-            Libro libro = controladorAdmin.buscarLibroPorISBN(isbn);
-
-            if (libro == null) {
-                JOptionPane.showMessageDialog(this,
-                        "No se encontró un libro con ese ISBN o el ISBN está vacío.");
-                return;
-            }
-
-            GestionarLibros dialog = new GestionarLibros(
-                    this, true, controladorAdmin.getRepoLibros(), libro
-            );
-            dialog.setVisible(true);
-            cargarlibrosalatabla();
-    }//GEN-LAST:event_btnModificarLibroActionPerformed
-
-    private void btnBorrarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarLibroActionPerformed
-        String isbn = JOptionPane.showInputDialog(this,
-            "Ingrese el ISBN del libro a eliminar:");
-            String mensaje = controladorAdmin.eliminarLibroPorISBN(isbn);
-            JOptionPane.showMessageDialog(this, mensaje);
-                cargarlibrosalatabla();
-                actualizarDashboard();
-
-    }//GEN-LAST:event_btnBorrarLibroActionPerformed
-
-    private void btnagregarestudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarestudianteActionPerformed
-         GestionarEstudiantes dialog = new GestionarEstudiantes(
-            this,
-            true,
-            controladorAdmin.getRepoEstudiantes()
-    );
-    dialog.setVisible(true);
-    cargarestudiantesalatabla();  //recarga automaticamente
-    actualizarDashboard();
-
-    }//GEN-LAST:event_btnagregarestudianteActionPerformed
+//GEN-FIRST:event_IniciarcargalibrosActionPerformed
+ 
+//GEN-LAST:event_IniciarcargalibrosActionPerformed
 
     private void btnModificarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarEstudianteActionPerformed
         String carne = JOptionPane.showInputDialog(this,
             "Ingrese el carnet del estudiante a modificar:");
-    Estudiante est = controladorAdmin.buscarEstudiantePorCarne(carne);
+        Estudiante est = controladorAdmin.buscarEstudiantePorCarne(carne);
 
-    if (est == null) {
-        JOptionPane.showMessageDialog(this,
+        if (est == null) {
+            JOptionPane.showMessageDialog(this,
                 "No se encontró un estudiante con ese carnet o el carnet está vacío.");
-        return;
-    }
+            return;
+        }
 
-    GestionarEstudiantes dialog = new GestionarEstudiantes(
+        GestionarEstudiantes dialog = new GestionarEstudiantes(
             this, true, controladorAdmin.getRepoEstudiantes(), est
-    );
-    dialog.setVisible(true);
-    cargarestudiantesalatabla();
+        );
+        dialog.setVisible(true);
+        cargarestudiantesalatabla();
     }//GEN-LAST:event_btnModificarEstudianteActionPerformed
 
     private void btnDeshabilitarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshabilitarEstudianteActionPerformed
         String carne = JOptionPane.showInputDialog(this,
             "Ingrese el carnet del estudiante a eliminar:");
-                String mensaje = controladorAdmin.eliminarEstudiantePorCarne(carne);
-                JOptionPane.showMessageDialog(this, mensaje);
-                    cargarestudiantesalatabla();
+        String mensaje = controladorAdmin.eliminarEstudiantePorCarne(carne);
+        JOptionPane.showMessageDialog(this, mensaje);
+        cargarestudiantesalatabla();
     }//GEN-LAST:event_btnDeshabilitarEstudianteActionPerformed
 
-    private void btnagregarbibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarbibliotecarioActionPerformed
-        GestionarBibliotecarios dialog = new GestionarBibliotecarios(
+    private void btnrecargarestudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrecargarestudiantesActionPerformed
+        cargarestudiantesalatabla();
+    }//GEN-LAST:event_btnrecargarestudiantesActionPerformed
+
+    private void btnagregarestudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarestudianteActionPerformed
+        GestionarEstudiantes dialog = new GestionarEstudiantes(
             this,
             true,
-            controladorAdmin.getRepoBibliotecarios()
-    );
-    dialog.setVisible(true);
-    cargarbibliotecariosalatabla();
-    actualizarDashboard();
-
-    }//GEN-LAST:event_btnagregarbibliotecarioActionPerformed
-
-    private void btndesactivarbibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndesactivarbibliotecarioActionPerformed
-            String id = JOptionPane.showInputDialog(this,
-            "Ingrese el ID del bibliotecario a eliminar:");
-
-    String mensaje = controladorAdmin.eliminarBibliotecarioPorID(id);
-    JOptionPane.showMessageDialog(this, mensaje);
-    cargarbibliotecariosalatabla();
-    }//GEN-LAST:event_btndesactivarbibliotecarioActionPerformed
-
-    private void btnmodificarbibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarbibliotecarioActionPerformed
-        String id = JOptionPane.showInputDialog(this,
-            "Ingrese el ID del bibliotecario a modificar:");
-
-    Bibliotecario bib = controladorAdmin.buscarBibliotecarioPorID(id);
-    if (bib == null) {
-        JOptionPane.showMessageDialog(this,
-                "No se encontró un bibliotecario con ese ID o el ID está vacío.");
-        return;
-    }
-
-    GestionarBibliotecarios dialog = new GestionarBibliotecarios(
-            this,
-            true,
-            controladorAdmin.getRepoBibliotecarios(),
-            bib
-    );
-    dialog.setVisible(true);
-    cargarbibliotecariosalatabla();
-    }//GEN-LAST:event_btnmodificarbibliotecarioActionPerformed
-
-    private void btncerrarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncerrarsesionActionPerformed
-        controladorAdmin.cerrarSesion();
-    }//GEN-LAST:event_btncerrarsesionActionPerformed
-
-    private void textobuscarlibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textobuscarlibrosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textobuscarlibrosActionPerformed
+            controladorAdmin.getRepoEstudiantes()
+        );
+        dialog.setVisible(true);
+        cargarestudiantesalatabla();  //recarga automaticamente
+        actualizarDashboard();
+    }//GEN-LAST:event_btnagregarestudianteActionPerformed
 
     private void btnbscarlibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbscarlibroActionPerformed
-            String texto = textobuscarlibros.getText();
+        String texto = textobuscarlibros.getText();
 
         Libro[] resultados = controladorAdmin.buscarLibros(texto, "titulo");
 
@@ -1001,34 +826,80 @@ private void cargarbibliotecariosalatabla(){
 
     private void seleciltroslibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleciltroslibrosActionPerformed
         String opcion = seleciltroslibros.getSelectedItem().toString();
-           Libro[] listaOrdenada = null;
-                switch (opcion) {
-                    case "ISBN":
-                        listaOrdenada = controladorAdmin.ordenarLibros_ISBN_Burbuja();
-                        break;
-                    case "Titulo":
-                        listaOrdenada = controladorAdmin.ordenarLibros_Titulo_Seleccion();
-                        break;
-                    case "Autor":
-                        listaOrdenada = controladorAdmin.ordenarLibros_Autor_Insercion();
-                        break;
-                    case "Editorial":
-                        listaOrdenada = controladorAdmin.ordenarLibros_Editorial_QuickSort();
-                        break;
-                    case "Año":
-                        listaOrdenada = controladorAdmin.ordenarLibros_Anio_MergeSort();
-                        break;
-                }
+        Libro[] listaOrdenada = null;
+        switch (opcion) {
+            case "ISBN":
+            listaOrdenada = controladorAdmin.ordenarLibros_ISBN_Burbuja();
+            break;
+            case "Titulo":
+            listaOrdenada = controladorAdmin.ordenarLibros_Titulo_Seleccion();
+            break;
+            case "Autor":
+            listaOrdenada = controladorAdmin.ordenarLibros_Autor_Insercion();
+            break;
+            case "Editorial":
+            listaOrdenada = controladorAdmin.ordenarLibros_Editorial_QuickSort();
+            break;
+            case "Año":
+            listaOrdenada = controladorAdmin.ordenarLibros_Anio_MergeSort();
+            break;
+        }
 
-                if (listaOrdenada != null) {
-                    cargarlibrosalatablaconparametro(listaOrdenada);
-            }
+        if (listaOrdenada != null) {
+            cargarlibrosalatablaconparametro(listaOrdenada);
+        }
     }//GEN-LAST:event_seleciltroslibrosActionPerformed
+
+    private void textobuscarlibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textobuscarlibrosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textobuscarlibrosActionPerformed
+
+    private void btnrecargarlibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrecargarlibrosActionPerformed
+        cargarlibrosalatabla();
+    }//GEN-LAST:event_btnrecargarlibrosActionPerformed
+
+    private void btnModificarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarLibroActionPerformed
+        String isbn = JOptionPane.showInputDialog(this,
+            "Ingrese el ISBN del libro a modificar:");
+        Libro libro = controladorAdmin.buscarLibroPorISBN(isbn);
+
+        if (libro == null) {
+            JOptionPane.showMessageDialog(this,
+                "No se encontró un libro con ese ISBN o el ISBN está vacío.");
+            return;
+        }
+
+        GestionarLibros dialog = new GestionarLibros(
+            this, true, controladorAdmin.getRepoLibros(), libro
+        );
+        dialog.setVisible(true);
+        cargarlibrosalatabla();
+    }//GEN-LAST:event_btnModificarLibroActionPerformed
+
+    private void btnBorrarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarLibroActionPerformed
+        String isbn = JOptionPane.showInputDialog(this,
+            "Ingrese el ISBN del libro a eliminar:");
+        String mensaje = controladorAdmin.eliminarLibroPorISBN(isbn);
+        JOptionPane.showMessageDialog(this, mensaje);
+        cargarlibrosalatabla();
+        actualizarDashboard();
+    }//GEN-LAST:event_btnBorrarLibroActionPerformed
+
+    private void btnagregarlibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarlibroActionPerformed
+        GestionarLibros dialog = new GestionarLibros(
+            this,
+            true,
+            controladorAdmin.getRepoLibros()
+        );
+        dialog.setVisible(true);
+        cargarlibrosalatabla();
+        actualizarDashboard();
+
+    }//GEN-LAST:event_btnagregarlibroActionPerformed
 //============================================
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Iniciarcargalibros;
-    private javax.swing.JTable TablaBibliotecarios;
     private javax.swing.JTable TablaEstudiantes;
     private javax.swing.JTable TablaLibros;
     private javax.swing.JButton botoncargarbibliotecarios;
@@ -1037,16 +908,12 @@ private void cargarbibliotecariosalatabla(){
     private javax.swing.JButton btnDeshabilitarEstudiante;
     private javax.swing.JButton btnModificarEstudiante;
     private javax.swing.JButton btnModificarLibro;
-    private javax.swing.JButton btnagregarbibliotecario;
     private javax.swing.JButton btnagregarestudiante;
     private javax.swing.JButton btnagregarlibro;
     private javax.swing.JButton btnbscarlibro;
     private javax.swing.JButton btncerrarsesion;
-    private javax.swing.JButton btndesactivarbibliotecario;
-    private javax.swing.JButton btnmodificarbibliotecario;
     private javax.swing.JButton btnrecargarestudiantes;
     private javax.swing.JButton btnrecargarlibros;
-    private javax.swing.JButton btnrecargarpaginabibliotecario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -1065,7 +932,6 @@ private void cargarbibliotecariosalatabla(){
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1074,7 +940,6 @@ private void cargarbibliotecariosalatabla(){
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;

@@ -37,7 +37,7 @@ public class ControladorEstudiante {
     public modelos.Estudiante getEstudianteActual() {
         return estudianteActual;
     }
-// METODOS DE ORDENAMIENTO
+//Metodos de Ordenamiento
     public Libro[] ordenarLibros_ISBN_Burbuja() {
         Libro[] lista = copiarLibrosSinVacios();
         burbujaPorISBN(lista);
@@ -67,7 +67,7 @@ public class ControladorEstudiante {
         mergeSortPorAnio(lista);
         return lista;
     }
-// ---------- copiar arreglo sin null ----------
+//--
     private Libro[] copiarLibrosSinVacios() {
         Libro[] todos = libros.todosLosLibros(); 
         int cantidad = 0;
@@ -118,7 +118,7 @@ public class ControladorEstudiante {
         }
     }
 
-//  SELECCIÓN POR TÍTULO 
+//--
     private void seleccionPorTitulo(Libro[] lista) {
         for (int i = 0; i < lista.length - 1; i++) {
             int posMenor = i;
@@ -138,7 +138,7 @@ public class ControladorEstudiante {
         }
     }
 
-//  INSERCIÓN POR AUTOR 
+//--
     private void insercionPorAutor(Libro[] lista) {
         for (int i = 1; i < lista.length; i++) {
             Libro actual = lista[i];
@@ -153,7 +153,7 @@ public class ControladorEstudiante {
         }
     }
 
-// QUICKSORT POR EDITORIAL 
+//--
     private void quickSortPorEditorial(Libro[] lista, int inicio, int fin) {
         if (inicio >= fin) {
             return;
@@ -184,7 +184,7 @@ public class ControladorEstudiante {
         return i + 1;
     }
 
-// MERGESORT POR AÑO
+//--
     private void mergeSortPorAnio(Libro[] lista) {
         Libro[] auxiliar = new Libro[lista.length];
         mergeSortPorAnio(lista, auxiliar, 0, lista.length - 1);

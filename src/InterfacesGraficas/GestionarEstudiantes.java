@@ -35,76 +35,79 @@ public class GestionarEstudiantes extends javax.swing.JDialog {
         if (estudianteEditando == null) {
             return;
         }
-        textoCarne.setText(estudianteEditando.getCarnet());
-        textoNombre.setText(estudianteEditando.getNombre());
-        textoCarrera.setText(estudianteEditando.getCarrera());
-        textoSemestre.setText(String.valueOf(estudianteEditando.getSemestre()));
-        textoUsuario.setText(estudianteEditando.getUsuario());
-        textoCUI.setText(estudianteEditando.getCUI());
-        textoCorreo.setText(estudianteEditando.getCorreo());
-        textoGenero.setText(String.valueOf(estudianteEditando.getGenero()));
-        textoTelefono.setText(String.valueOf(estudianteEditando.getTelefono()));
-        textoEdad.setText(String.valueOf(estudianteEditando.getEdad()));
-        textoEstadoCivil.setText(String.valueOf(estudianteEditando.getEstadoCivil()));
-
-        textoCarne.setEnabled(false); // normalmente el carnet no cambia
+            textoCarne.setText(estudianteEditando.getCarnet());
+            textoNombre.setText(estudianteEditando.getNombre());
+            textoCarrera.setText(estudianteEditando.getCarrera());
+            textoSemestre.setText(String.valueOf(estudianteEditando.getSemestre()));
+            textoUsuario.setText(estudianteEditando.getUsuario());
+            textoCUI.setText(estudianteEditando.getCUI());
+            textoCorreo.setText(estudianteEditando.getCorreo());
+            textoGenero.setText(String.valueOf(estudianteEditando.getGenero()));
+            textoTelefono.setText(String.valueOf(estudianteEditando.getTelefono()));
+            textoEdad.setText(String.valueOf(estudianteEditando.getEdad()));
+            textoEstadoCivil.setText(String.valueOf(estudianteEditando.getEstadoCivil()));
+            textoContraseña.setText(estudianteEditando.getContrasena());
+            
+            textoCarne.setEnabled(false); //No cambia el Carnet
     }
 
     //------------------------------------
     private void guardarEstudiante() {
-        
         String carne = textoCarne.getText().trim();
         String nombre = textoNombre.getText().trim();
         String carrera = textoCarrera.getText().trim();
         String semestreTexto = textoSemestre.getText().trim();
         String usuario = textoUsuario.getText().trim();
+        String contrasena = textoContraseña.getText().trim();
         String cui = textoCUI.getText().trim();
         String correo = textoCorreo.getText().trim();
         String generoTexto = textoGenero.getText().trim();
         String telefonoTexto = textoTelefono.getText().trim();
         String edadTexto = textoEdad.getText().trim();
         String estadoCivilTexto = textoEstadoCivil.getText().trim();
-
-        // Validaciones basicas
+        
+        
+        //Validación de Campos Vacios
         if (carne.isEmpty() || nombre.isEmpty() || carrera.isEmpty()
                 || semestreTexto.isEmpty() || usuario.isEmpty()
-                || cui.isEmpty() || correo.isEmpty()
+                || contrasena.isEmpty() || cui.isEmpty() || correo.isEmpty()
                 || generoTexto.isEmpty() || telefonoTexto.isEmpty()
                 || edadTexto.isEmpty() || estadoCivilTexto.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.");
             return;
         }
 
-        int semestre;
-        int telefono;
-        int edad;
-        try {
-            semestre = Integer.parseInt(semestreTexto);
-            telefono = Integer.parseInt(telefonoTexto);
-            edad = Integer.parseInt(edadTexto);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Semestre, telefono y edad deben ser numeros enteros.");
-            return;
-        }
+            int semestre;
+            int telefono;
+            int edad;
+            
+            //validación de ingreso de números
+            try {
+                semestre = Integer.parseInt(semestreTexto);
+                telefono = Integer.parseInt(telefonoTexto);
+                edad = Integer.parseInt(edadTexto);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Semestre, telefono y edad deben ser numeros enteros.");
+                return;
+            }
 
-        char genero = generoTexto.charAt(0);
-        char estadoCivil = estadoCivilTexto.charAt(0);
+                char genero = generoTexto.charAt(0);
+                char estadoCivil = estadoCivilTexto.charAt(0);
 
-        // Si es nuevo, validar carne unico (si tienes metodo verificar/buscar)
-        if (estudianteEditando == null && repoEstudiantes.buscarPorCarne(carne) != null) {
-            JOptionPane.showMessageDialog(this, "Ya existe un estudiante con ese carnet.");
-            return;
-        }
+        //validar carnet unico
+            if (estudianteEditando == null && repoEstudiantes.buscarPorCarne(carne) != null) {
+                JOptionPane.showMessageDialog(this, "Ya existe un estudiante con ese carnet.");
+                return;
+            }
 
 
         if (estudianteEditando == null) {
                     String facultad = "Ingenieria";
-                    String contrasena = "1234";
             Estudiante nuevo = new Estudiante(
                     carrera,
                     semestre,
                     facultad,
-                    carne,      // ojo: aquí debes respetar el orden de tu constructor real
+                    carne,     
                     nombre,
                     cui,
                     correo,
@@ -129,6 +132,7 @@ public class GestionarEstudiantes extends javax.swing.JDialog {
             estudianteEditando.setTelefono(telefono);
             estudianteEditando.setEdad(edad);
             estudianteEditando.setEstadoCivil(estadoCivil);
+            estudianteEditando.setContrasena(contrasena);
             JOptionPane.showMessageDialog(this, "Estudiante modificado correctamente.");
         }
 
@@ -161,6 +165,8 @@ public class GestionarEstudiantes extends javax.swing.JDialog {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         textoEdad = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        textoContraseña = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -196,6 +202,8 @@ public class GestionarEstudiantes extends javax.swing.JDialog {
 
         jLabel12.setText("Estado Civil");
 
+        jLabel13.setText("Contraseña");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -216,7 +224,8 @@ public class GestionarEstudiantes extends javax.swing.JDialog {
                             .addComponent(jLabel7)
                             .addComponent(jLabel11)
                             .addComponent(jLabel10)
-                            .addComponent(jLabel12))
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel13))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(textoNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
@@ -229,7 +238,8 @@ public class GestionarEstudiantes extends javax.swing.JDialog {
                             .addComponent(textoEstadoCivil)
                             .addComponent(textoTelefono)
                             .addComponent(textoGenero)
-                            .addComponent(textoCorreo)))
+                            .addComponent(textoCorreo)
+                            .addComponent(textoContraseña, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(120, 120, 120)
                         .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -240,7 +250,7 @@ public class GestionarEstudiantes extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(textoCarne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -260,7 +270,11 @@ public class GestionarEstudiantes extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(textoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(textoContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(textoCUI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -288,7 +302,7 @@ public class GestionarEstudiantes extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelar)
                     .addComponent(btnguardarnuevoestudiante))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -321,6 +335,7 @@ public class GestionarEstudiantes extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -331,6 +346,7 @@ public class GestionarEstudiantes extends javax.swing.JDialog {
     private javax.swing.JTextField textoCUI;
     private javax.swing.JTextField textoCarne;
     private javax.swing.JTextField textoCarrera;
+    private javax.swing.JTextField textoContraseña;
     private javax.swing.JTextField textoCorreo;
     private javax.swing.JTextField textoEdad;
     private javax.swing.JTextField textoEstadoCivil;

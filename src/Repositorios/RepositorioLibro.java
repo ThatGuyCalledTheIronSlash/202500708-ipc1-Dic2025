@@ -5,8 +5,22 @@ import modelos.Libro;
 public class RepositorioLibro {
     
     private Libro[] libros = new Libro[200];
-    
-//---------------------------------------------
+
+    public Libro[] todosLosLibros() {
+        int contador = 0;
+            for (Libro libro : libros) {
+                if (libro != null) contador++;
+                }
+        Libro[] copia = new Libro[contador];
+            int idx = 0;
+                for (Libro libro : libros) {
+                    if (libro != null) {
+                        copia[idx++] = libro;
+                    }
+                }
+        return copia;
+    }  
+//--
     public void agregarLibro(Libro libroNuevo) {
         for (int i = 0; i < libros.length; i++) {
             if (libros[i] == null) {
@@ -15,7 +29,7 @@ public class RepositorioLibro {
             }
         }
     }
-//---------------------------------------------
+//--
     public void eliminarLibro(String ISBN) {
         for (int i = 0; i < libros.length; i++) {
             if (libros[i] != null && libros[i].getISBN().equals(ISBN)) {
@@ -24,7 +38,7 @@ public class RepositorioLibro {
             }
         }
     }
-//---------------------------------------------    
+//--    
    public Libro buscarLibro(String ISBN) {
         for (int i = 0; i < libros.length; i++) {
             if (libros[i] != null && libros[i].getISBN().equals(ISBN)) {
@@ -33,11 +47,11 @@ public class RepositorioLibro {
         }
         return null;
     }
-//---------------------------------------------
+//--
     public boolean verificarLibro(String ISBN) {
             return buscarLibro(ISBN) != null;
     } 
-//---------------------------------------------    
+//--   
     public void mostarTodosLibros(){
         for (int i = 0; i < libros.length; i++) {
             if(libros[i]!=null){
@@ -45,47 +59,33 @@ public class RepositorioLibro {
             }
         }        
     }
-//---------------------------------------------
-    public Libro[] todosLosLibros() {
-        int contador = 0;
-        for (Libro libro : libros) {
-            if (libro != null) contador++;
-        }
-        Libro[] copia = new Libro[contador];
-        int idx = 0;
-        for (Libro libro : libros) {
-            if (libro != null) {
-                copia[idx++] = libro;
-            }
-        }
-        return copia;
-    }
-//---------------------------------------------
+//--
     public void ordenarPorTitulo() {
-    for (int i = 0; i < libros.length - 1; i++) {
-        for (int j = 0; j < libros.length - 1 - i; j++) {
-            Libro a = libros[j];
-            Libro b = libros[j + 1];
+        for (int i = 0; i < libros.length - 1; i++) {
+            for (int j = 0; j < libros.length - 1 - i; j++) {
+                Libro a = libros[j];
+                Libro b = libros[j + 1];
 
-            if (a == null || b == null) continue;
+                if (a == null || b == null) continue;
 
-            String ta = a.getTitulo() == null ? "" : a.getTitulo();
-            String tb = b.getTitulo() == null ? "" : b.getTitulo();
+                String ta = a.getTitulo() == null ? "" : a.getTitulo();
+                String tb = b.getTitulo() == null ? "" : b.getTitulo();
 
-            if (ta.compareToIgnoreCase(tb) > 0) {
-                libros[j] = b;
-                libros[j + 1] = a;
+                if (ta.compareToIgnoreCase(tb) > 0) {
+                    libros[j] = b;
+                    libros[j + 1] = a;
+                }
             }
         }
-    }
 }
-    //-------------con recursividad-------------------
+    //--
     public Libro[] buscarLibros(String texto, String filtro) {
         if (texto == null) texto = "";
         texto = texto.trim().toLowerCase();
         if (texto.isEmpty()) {
             return todosLosLibros();
         }
+        String[] palabras = texto.split("\\s+");
             int conteo = contarCoincidenciasRecursivo(texto, filtro, 0);
                 Libro[] resultados = new Libro[conteo];
             llenarResultadosRecursivo(texto, filtro, 0, resultados, 0);

@@ -31,18 +31,17 @@ public class GestionarLibros extends javax.swing.JDialog {
         if (libroEditando == null) {
             return;
         }
-        textoISBN.setText(libroEditando.getISBN());
-        textoTitulo.setText(libroEditando.getTitulo());
-        textoAutor.setText(libroEditando.getAutor());
-        textoEditorial.setText(libroEditando.getEditorial());
-        textoAnio.setText(String.valueOf(libroEditando.getAnioPublicacion()));
-        textoCategoria.setText(libroEditando.getCategoria());
-        textoEjemplares.setText(String.valueOf(libroEditando.getCantidad()));
-        textoUbicacion.setText(libroEditando.getUbicacion());
-        textoDesc.setText(libroEditando.getDescripcion());
-        textoISBN.setEnabled(false);
+            textoISBN.setText(libroEditando.getISBN());
+            textoTitulo.setText(libroEditando.getTitulo());
+            textoAutor.setText(libroEditando.getAutor());
+            textoEditorial.setText(libroEditando.getEditorial());
+            textoAnio.setText(String.valueOf(libroEditando.getAnioPublicacion()));
+            textoCategoria.setText(libroEditando.getCategoria());
+            textoEjemplares.setText(String.valueOf(libroEditando.getCantidad()));
+            textoUbicacion.setText(libroEditando.getUbicacion());
+            textoDesc.setText(libroEditando.getDescripcion());
+            textoISBN.setEnabled(false);
     }
-
     //------------------------------------
     private void guardarLibro() {
         String isbn = textoISBN.getText().trim();
@@ -54,7 +53,8 @@ public class GestionarLibros extends javax.swing.JDialog {
         String cantidadTexto = textoEjemplares.getText().trim();
         String ubicacion = textoUbicacion.getText().trim();
         String descripcion = textoDesc.getText().trim();
-
+        
+        //validar que no haya campos vacios
         if (isbn.isEmpty() || titulo.isEmpty() || autor.isEmpty()
                 || editorial.isEmpty() || anioTexto.isEmpty()
                 || categoria.isEmpty() || cantidadTexto.isEmpty()
@@ -65,6 +65,7 @@ public class GestionarLibros extends javax.swing.JDialog {
 
         int anio;
         int cantidad;
+        //Validar que se ingresen numeros
         try {
             anio = Integer.parseInt(anioTexto);
             cantidad = Integer.parseInt(cantidadTexto);
@@ -72,25 +73,25 @@ public class GestionarLibros extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Año y cantidad deben ser numeros enteros.");
             return;
         }
-
+        //Evitar cantidades negativas de ejemplares
         if (cantidad < 0) {
             JOptionPane.showMessageDialog(this, "La cantidad no puede ser negativa.");
-            return;
+                return;
         }
 
-        // Modo "nuevo": verificar ISBN duplicado
+        // Verificar ISBN
         if (libroEditando == null && repoLibros.verificarLibro(isbn)) {
             JOptionPane.showMessageDialog(this, "Ya existe un libro con ese ISBN.");
-            return;
+                return;
         }
-
-        if (libroEditando == null) {
-            // Crear nuevo libro
+         // Crear nuevo libro
+        if (libroEditando == null) {  
             Libro nuevo = new Libro(isbn, titulo, autor, editorial,
                     anio, categoria, cantidad, ubicacion, descripcion);
             repoLibros.agregarLibro(nuevo);
             JOptionPane.showMessageDialog(this, "Libro agregado correctamente.");
         } else {
+            
             // Editar libro existente
             libroEditando.setTitulo(titulo);
             libroEditando.setAutor(autor);
@@ -103,11 +104,8 @@ public class GestionarLibros extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Libro modificado correctamente.");
         }
 
-        dispose(); // cerrar el dialogo
+        dispose();
     }
-     
-
-    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -257,11 +255,7 @@ public class GestionarLibros extends javax.swing.JDialog {
     private void btnguardarnuevolibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarnuevolibroActionPerformed
             guardarLibro();
     }//GEN-LAST:event_btnguardarnuevolibroActionPerformed
-//-------------------------------------------------------------------
-    /**
-     * @param args the command line arguments
-     */
-
+//-------------------------------------------------------
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnguardarnuevolibro;
     private javax.swing.JButton cancelar;

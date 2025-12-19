@@ -18,8 +18,8 @@ public class VentanaAdmin extends javax.swing.JFrame {
         public VentanaAdmin(ControladorAdmin controladorAdmin) {
             initComponents();
                 this.controladorAdmin = controladorAdmin;  
-                setLocationRelativeTo(null);
-                //Configurar
+                    setLocationRelativeTo(null);
+                //Configurar las tablas
                     configurarTablaLibros();
                     configurarTablaEstudiantes();
                     configurarTablaBibliotecarios();
@@ -28,59 +28,56 @@ public class VentanaAdmin extends javax.swing.JFrame {
                     cargarestudiantesalatabla();
                     cargarbibliotecariosalatabla();
                     actualizarDashboard();
-                
-
         }
-//---------ConfigurarTablas---------
+//-ConfigurarTablas
 private void configurarTablaEstudiantes(){
     modeloEstudiantes = new javax.swing.table.DefaultTableModel(
         new Object[] {
-            "Carnet", "Nombre", "Usuario", "Carrera", "Semestre",
-            "Facultad", "CUI", "Correo", "Género", "Teléfono", "Edad", "Estado"
-        },
+            "Carnet", "Nombre", "Usuario", "Carrera", "Semestre","Facultad",  
+            "CUI", "Correo", "Género", "Teléfono", "Edad", "Estado"
+            },
         0
     );
     TablaEstudiantes.setModel(modeloEstudiantes);
-    cargarestudiantesalatabla(); //Recarga automaticamente la tabla;
+        cargarestudiantesalatabla(); //Recarga automaticamente la tabla;
 }
-
+//--
 private void configurarTablaLibros() {
     modeloLibros = new javax.swing.table.DefaultTableModel(
         new Object[] {"ISBN", "Titulo", "Autor", "Editorial", "Año", "Categoria", "Cantidad", "Ubicacion"},
         0
     );
     TablaLibros.setModel(modeloLibros);
-    cargarlibrosalatabla(); //Recarga automaticamente la tabla
+        cargarlibrosalatabla(); //Recarga automaticamente la tabla
 }
-
+//--
 private void configurarTablaBibliotecarios() {
     modeloBibliotecarios = new javax.swing.table.DefaultTableModel(
         new Object[] {
             "ID", "Nombre", "Usuario", "CUI", "Turno",
             "Área Trabajo", "Teléfono", "Salario", "Estado"
-        },
+            },
         0
     );
     TablaBibliotecarios.setModel(modeloBibliotecarios);
-    cargarbibliotecariosalatabla(); //Recarga automaticamente la tabla
+        cargarbibliotecariosalatabla(); //Recarga automaticamente la tabla
 }
 
 //--Actualizar el Dashboard
 private void actualizarDashboard() {
-
     int totalLibros = controladorAdmin.contarLibros();
     int totalEstudiantes = controladorAdmin.contarEstudiantes();
     int totalBibliotecarios = controladorAdmin.contarBibliotecarios();
     
-    lblTotalLibros.setText(String.valueOf(totalLibros));
-    lblTotalEstudiantes.setText(String.valueOf(totalEstudiantes));
-    lblTotalBibliotecarios.setText(String.valueOf(totalBibliotecarios));
+        lblTotalLibros.setText(String.valueOf(totalLibros));
+        lblTotalEstudiantes.setText(String.valueOf(totalEstudiantes));
+        lblTotalBibliotecarios.setText(String.valueOf(totalBibliotecarios));
 }
 
-//----------CargarTablas------------
+//CargarTablas con datos
 private void cargarlibrosalatabla(){
-        modeloLibros.setRowCount(0);     //limpia las filas anteriores
-
+    modeloLibros.setRowCount(0);     //limpia las filas anteriores
+        
         Libro[] libros = controladorAdmin.getRepoLibros().todosLosLibros();
 
         if (libros != null) {
@@ -100,79 +97,82 @@ private void cargarlibrosalatabla(){
                 }
             }
         }
-}
-
-private void cargarlibrosalatablaconparametro(Libro[] libros){
+    }
+//--
+private void cargarlibrosalatablaconparametro(Libro[] libros){  //Sirve para los ordenamientos(considere mejor simplemente crear una copia)
     modeloLibros.setRowCount(0); // limpia las filas anteriores
-    if (libros != null) {
-        for (Libro libro : libros) {
-            if (libro != null) {
-                Object[] fila = new Object[] {
-                    libro.getISBN(),
-                    libro.getTitulo(),
-                    libro.getAutor(),
-                    libro.getEditorial(),
-                    libro.getAnioPublicacion(),
-                    libro.getCategoria(),
-                    libro.getCantidad(),
-                    libro.getUbicacion()
-                };
-                modeloLibros.addRow(fila);
+    
+        if (libros != null) {
+            for (Libro libro : libros) {
+                if (libro != null) {
+                    Object[] fila = new Object[] {
+                        libro.getISBN(),
+                        libro.getTitulo(),
+                        libro.getAutor(),
+                        libro.getEditorial(),
+                        libro.getAnioPublicacion(),
+                        libro.getCategoria(),
+                        libro.getCantidad(),
+                        libro.getUbicacion()
+                    };
+                    modeloLibros.addRow(fila);
+                }
             }
         }
     }
-}
-
+//--
 private void cargarestudiantesalatabla(){
-    modeloEstudiantes.setRowCount(0);
+    modeloEstudiantes.setRowCount(0);  //Limpia las filas anteriores
 
-    Estudiante[] estudiantes = controladorAdmin.getRepoEstudiantes().todoslosestudiantes();
-    if (estudiantes != null) {
-        for (Estudiante est : estudiantes) {
-            if (est != null) {
-                Object[] fila = new Object[] {
-                    est.getCarnet(),
-                    est.getNombre(),
-                    est.getUsuario(),
-                    est.getCarrera(),
-                    est.getSemestre(),
-                    est.getFacultad(),
-                    est.getCUI(),
-                    est.getCorreo(),
-                    est.getGenero(),
-                    est.getTelefono(),
-                    est.getEdad(),
-                    est.getEstadoCivil()
-                };
-                modeloEstudiantes.addRow(fila);
+        Estudiante[] estudiantes = controladorAdmin.getRepoEstudiantes().todoslosestudiantes();
+    
+        if (estudiantes != null) {
+            for (Estudiante est : estudiantes) {
+                if (est != null) {
+                    Object[] fila = new Object[] {
+                        est.getCarnet(),
+                        est.getNombre(),
+                        est.getUsuario(),
+                        est.getCarrera(),
+                        est.getSemestre(),
+                        est.getFacultad(),
+                        est.getCUI(),
+                        est.getCorreo(),
+                        est.getGenero(),
+                        est.getTelefono(),
+                        est.getEdad(),
+                        est.getEstadoCivil()
+                    };
+                    modeloEstudiantes.addRow(fila);
+                }
             }
         }
     }
-}
-
+//--
 private void cargarbibliotecariosalatabla(){
-   modeloBibliotecarios.setRowCount(0);
-    Bibliotecario[] bibliotecarios = controladorAdmin.getRepoBibliotecarios().todosLosBibliotecarios();
-    if (bibliotecarios != null) {
-        for (Bibliotecario bib : bibliotecarios) {
-            if (bib != null) {
-                Object[] fila = new Object[] {
-                    bib.getIDEmpleado(),
-                    bib.getNombre(),
-                    bib.getUsuario(),
-                    bib.getCUI(),
-                    bib.getTurno(),
-                    bib.getAreaTrabajo(),
-                    bib.getTelefono(),
-                    bib.getSalario(),
-                    bib.getEstadoCivil()
-                };
-                modeloBibliotecarios.addRow(fila);
+   modeloBibliotecarios.setRowCount(0);  //limpia las filas anteriores
+   
+        Bibliotecario[] bibliotecarios = controladorAdmin.getRepoBibliotecarios().todosLosBibliotecarios();
+        
+        if (bibliotecarios != null) {
+            for (Bibliotecario bib : bibliotecarios) {
+                if (bib != null) {
+                    Object[] fila = new Object[] {
+                        bib.getIDEmpleado(),
+                        bib.getNombre(),
+                        bib.getUsuario(),
+                        bib.getCUI(),
+                        bib.getTurno(),
+                        bib.getAreaTrabajo(),
+                        bib.getTelefono(),
+                        bib.getSalario(),
+                        bib.getEstadoCivil()
+                    };
+                    modeloBibliotecarios.addRow(fila);
+                }
             }
-        }
-    } 
-}
-
+        } 
+    }
 //----------------------------------------
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -803,17 +803,18 @@ private void cargarbibliotecariosalatabla(){
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//---------------------------- BOTONES -----------------------------
+//Botones
     private void IniciarcargalibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IniciarcargalibrosActionPerformed
         String texto = controladorAdmin.cargarLibrosConDialogo();
-
-        String[] partes = texto.split("=== REPORTE DE CARGA DE LIBROS ===", 2);
-        if (partes.length == 2) {
-            vistaprevia.setViewportView(new javax.swing.JTextArea(partes[0]));
-            vistaResultado.setText("=== REPORTE DE CARGA DE LIBROS ===" + partes[1]);
-        } else {
-            vistaResultado.setText(texto);
-        }
+        
+            String[] partes = texto.split("=== REPORTE DE CARGA DE LIBROS ===", 2);
+            
+            if (partes.length == 2) {
+                vistaprevia.setViewportView(new javax.swing.JTextArea(partes[0]));
+                vistaResultado.setText("=== REPORTE DE CARGA DE LIBROS ===" + partes[1]);
+                } else {
+                    vistaResultado.setText(texto);
+                }
 
         cargarlibrosalatabla(); 
         actualizarDashboard();
@@ -822,117 +823,106 @@ private void cargarbibliotecariosalatabla(){
 //---
     private void botoncargarestudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoncargarestudiantesActionPerformed
         String texto = controladorAdmin.cargarEstudiantesConDialogo();
-        String[] partes = texto.split("=== REPORTE DE CARGA DE ESTUDIANTES ===", 2);
-        if (partes.length == 2) {
-            vistaprevia2.setViewportView(new javax.swing.JTextArea(partes[0]));
-            vistaResultado2.setText("=== REPORTE DE CARGA DE ESTUDIANTES ===" + partes[1]);
-        } else {
-            vistaResultado2.setText(texto);
-        }
+        
+            String[] partes = texto.split("REPORTE DE CARGA DE ESTUDIANTES", 2);
+            
+            if (partes.length == 2) {
+                vistaprevia2.setViewportView(new javax.swing.JTextArea(partes[0]));
+                vistaResultado2.setText("REPORTE DE CARGA DE ESTUDIANTES" + partes[1]);
+                } else {
+                    vistaResultado2.setText(texto);
+                }
 
-        cargarestudiantesalatabla();
-        actualizarDashboard();
+            cargarestudiantesalatabla();
+            actualizarDashboard();
 
     }//GEN-LAST:event_botoncargarestudiantesActionPerformed
-
+//--
     private void botoncargarbibliotecariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoncargarbibliotecariosActionPerformed
         String texto = controladorAdmin.cargarBibliotecariosConDialogo();
 
         String[] partes = texto.split("=== REPORTE DE CARGA DE BIBLIOTECARIOS ===", 2);
-        if (partes.length == 2) {
-            vistaprevia3.setViewportView(new javax.swing.JTextArea(partes[0]));
-            vistaResultado3.setText("=== REPORTE DE CARGA DE BIBLIOTECARIOS ===" + partes[1]);
-        } else {
-            vistaResultado3.setText(texto);
-        }
+            
+            if (partes.length == 2) {
+                vistaprevia3.setViewportView(new javax.swing.JTextArea(partes[0]));
+                vistaResultado3.setText("=== REPORTE DE CARGA DE BIBLIOTECARIOS ===" + partes[1]);
+                } else {
+                    vistaResultado3.setText(texto);
+                }
 
-        cargarbibliotecariosalatabla();
-        actualizarDashboard();
+            cargarbibliotecariosalatabla();
+            actualizarDashboard();
 
     }//GEN-LAST:event_botoncargarbibliotecariosActionPerformed
-
+//--
     private void btnrecargarestudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrecargarestudiantesActionPerformed
         cargarestudiantesalatabla();
     }//GEN-LAST:event_btnrecargarestudiantesActionPerformed
-
+//--
     private void btnrecargarlibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrecargarlibrosActionPerformed
         cargarlibrosalatabla();
     }//GEN-LAST:event_btnrecargarlibrosActionPerformed
-
+//--
     private void btnagregarlibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarlibroActionPerformed
-    GestionarLibros dialog = new GestionarLibros(
-            this,
-            true,
-            controladorAdmin.getRepoLibros()
-    );
-    dialog.setVisible(true);
-    cargarlibrosalatabla();
-    actualizarDashboard();
+        GestionarLibros dialog = new GestionarLibros(this,true, controladorAdmin.getRepoLibros());
+            dialog.setVisible(true);
+                cargarlibrosalatabla();
+                actualizarDashboard();
     
     }//GEN-LAST:event_btnagregarlibroActionPerformed
-
+//--
     private void btnrecargarpaginabibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrecargarpaginabibliotecarioActionPerformed
         cargarbibliotecariosalatabla();
     }//GEN-LAST:event_btnrecargarpaginabibliotecarioActionPerformed
-
+//--
     private void btnModificarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarLibroActionPerformed
-        String isbn = JOptionPane.showInputDialog(this,
-                    "Ingrese el ISBN del libro a modificar:");
+        String isbn = JOptionPane.showInputDialog(this, "Ingrese el ISBN del libro a modificar:");
+            
             Libro libro = controladorAdmin.buscarLibroPorISBN(isbn);
 
-            if (libro == null) {
-                JOptionPane.showMessageDialog(this,
-                        "No se encontró un libro con ese ISBN o el ISBN está vacío.");
-                return;
-            }
+                if (libro == null) {
+                    JOptionPane.showMessageDialog(this,"No se encontró un libro con ese ISBN o el ISBN está vacío.");
+                        return;
+                }
 
-            GestionarLibros dialog = new GestionarLibros(
-                    this, true, controladorAdmin.getRepoLibros(), libro
-            );
-            dialog.setVisible(true);
-            cargarlibrosalatabla();
+                GestionarLibros dialog = new GestionarLibros(this, true, controladorAdmin.getRepoLibros(), libro );
+                    dialog.setVisible(true);
+                    cargarlibrosalatabla();
     }//GEN-LAST:event_btnModificarLibroActionPerformed
-
+//--
     private void btnBorrarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarLibroActionPerformed
-        String isbn = JOptionPane.showInputDialog(this,
-            "Ingrese el ISBN del libro a eliminar:");
+        String isbn = JOptionPane.showInputDialog(this, "Ingrese el ISBN del libro a eliminar:");
             String mensaje = controladorAdmin.eliminarLibroPorISBN(isbn);
-            JOptionPane.showMessageDialog(this, mensaje);
-                cargarlibrosalatabla();
-                actualizarDashboard();
+                JOptionPane.showMessageDialog(this, mensaje);
+                    cargarlibrosalatabla();
+                    actualizarDashboard();
 
     }//GEN-LAST:event_btnBorrarLibroActionPerformed
-
+//--
     private void btnagregarestudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarestudianteActionPerformed
-         GestionarEstudiantes dialog = new GestionarEstudiantes(
-            this,
-            true,
-            controladorAdmin.getRepoEstudiantes()
-    );
-    dialog.setVisible(true);
-    cargarestudiantesalatabla();  //recarga automaticamente
-    actualizarDashboard();
+         GestionarEstudiantes dialog = new GestionarEstudiantes(this,true, controladorAdmin.getRepoEstudiantes() );
+            dialog.setVisible(true);
+                cargarestudiantesalatabla();  //recarga automaticamente
+                actualizarDashboard();
 
     }//GEN-LAST:event_btnagregarestudianteActionPerformed
-
+//--
     private void btnModificarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarEstudianteActionPerformed
-        String carne = JOptionPane.showInputDialog(this,
-            "Ingrese el carnet del estudiante a modificar:");
-    Estudiante est = controladorAdmin.buscarEstudiantePorCarne(carne);
+        String carne = JOptionPane.showInputDialog(this, "Ingrese el carnet del estudiante a modificar:");
+    
+            Estudiante est = controladorAdmin.buscarEstudiantePorCarne(carne);
 
-    if (est == null) {
-        JOptionPane.showMessageDialog(this,
-                "No se encontró un estudiante con ese carnet o el carnet está vacío.");
-        return;
-    }
+        if (est == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró un estudiante con ese carnet o el carnet está vacío.");
+                return;
+        }
 
-    GestionarEstudiantes dialog = new GestionarEstudiantes(
-            this, true, controladorAdmin.getRepoEstudiantes(), est
-    );
-    dialog.setVisible(true);
-    cargarestudiantesalatabla();
+        GestionarEstudiantes dialog = new GestionarEstudiantes(this,
+                true, controladorAdmin.getRepoEstudiantes(), est);
+            dialog.setVisible(true);
+            cargarestudiantesalatabla();
     }//GEN-LAST:event_btnModificarEstudianteActionPerformed
-
+//--
     private void btnDeshabilitarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshabilitarEstudianteActionPerformed
         String carne = JOptionPane.showInputDialog(this,
             "Ingrese el carnet del estudiante a eliminar:");
@@ -940,65 +930,58 @@ private void cargarbibliotecariosalatabla(){
                 JOptionPane.showMessageDialog(this, mensaje);
                     cargarestudiantesalatabla();
     }//GEN-LAST:event_btnDeshabilitarEstudianteActionPerformed
-
+//--
     private void btnagregarbibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarbibliotecarioActionPerformed
-        GestionarBibliotecarios dialog = new GestionarBibliotecarios(
-            this,
-            true,
-            controladorAdmin.getRepoBibliotecarios()
-    );
-    dialog.setVisible(true);
-    cargarbibliotecariosalatabla();
-    actualizarDashboard();
-
+        GestionarBibliotecarios dialog = new GestionarBibliotecarios(this,true,
+            controladorAdmin.getRepoBibliotecarios());
+                dialog.setVisible(true);
+                cargarbibliotecariosalatabla();
+                actualizarDashboard();
     }//GEN-LAST:event_btnagregarbibliotecarioActionPerformed
-
+//--
     private void btndesactivarbibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndesactivarbibliotecarioActionPerformed
-            String id = JOptionPane.showInputDialog(this,
-            "Ingrese el ID del bibliotecario a eliminar:");
+       String id = JOptionPane.showInputDialog(this,"Ingrese el ID del bibliotecario a eliminar:");
 
-    String mensaje = controladorAdmin.eliminarBibliotecarioPorID(id);
-    JOptionPane.showMessageDialog(this, mensaje);
-    cargarbibliotecariosalatabla();
+        String mensaje = controladorAdmin.eliminarBibliotecarioPorID(id);
+            JOptionPane.showMessageDialog(this, mensaje);
+                cargarbibliotecariosalatabla();
     }//GEN-LAST:event_btndesactivarbibliotecarioActionPerformed
-
+//--
     private void btnmodificarbibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarbibliotecarioActionPerformed
         String id = JOptionPane.showInputDialog(this,
             "Ingrese el ID del bibliotecario a modificar:");
 
-    Bibliotecario bib = controladorAdmin.buscarBibliotecarioPorID(id);
-    if (bib == null) {
-        JOptionPane.showMessageDialog(this,
-                "No se encontró un bibliotecario con ese ID o el ID está vacío.");
-        return;
-    }
+            Bibliotecario bib = controladorAdmin.buscarBibliotecarioPorID(id);
+    
+            if (bib == null) {
+                JOptionPane.showMessageDialog(this, "No se encontró un bibliotecario con ese ID o el ID está vacío.");
+                    return;
+            }
 
-    GestionarBibliotecarios dialog = new GestionarBibliotecarios(
-            this,
-            true,
-            controladorAdmin.getRepoBibliotecarios(),
-            bib
-    );
-    dialog.setVisible(true);
-    cargarbibliotecariosalatabla();
+            GestionarBibliotecarios dialog = new GestionarBibliotecarios( this, true,
+                controladorAdmin.getRepoBibliotecarios(),
+                bib
+            );
+                dialog.setVisible(true);
+                cargarbibliotecariosalatabla();
     }//GEN-LAST:event_btnmodificarbibliotecarioActionPerformed
-
+//--
     private void btncerrarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncerrarsesionActionPerformed
         controladorAdmin.cerrarSesion();
     }//GEN-LAST:event_btncerrarsesionActionPerformed
-
+//--
     private void textobuscarlibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textobuscarlibrosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textobuscarlibrosActionPerformed
-
+//--
     private void btnbscarlibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbscarlibroActionPerformed
-            String texto = textobuscarlibros.getText();
+        String texto = textobuscarlibros.getText();
 
-        Libro[] resultados = controladorAdmin.buscarLibros(texto, "titulo");
+            Libro[] resultados = controladorAdmin.buscarLibros(texto, "titulo");
 
-        cargarlibrosalatablaconparametro(resultados);
+                cargarlibrosalatablaconparametro(resultados);
     }//GEN-LAST:event_btnbscarlibroActionPerformed
-
+//--
     private void seleciltroslibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleciltroslibrosActionPerformed
         String opcion = seleciltroslibros.getSelectedItem().toString();
            Libro[] listaOrdenada = null;

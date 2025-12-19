@@ -40,26 +40,25 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
     }
 //--
     private void cargarDatosEnFormulario() {
-    if (bibliotecarioEditando == null) {
+        if (bibliotecarioEditando == null) {
             return;
         }
-        textoIDEmpleado.setText(bibliotecarioEditando.getIDEmpleado());
-        textoNombre.setText(bibliotecarioEditando.getNombre());
-        textoUsuario.setText(bibliotecarioEditando.getUsuario());
-        textoContrasena.setText(bibliotecarioEditando.getContrasena());
-        textoCUI.setText(bibliotecarioEditando.getCUI());
-        textoCorreo.setText(bibliotecarioEditando.getCorreo());
-        textoTurno.setText(bibliotecarioEditando.getTurno());
-        textoTelefono.setText(String.valueOf(bibliotecarioEditando.getTelefono()));
-        textoEdad1.setText(String.valueOf(bibliotecarioEditando.getGenero()));
-        textoEstadoCivil.setText(String.valueOf(bibliotecarioEditando.getEstadoCivil()));
-        textoSalario.setText(String.valueOf(bibliotecarioEditando.getSalario()));
+                textoIDEmpleado.setText(bibliotecarioEditando.getIDEmpleado());
+                textoNombre.setText(bibliotecarioEditando.getNombre());
+                textoUsuario.setText(bibliotecarioEditando.getUsuario());
+                textoContrasena.setText(bibliotecarioEditando.getContrasena());
+                textoCUI.setText(bibliotecarioEditando.getCUI());
+                textoCorreo.setText(bibliotecarioEditando.getCorreo());
+                textoTurno.setText(bibliotecarioEditando.getTurno());
+                textoTelefono.setText(String.valueOf(bibliotecarioEditando.getTelefono()));
+                textoGenero.setText(String.valueOf(bibliotecarioEditando.getGenero()));
+                textoEstadoCivil.setText(String.valueOf(bibliotecarioEditando.getEstadoCivil()));
+                textoSalario.setText(String.valueOf(bibliotecarioEditando.getSalario()));
 
-        textoIDEmpleado.setEnabled(false);
-    }
+                    textoIDEmpleado.setEnabled(false);
+            }
 //--
     private void guardarBibliotecario() {
-
         String idEmpleado = textoIDEmpleado.getText().trim();
         String nombre = textoNombre.getText().trim();
         String usuario = textoUsuario.getText().trim();
@@ -67,43 +66,43 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
         String cui = textoCUI.getText().trim();
         String correo = textoCorreo.getText().trim();
         String turno = textoTurno.getText().trim();
-        String generoTexto = textoEdad1.getText().trim();
+        String generoTexto = textoGenero.getText().trim();
         String telefonoTexto = textoTelefono.getText().trim();
         String salarioTexto = textoSalario.getText().trim();
         String estadoCivilTexto = textoEstadoCivil.getText().trim();
         
-
+            //Validación de campos vacios
             if (idEmpleado.isEmpty() || nombre.isEmpty() || usuario.isEmpty()
                    || contrasena.isEmpty() || cui.isEmpty() || correo.isEmpty()
                    || turno.isEmpty() || generoTexto.isEmpty()
                    || telefonoTexto.isEmpty() || salarioTexto.isEmpty()
                    || estadoCivilTexto.isEmpty()) {
                JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.");
-               return;
+                return;
            }
-                    int telefono;
-                    int edad;
-                    double salario;
+                int telefono;
+                double salario;
+                //validación de que se ingresen números
                 try {
                     telefono = Integer.parseInt(telefonoTexto);
                     salario = Double.parseDouble(salarioTexto);
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(this,
-                            "Teléfono, edad y salario deben ser números válidos.");
+                            "Telefono y salario deben ser números válidos.");
                     return;
                 }
 
         char genero = generoTexto.charAt(0);
         char estadoCivil = estadoCivilTexto.charAt(0);
 
-        // Si es nuevo, validar ID único si tienes método verificar
-        if (bibliotecarioEditando == null
-                && repoBiblioteca.retornarBibliotecario(idEmpleado) != null) {
-            JOptionPane.showMessageDialog(this, "Ya existe un bibliotecario con ese ID.");
-            return;
-        }
+        // validar ID único
+            if (bibliotecarioEditando == null
+                    && repoBiblioteca.retornarBibliotecario(idEmpleado) != null) {
+                JOptionPane.showMessageDialog(this, "Ya existe un bibliotecario con ese ID.");
+                return;
+            }
         
-        String areaTrabajo = "Area";
+            String areaTrabajo = "Area";
 
         if (bibliotecarioEditando == null) {
             Bibliotecario nuevo = new Bibliotecario(
@@ -119,28 +118,28 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
                 telefono,
                 estadoCivil,
                 salario
-            
             );
-            repoBiblioteca.agregarBibliotecarios(nuevo);
-            JOptionPane.showMessageDialog(this, "Bibliotecario agregado correctamente.");
-        } else {
-            // Editar existente
-            bibliotecarioEditando.setNombre(nombre);
-            bibliotecarioEditando.setUsuario(usuario);
-            bibliotecarioEditando.setContrasena(contrasena);
-            bibliotecarioEditando.setCUI(cui);
-            bibliotecarioEditando.setCorreo(correo);
-            bibliotecarioEditando.setTurno(turno);
-            bibliotecarioEditando.setTelefono(telefono);
-            bibliotecarioEditando.setSalario(salario);
-            bibliotecarioEditando.setGenero(genero);
-            bibliotecarioEditando.setEstadoCivil(estadoCivil);
             
-            JOptionPane.showMessageDialog(this, "Bibliotecario modificado correctamente.");
-        }
+            repoBiblioteca.agregarBibliotecarios(nuevo);
+                JOptionPane.showMessageDialog(this, "Bibliotecario agregado correctamente.");
+                    } else {
+                        // Editar existente
+                        bibliotecarioEditando.setNombre(nombre);
+                        bibliotecarioEditando.setUsuario(usuario);
+                        bibliotecarioEditando.setContrasena(contrasena);
+                        bibliotecarioEditando.setCUI(cui);
+                        bibliotecarioEditando.setCorreo(correo);
+                        bibliotecarioEditando.setTurno(turno);
+                        bibliotecarioEditando.setTelefono(telefono);
+                        bibliotecarioEditando.setSalario(salario);
+                        bibliotecarioEditando.setGenero(genero);
+                        bibliotecarioEditando.setEstadoCivil(estadoCivil);
 
-        dispose();
-    }
+                        JOptionPane.showMessageDialog(this, "Bibliotecario modificado correctamente.");
+                    }
+
+                    dispose();
+                }
 //--
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -168,7 +167,7 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
         jLabel13 = new javax.swing.JLabel();
         textoSalario = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        textoEdad1 = new javax.swing.JTextField();
+        textoGenero = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -235,7 +234,7 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
                             .addComponent(textoTelefono)
                             .addComponent(textoTurno)
                             .addComponent(textoCorreo)
-                            .addComponent(textoEdad1)
+                            .addComponent(textoGenero)
                             .addComponent(textoSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(119, 119, 119)
@@ -282,7 +281,7 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(textoEdad1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textoGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
@@ -310,11 +309,11 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
     }//GEN-LAST:event_btnguardarnuevoestudianteActionPerformed
 //--
     private void textoTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoTelefonoActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_textoTelefonoActionPerformed
 
     private void textoContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoContrasenaActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_textoContrasenaActionPerformed
 //-------------------------------------------------------------------
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -334,8 +333,8 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
     private javax.swing.JTextField textoCUI;
     private javax.swing.JTextField textoContrasena;
     private javax.swing.JTextField textoCorreo;
-    private javax.swing.JTextField textoEdad1;
     private javax.swing.JTextField textoEstadoCivil;
+    private javax.swing.JTextField textoGenero;
     private javax.swing.JTextField textoIDEmpleado;
     private javax.swing.JTextField textoNombre;
     private javax.swing.JTextField textoSalario;

@@ -20,7 +20,7 @@ public class VentanaEstudiante extends javax.swing.JFrame {
                 configurarTablaLibros();
                 cargarlibrosalatabla();
 }          
-//------------Obtener Tabla de Libros
+//Obtener Tabla de Libros
 private void configurarTablaLibros() {
     modeloLibros = new javax.swing.table.DefaultTableModel(
         new Object[] {
@@ -32,7 +32,7 @@ private void configurarTablaLibros() {
     TablaLibros.setModel(modeloLibros);
     cargarlibrosalatabla();
 }
-
+//--
 private void cargarlibrosalatabla() {
     modelos.Libro[] libros = controladorEstudiante.obtenerCatalogoLibros();
     System.out.println("Libros para estudiante: " + (libros == null ? "null" : libros.length));
@@ -58,7 +58,7 @@ private void cargarlibrosalatabla() {
         }
     }
 }
-
+//--
 private void cargarlibrosalatablaconparametro(Libro[] libros){
     modeloLibros.setRowCount(0); // limpia las filas anteriores
     if (libros != null) {
@@ -79,19 +79,19 @@ private void cargarlibrosalatablaconparametro(Libro[] libros){
         }
     }
 }
-
+//--
 public void recargarCatalogo() {
     cargarlibrosalatabla();
 }
-//-----------------------
+//--
 public void cargarPerfil(modelos.Estudiante est) {
     if (est == null) return;
-    nombreusuario.setText(est.getNombre());
-    carrerausuario.setText(est.getCarrera());
-    Semestreusuario.setText(String.valueOf(est.getSemestre()));
-    emailusuario.setText(est.getCorreo());
-    telefonousuario.setText(String.valueOf(est.getTelefono()));
-}
+        nombreusuario.setText(est.getNombre());
+        carrerausuario.setText(est.getCarrera());
+        Semestreusuario.setText(String.valueOf(est.getSemestre()));
+        emailusuario.setText(est.getCorreo());
+        telefonousuario.setText(String.valueOf(est.getTelefono()));
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -108,11 +108,11 @@ public void cargarPerfil(modelos.Estudiante est) {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        carrerausuario = new javax.swing.JTextField();
         emailusuario = new javax.swing.JTextField();
-        Semestreusuario = new javax.swing.JTextField();
         telefonousuario = new javax.swing.JTextField();
         nombreusuario = new javax.swing.JLabel();
+        carrerausuario = new javax.swing.JLabel();
+        Semestreusuario = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -146,6 +146,8 @@ public void cargarPerfil(modelos.Estudiante est) {
 
         jLabel1.setText("Información Personal");
 
+        jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 153, 255), 1, true));
+
         jLabel4.setText("Carrera:");
 
         jLabel5.setText("Semestre:");
@@ -155,6 +157,10 @@ public void cargarPerfil(modelos.Estudiante est) {
         jLabel7.setText("Telefono:");
 
         jLabel8.setText("Nombre Completo:");
+
+        emailusuario.setEditable(false);
+
+        telefonousuario.setEditable(false);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -170,28 +176,28 @@ public void cargarPerfil(modelos.Estudiante est) {
                     .addComponent(jLabel6))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(carrerausuario, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                    .addComponent(carrerausuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(emailusuario, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
-                    .addComponent(Semestreusuario, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                     .addComponent(telefonousuario, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
-                    .addComponent(nombreusuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(nombreusuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Semestreusuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(275, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(nombreusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(carrerausuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(carrerausuario, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5)
-                    .addComponent(Semestreusuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Semestreusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -224,7 +230,7 @@ public void cargarPerfil(modelos.Estudiante est) {
                         .addGap(14, 14, 14)
                         .addComponent(jLabel3))
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -354,17 +360,17 @@ public void cargarPerfil(modelos.Estudiante est) {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+//Botones
     private void btncerrarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncerrarsesionActionPerformed
      controladorEstudiante.CerrarSesion();
     }//GEN-LAST:event_btncerrarsesionActionPerformed
-
+//--
     private void btnbscarlibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbscarlibroActionPerformed
         String texto = textobuscarlibros.getText();
             Libro[] resultados = controladorEstudiante.buscarLibros(texto, "titulo");
             cargarlibrosalatablaconparametro(resultados);   
     }//GEN-LAST:event_btnbscarlibroActionPerformed
-
+//--
     private void seleciltroslibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleciltroslibrosActionPerformed
           String opcion = seleciltroslibros.getSelectedItem().toString();
            Libro[] listaOrdenada = null;
@@ -394,11 +400,11 @@ public void cargarPerfil(modelos.Estudiante est) {
 //---------------------------------------------
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Semestreusuario;
+    private javax.swing.JLabel Semestreusuario;
     private javax.swing.JTable TablaLibros;
     private javax.swing.JButton btnbscarlibro;
     private javax.swing.JButton btncerrarsesion;
-    private javax.swing.JTextField carrerausuario;
+    private javax.swing.JLabel carrerausuario;
     private javax.swing.JTextField emailusuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

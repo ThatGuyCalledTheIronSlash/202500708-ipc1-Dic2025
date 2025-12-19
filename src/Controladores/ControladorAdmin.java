@@ -29,12 +29,12 @@ public class ControladorAdmin {
         this.libros = libros;
     }
 
-    // ==== getters usados por VentanaAdmin y diálogos ====
+//getters usados por VentanaAdmin y diálogos
     public RepositorioBiblioteca getRepoBibliotecarios() { return bibliotecarios; }
     public RepositorioEstudiante getRepoEstudiantes() { return estudiantes; }
     public RepositorioLibro getRepoLibros() { return libros; }
 
-//----------------Obtener Datos ------------------------
+//Obtener Datos
     public Libro[] obtenerLibros() {
         return libros.todosLosLibros();
     }
@@ -63,19 +63,18 @@ public class ControladorAdmin {
             previa.append("Error al leer archivo: ").append(e.getMessage());
         }
         return previa.toString();
-    }
-    
-//---------------- CARGA DE ARCHIVOS CSV --------------------
+    }   
+// Carga de Archivos CSV
     public String cargarLibrosCSV(File archivo) {
         int exitosos = 0;
         int errores = 0;
-        StringBuilder reporte = new StringBuilder();
-        reporte.append("=== REPORTE DE CARGA DE LIBROS ===\n");
+            StringBuilder reporte = new StringBuilder();
+            reporte.append("=== REPORTE DE CARGA DE LIBROS ===\n");
 
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
-            boolean primeraLinea = true;
-            int numeroLinea = 0;
+                boolean primeraLinea = true;
+                int numeroLinea = 0;
 
             while ((linea = br.readLine()) != null) {
                 numeroLinea++;
@@ -90,10 +89,9 @@ public class ControladorAdmin {
                 try {
                     String[] datos = linea.split(",");
                     if (datos.length < 9) {
-                        reporte.append("Linea ").append(numeroLinea)
-                               .append(": Datos incompletos\n");
-                        errores++;
-                        continue;
+                        reporte.append("Linea ").append(numeroLinea).append(": Datos incompletos\n");
+                            errores++;
+                            continue;
                     }
 
                     String isbn = datos[0].trim();
@@ -105,12 +103,12 @@ public class ControladorAdmin {
                     int cantidad = Integer.parseInt(datos[6].trim());
                     String ubicacion = datos[7].trim();
                     String descripcion = datos[8].trim();
-
+                    //Validacion de ISBN duplicado
                     if (libros.verificarLibro(isbn)) {
                         reporte.append("Linea ").append(numeroLinea)
                                .append(": ISBN duplicado (").append(isbn).append(")\n");
-                        errores++;
-                        continue;
+                            errores++;
+                            continue;
                     }
 
                     Libro nuevoLibro = new Libro(
@@ -118,7 +116,7 @@ public class ControladorAdmin {
                             anio, categoria, cantidad, ubicacion, descripcion
                     );
                     libros.agregarLibro(nuevoLibro);
-                    exitosos++;
+                        exitosos++;
 
                 } catch (NumberFormatException e) {
                     reporte.append("Línea ").append(numeroLinea)
@@ -136,23 +134,23 @@ public class ControladorAdmin {
             return "Error crítico al leer el archivo: " + e.getMessage();
         }
 
-        reporte.append("\n=== RESUMEN ===\n");
-        reporte.append("Libros cargados exitosamente: ").append(exitosos).append("\n");
-        reporte.append("Errores encontrados: ").append(errores).append("\n");
-        reporte.append("Total de líneas procesadas: ").append(exitosos + errores).append("\n");
-        return reporte.toString();
+            reporte.append("\n=== RESUMEN ===\n");
+            reporte.append("Libros cargados exitosamente: ").append(exitosos).append("\n");
+            reporte.append("Errores encontrados: ").append(errores).append("\n");
+            reporte.append("Total de líneas procesadas: ").append(exitosos + errores).append("\n");
+            return reporte.toString();
     }
 //--
     public String cargarEstudiantesCSV(File archivo) {
         int exitosos = 0;
-    int errores = 0;
-    StringBuilder reporte = new StringBuilder();
-    reporte.append("=== REPORTE DE CARGA DE ESTUDIANTES ===\n");
+        int errores = 0;
+            StringBuilder reporte = new StringBuilder();
+            reporte.append("=== REPORTE DE CARGA DE ESTUDIANTES ===\n");
 
-    try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
-        String linea;
-        boolean primeraLinea = true;
-        int numeroLinea = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            boolean primeraLinea = true;
+            int numeroLinea = 0;
 
         while ((linea = br.readLine()) != null) {
             numeroLinea++;
@@ -173,81 +171,88 @@ public class ControladorAdmin {
                     continue;
                 }
 
-                String carrera = datos[0].trim();
-                int semestre = Integer.parseInt(datos[1].trim());
-                String facultad = datos[2].trim();
-                String usuario = datos[3].trim();
-                String nombre = datos[4].trim();
-                String cui = datos[5].trim();
-                String correo = datos[6].trim();
-                String contrasena = datos[7].trim();
-                String carnet = datos[8].trim();
-                char genero = datos[9].trim().isEmpty() ? 'N' : datos[9].trim().charAt(0);
-                int telefono = Integer.parseInt(datos[10].trim());
-                int edad = Integer.parseInt(datos[11].trim());
+                String carrera   = datos[0].trim();
+                int semestre     = Integer.parseInt(datos[1].trim());
+                String facultad  = datos[2].trim();
+                String carnet    = datos[3].trim();
+                String nombre    = datos[4].trim();
+                String cui       = datos[5].trim();
+                String correo    = datos[6].trim();
+                String contrasena= datos[7].trim();
+                String usuario   = datos[8].trim();
+                char genero      = datos[9].trim().isEmpty() ? 'N' : datos[9].trim().charAt(0);
+                int telefono     = Integer.parseInt(datos[10].trim());
+                int edad         = Integer.parseInt(datos[11].trim());
                 char estadoCivil = datos[12].trim().isEmpty() ? 'N' : datos[12].trim().charAt(0);
-
+                
+                // Validación para evitar carnet duplicados
+                if (estudiantes.buscarPorCarne(carnet) != null) {
+                    reporte.append("Linea ").append(numeroLinea)
+                           .append(": Carnet duplicado (").append(carnet).append(")\n");
+                    errores++;
+                    continue;
+                }
                 Estudiante nuevo = new Estudiante(
-                        carrera, semestre, facultad, usuario, nombre,
-                        cui, correo, contrasena, carnet, genero,
-                        telefono, edad, estadoCivil
+                    carrera, semestre, facultad, carnet,
+                    nombre, cui, correo, contrasena, usuario,
+                    genero, telefono, edad, estadoCivil
                 );
                 estudiantes.agregarEstudiante(nuevo);
                 exitosos++;
 
-            } catch (NumberFormatException e) {
-                reporte.append("Línea ").append(numeroLinea)
-                       .append(": Error de formato numérico - ")
-                       .append(e.getMessage()).append("\n");
-                errores++;
-            } catch (Exception e) {
-                reporte.append("Línea ").append(numeroLinea)
-                       .append(": Error inesperado - ")
-                       .append(e.getMessage()).append("\n");
-                errores++;
+                } catch (NumberFormatException e) {
+                    reporte.append("Línea ").append(numeroLinea)
+                           .append(": Error de formato numérico - ")
+                           .append(e.getMessage()).append("\n");
+                    errores++;
+                } catch (Exception e) {
+                    reporte.append("Línea ").append(numeroLinea)
+                           .append(": Error inesperado - ")
+                           .append(e.getMessage()).append("\n");
+                    errores++;
+                }
             }
-        }
-    } catch (IOException e) {
-        return "Error crítico al leer el archivo: " + e.getMessage();
+        } catch (IOException e) {
+            return "Error crítico al leer el archivo: " + e.getMessage();
     }
 
-    reporte.append("\n=== RESUMEN ===\n");
-    reporte.append("Estudiantes cargados exitosamente: ").append(exitosos).append("\n");
-    reporte.append("Errores encontrados: ").append(errores).append("\n");
-    reporte.append("Total de líneas procesadas: ").append(exitosos + errores).append("\n");
-    return reporte.toString();
+        reporte.append("\n=== RESUMEN ===\n");
+        reporte.append("Estudiantes cargados exitosamente: ").append(exitosos).append("\n");
+        reporte.append("Errores encontrados: ").append(errores).append("\n");
+        reporte.append("Total de líneas procesadas: ").append(exitosos + errores).append("\n");
+        return reporte.toString();
     
     }
 //--
     public String cargarBibliotecariosCSV(File archivo) {
         int exitosos = 0;
-    int errores = 0;
-    StringBuilder reporte = new StringBuilder();
-    reporte.append("=== REPORTE DE CARGA DE BIBLIOTECARIOS ===\n");
+        int errores = 0;
+            StringBuilder reporte = new StringBuilder();
+            reporte.append("=== REPORTE DE CARGA DE BIBLIOTECARIOS ===\n");
+            
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            boolean primeraLinea = true;
+            int numeroLinea = 0;
 
-    try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
-        String linea;
-        boolean primeraLinea = true;
-        int numeroLinea = 0;
-
-        while ((linea = br.readLine()) != null) {
-            numeroLinea++;
-            if (primeraLinea) {
-                primeraLinea = false;
-                continue;
-            }
-            if (linea.trim().isEmpty()) {
-                continue;
-            }
-
-            try {
-                String[] datos = linea.split(",");
-                if (datos.length < 12) {
-                    reporte.append("Linea ").append(numeroLinea)
-                           .append(": Datos incompletos\n");
-                    errores++;
+            while ((linea = br.readLine()) != null) {
+                numeroLinea++;
+                if (primeraLinea) {
+                    primeraLinea = false;
                     continue;
                 }
+                if (linea.trim().isEmpty()) {
+                    continue;
+                }
+
+                try {
+                    String[] datos = linea.split(",");
+                    if (datos.length < 12) {
+                        reporte.append("Linea ").append(numeroLinea)
+                               .append(": Datos incompletos\n");
+                        errores++;
+                        continue;
+                    }
 
                 String idEmpleado = datos[0].trim();
                 String turno = datos[1].trim();
@@ -263,10 +268,9 @@ public class ControladorAdmin {
                 char estadoCivil = datos[11].trim().isEmpty() ? 'N' : datos[11].trim().charAt(0);
                 //Validacion para evitar duplicados
                 if (bibliotecarios.retornarBibliotecario(idEmpleado) != null) {
-                    reporte.append("Linea ").append(numeroLinea)
-                           .append(": ID duplicado (").append(idEmpleado).append(")\n");
-                    errores++;
-                    continue;
+                    reporte.append("Linea ").append(numeroLinea).append(": ID duplicado (").append(idEmpleado).append(")\n");
+                        errores++;
+                        continue;
                 }
                
                 Bibliotecario nuevo = new Bibliotecario(
@@ -277,44 +281,44 @@ public class ControladorAdmin {
                 bibliotecarios.agregarBibliotecarios(nuevo);
                 exitosos++;
 
-            } catch (NumberFormatException e) {
-                reporte.append("Línea ").append(numeroLinea)
-                       .append(": Error de formato numérico - ")
-                       .append(e.getMessage()).append("\n");
-                errores++;
-            } catch (Exception e) {
-                reporte.append("Línea ").append(numeroLinea)
-                       .append(": Error inesperado - ")
-                       .append(e.getMessage()).append("\n");
-                errores++;
+                } catch (NumberFormatException e) {
+                    reporte.append("Línea ").append(numeroLinea)
+                           .append(": Error de formato numérico - ")
+                           .append(e.getMessage()).append("\n");
+                    errores++;
+                } catch (Exception e) {
+                    reporte.append("Línea ").append(numeroLinea)
+                           .append(": Error inesperado - ")
+                           .append(e.getMessage()).append("\n");
+                    errores++;
+                }
             }
-        }
-    } catch (IOException e) {
-        return "Error crítico al leer el archivo: " + e.getMessage();
-    }
+        } catch (IOException e) {
+             return "Error crítico al leer el archivo: " + e.getMessage();
+            }
 
-    reporte.append("\n=== RESUMEN ===\n");
-    reporte.append("Bibliotecarios cargados exitosamente: ").append(exitosos).append("\n");
-    reporte.append("Errores encontrados: ").append(errores).append("\n");
-    reporte.append("Total de líneas procesadas: ").append(exitosos + errores).append("\n");
-    return reporte.toString();
-    
-    
+            reporte.append("\n=== RESUMEN ===\n");
+            reporte.append("Bibliotecarios cargados exitosamente: ").append(exitosos).append("\n");
+            reporte.append("Errores encontrados: ").append(errores).append("\n");
+            reporte.append("Total de líneas procesadas: ").append(exitosos + errores).append("\n");
+            return reporte.toString();
+
+
     }
 //--
     public String cargarLibrosConDialogo() {
         javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
         javax.swing.filechooser.FileNameExtensionFilter filter =
-                new javax.swing.filechooser.FileNameExtensionFilter("Archivos CSV", "csv");
-            fileChooser.setFileFilter(filter);
+        new javax.swing.filechooser.FileNameExtensionFilter("Archivos CSV", "csv");
+        fileChooser.setFileFilter(filter);
 
          int resultado = fileChooser.showOpenDialog(null);
-         if (resultado != javax.swing.JFileChooser.APPROVE_OPTION) {
-             return "Operación cancelada por el usuario.";
-         }
+            if (resultado != javax.swing.JFileChooser.APPROVE_OPTION) {
+                return "Operación cancelada por el usuario.";
+            }
 
          File archivoSeleccionado = fileChooser.getSelectedFile();
-
+            //Vista previa + Resultado
          String preview = generarVistaPrevia(archivoSeleccionado, 15);
          String reporte = cargarLibrosCSV(archivoSeleccionado);
 
@@ -324,72 +328,75 @@ public class ControladorAdmin {
     public String cargarEstudiantesConDialogo() {
         javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
         javax.swing.filechooser.FileNameExtensionFilter filter =
-                new javax.swing.filechooser.FileNameExtensionFilter("Archivos CSV", "csv");
+        new javax.swing.filechooser.FileNameExtensionFilter("Archivos CSV", "csv");
         fileChooser.setFileFilter(filter);
 
-    int resultado = fileChooser.showOpenDialog(null);
-    if (resultado != javax.swing.JFileChooser.APPROVE_OPTION) {
-        return "Operación cancelada por el usuario.";
+        int resultado = fileChooser.showOpenDialog(null);
+            if (resultado != javax.swing.JFileChooser.APPROVE_OPTION) {
+                return "Operación cancelada por el usuario.";
+            }
+
+        File archivoSeleccionado = fileChooser.getSelectedFile();
+
+        //Vista previa + Resultado
+        String preview = generarVistaPrevia(archivoSeleccionado, 15);
+        String reporte = cargarEstudiantesCSV(archivoSeleccionado);
+
+        return preview + "\n\n" + reporte;
     }
-
-    File archivoSeleccionado = fileChooser.getSelectedFile();
-
-    // 1) Vista previa + 2) Resultado
-    String preview = generarVistaPrevia(archivoSeleccionado, 15);
-    String reporte = cargarEstudiantesCSV(archivoSeleccionado);
-
-    return preview + "\n\n" + reporte;
-}
 //--
     public String cargarBibliotecariosConDialogo() {
         javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
         javax.swing.filechooser.FileNameExtensionFilter filter =
-                new javax.swing.filechooser.FileNameExtensionFilter("Archivos CSV", "csv");
-            fileChooser.setFileFilter(filter);
+        new javax.swing.filechooser.FileNameExtensionFilter("Archivos CSV", "csv");
+        fileChooser.setFileFilter(filter);
 
-                int resultado = fileChooser.showOpenDialog(null);
-                if (resultado != javax.swing.JFileChooser.APPROVE_OPTION) {
-                    return "Operación cancelada por el usuario.";
-                }
+        int resultado = fileChooser.showOpenDialog(null);
+            if (resultado != javax.swing.JFileChooser.APPROVE_OPTION) {
+                 return "Operación cancelada por el usuario.";
+            }
 
-                java.io.File archivoSeleccionado = fileChooser.getSelectedFile(); 
-                String preview = generarVistaPrevia(archivoSeleccionado, 15);
-                String reporte = cargarBibliotecariosCSV(archivoSeleccionado);
+            File archivoSeleccionado = fileChooser.getSelectedFile(); 
+            //Vista previa + Resultado    
+            String preview = generarVistaPrevia(archivoSeleccionado, 15);  
+            String reporte = cargarBibliotecariosCSV(archivoSeleccionado);
 
-                return preview + "\n\n" + reporte;
-    }
-    
-//------------------  Utilidades -----------------------------
+            return preview + "\n\n" + reporte;
+    }  
+//Utilidades
     public Libro buscarLibroPorISBN(String isbn){
         if (isbn == null) return null;
             isbn = isbn.trim();
-            if (isbn.isEmpty()) return null;
-            return libros.buscarLibro(isbn);
+                if (isbn.isEmpty()) return null;
+                    return libros.buscarLibro(isbn);
     }
 //--
     public String eliminarLibroPorISBN(String isbn){
+        
         if (isbn == null) {
-        return "Operación cancelada.";
+            return "Operación cancelada.";
             }
                 isbn = isbn.trim();
-                if (isbn.isEmpty()) {
-                    return "Debe ingresar un ISBN.";
-                }
+                
+        if (isbn.isEmpty()) {
+            return "Debe ingresar un ISBN.";
+            }
 
-                Libro libro = libros.buscarLibro(isbn);
-                    if (libro == null) {
-                        return "No se encontró un libro con ese ISBN.";
+        Libro libro = libros.buscarLibro(isbn);
+            if (libro == null) {
+                return "No se encontró un libro con ese ISBN.";
                     }
-
                     libros.eliminarLibro(isbn);
                         return "Libro \"" + libro.getTitulo() + "\" eliminado correctamente.";
     }
 //--
     public Estudiante buscarEstudiantePorCarne(String carne) {
-        if (carne == null) return null;
+        if (carne == null){
+            return null;
+        }
             carne = carne.trim();
-            if (carne.isEmpty()) return null;
-                return estudiantes.buscarPorCarne(carne);
+                if (carne.isEmpty()) return null;
+                    return estudiantes.buscarPorCarne(carne);
 }
 //--
     public String eliminarEstudiantePorCarne(String carne) {
@@ -399,16 +406,16 @@ public class ControladorAdmin {
         carne = carne.trim();
         if (carne.isEmpty()) {
             return "Debe ingresar un carnet.";
+        }
+
+        Estudiante est = estudiantes.buscarPorCarne(carne);
+            if (est == null) {
+                return "No se encontró un estudiante con ese carnet.";
     }
 
-    Estudiante est = estudiantes.buscarPorCarne(carne);
-    if (est == null) {
-        return "No se encontró un estudiante con ese carnet.";
+            estudiantes.eliminarPorCarne(carne);
+                return "Estudiante \"" + est.getNombre() + "\" eliminado correctamente.";
     }
-
-    estudiantes.eliminarPorCarne(carne);
-    return "Estudiante \"" + est.getNombre() + "\" eliminado correctamente.";
-}
 //--
     public Bibliotecario buscarBibliotecarioPorID(String idEmpleado) {
         if (idEmpleado == null) return null;
@@ -431,9 +438,9 @@ public class ControladorAdmin {
             return "No se encontró un bibliotecario con ese ID.";
         }
 
-        bibliotecarios.eliminarBibliotecario(idEmpleado);
-        return "Bibliotecario \"" + bib.getNombre() + "\" eliminado correctamente.";
-}
+            bibliotecarios.eliminarBibliotecario(idEmpleado);
+            return "Bibliotecario \"" + bib.getNombre() + "\" eliminado correctamente.";
+        }
 //--
     public void cerrarSesion() {
         controladorPrincipal.mostrarLogin();
@@ -442,7 +449,7 @@ public class ControladorAdmin {
     public Libro[] buscarLibros(String texto, String filtro) {
         return libros.buscarLibros(texto, filtro);
     }
-//----Metodos de Ordenamiento---
+//Metodos de Ordenamiento
     public Libro[] ordenarLibros_ISBN_Burbuja() {
         Libro[] lista = copiarLibrosSinVacios();
             burbujaPorISBN(lista);
@@ -670,6 +677,6 @@ public class ControladorAdmin {
                 }
             }
             return contador;
-    }
+        }
 }
 
