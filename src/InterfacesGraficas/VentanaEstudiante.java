@@ -6,8 +6,7 @@ import modelos.Libro;
 
 public class VentanaEstudiante extends javax.swing.JFrame { 
     
-        private javax.swing.table.DefaultTableModel modeloLibros;
-        
+    private javax.swing.table.DefaultTableModel modeloLibros;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaEstudiante.class.getName());
     
@@ -20,17 +19,7 @@ public class VentanaEstudiante extends javax.swing.JFrame {
                       
                 configurarTablaLibros();
                 cargarlibrosalatabla();
-} 
-//--------------------------------------------
-    public void cargarPerfil(modelos.Estudiante est) {
-        if (est == null) return;
-        nombreestudiante.setText(est.getNombre());
-        carreraestudiante.setText(est.getCarrera());
-        semestreestudiante.setText(String.valueOf(est.getSemestre()));
-        correoestudiante.setText(est.getCorreo());
-        telefonoestudiante.setText(String.valueOf(est.getTelefono()));
-}            
-
+}          
 //------------Obtener Tabla de Libros
 private void configurarTablaLibros() {
     modeloLibros = new javax.swing.table.DefaultTableModel(
@@ -70,6 +59,27 @@ private void cargarlibrosalatabla() {
     }
 }
 
+private void cargarlibrosalatablaconparametro(Libro[] libros){
+    modeloLibros.setRowCount(0); // limpia las filas anteriores
+    if (libros != null) {
+        for (Libro libro : libros) {
+            if (libro != null) {
+                Object[] fila = new Object[] {
+                    libro.getISBN(),
+                    libro.getTitulo(),
+                    libro.getAutor(),
+                    libro.getEditorial(),
+                    libro.getAnioPublicacion(),
+                    libro.getCategoria(),
+                    libro.getCantidad(),
+                    libro.getUbicacion()
+                };
+                modeloLibros.addRow(fila);
+            }
+        }
+    }
+}
+
 public void recargarCatalogo() {
     cargarlibrosalatabla();
 }
@@ -83,16 +93,6 @@ public void recargarCatalogo() {
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        nombreestudiante = new javax.swing.JTextField();
-        carreraestudiante = new javax.swing.JTextField();
-        semestreestudiante = new javax.swing.JTextField();
-        telefonoestudiante = new javax.swing.JTextField();
-        correoestudiante = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -115,7 +115,7 @@ public void recargarCatalogo() {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 781, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,65 +124,15 @@ public void recargarCatalogo() {
 
         jLabel1.setText("Información Personal");
 
-        jLabel4.setText("Nombre Completo:");
-
-        jLabel5.setText("Carrera:");
-
-        jLabel6.setText("Semestre:");
-
-        jLabel7.setText("Correo:");
-
-        jLabel8.setText("Teléfono:");
-
-        nombreestudiante.setEditable(false);
-
-        carreraestudiante.setEditable(false);
-
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(224, 224, 224)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel7))
-                .addGap(40, 40, 40)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(correoestudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(telefonoestudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(semestreestudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(carreraestudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nombreestudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(267, Short.MAX_VALUE))
+            .addGap(0, 944, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(nombreestudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(carreraestudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(semestreestudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(correoestudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(telefonoestudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+            .addGap(0, 234, Short.MAX_VALUE)
         );
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -196,19 +146,17 @@ public void recargarCatalogo() {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(54, 54, 54)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel1))
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(55, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(64, 64, 64)
-                    .addComponent(jLabel3)
-                    .addContainerGap(881, Short.MAX_VALUE)))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel3))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,16 +165,12 @@ public void recargarCatalogo() {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(40, 40, 40)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(342, Short.MAX_VALUE)
-                    .addComponent(jLabel3)
-                    .addGap(239, 239, 239)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addGap(12, 12, 12)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jTabbedPane1.addTab("Mi Perfil", jPanel1);
@@ -244,7 +188,8 @@ public void recargarCatalogo() {
         ));
         jScrollPane6.setViewportView(TablaLibros);
 
-        seleciltroslibros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Titulo", "Autor", "Categoria", "ISBN" }));
+        seleciltroslibros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ISBN", "Titulo", "Autor", "Año", "Editorial" }));
+        seleciltroslibros.addActionListener(this::seleciltroslibrosActionPerformed);
 
         btnbscarlibro.setText("Buscar");
         btnbscarlibro.addActionListener(this::btnbscarlibroActionPerformed);
@@ -324,7 +269,7 @@ public void recargarCatalogo() {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1027, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(btncerrarsesion)
@@ -347,72 +292,46 @@ public void recargarCatalogo() {
     }//GEN-LAST:event_btncerrarsesionActionPerformed
 
     private void btnbscarlibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbscarlibroActionPerformed
-    String texto = textobuscarlibros.getText();
-    String opcionFiltro = seleciltroslibros.getSelectedItem().toString();
-
-    // Normalizar el filtro a lo que espera el repositorio
-    String filtro;
-    switch (opcionFiltro) {
-        case "Título":
-            filtro = "titulo";
-            break;
-        case "Autor":
-            filtro = "autor";
-            break;
-        case "Categoria":
-            filtro = "categoria";
-            break;
-        case "ISBN":
-            filtro = "isbn";
-            break;
-        default:
-            filtro = "titulo";
-    }
-
-    // Llamar al controlador del estudiante
-    Libro[] resultados = controladorEstudiante.buscarLibros(texto, filtro);  // método que ya conectamos al Repositorio
-
-    // Crear el modelo de tabla con los resultados
-    javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(
-        new Object[] {"ISBN", "Titulo", "Autor", "Editorial", "Año","Categoria", "Cantidad", "Ubicacion"}, 0
-    );
-
-    if (resultados != null) {
-        for (Libro libro : resultados) {
-            if (libro != null) {
-                Object[] fila = new Object[] {
-                    libro.getISBN(),
-                    libro.getTitulo(),
-                    libro.getAutor(),
-                    libro.getEditorial(),
-                    libro.getAnioPublicacion(),
-                    libro.getCategoria(),
-                    libro.getCantidad(),
-                    libro.getUbicacion()
-                };
-                modelo.addRow(fila);
-            }
-        }
-    }
-
-    TablaLibros.setModel(modelo);       
+        String texto = textobuscarlibros.getText();
+            Libro[] resultados = controladorEstudiante.buscarLibros(texto, "titulo");
+            cargarlibrosalatablaconparametro(resultados);   
     }//GEN-LAST:event_btnbscarlibroActionPerformed
+
+    private void seleciltroslibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleciltroslibrosActionPerformed
+          String opcion = seleciltroslibros.getSelectedItem().toString();
+           Libro[] listaOrdenada = null;
+
+           switch (opcion) {
+               case "ISBN":
+                   listaOrdenada = controladorEstudiante.ordenarLibros_ISBN_Burbuja();
+                   break;
+               case "Titulo":
+                   listaOrdenada = controladorEstudiante.ordenarLibros_Titulo_Seleccion();
+                   break;
+               case "Autor":
+                   listaOrdenada = controladorEstudiante.ordenarLibros_Autor_Insercion();
+                   break;
+               case "Editorial":
+                   listaOrdenada = controladorEstudiante.ordenarLibros_Editorial_QuickSort();
+                   break;
+               case "Año":
+                   listaOrdenada = controladorEstudiante.ordenarLibros_Anio_MergeSort();
+                   break;
+           }
+
+           if (listaOrdenada != null) {
+               cargarlibrosalatablaconparametro(listaOrdenada);
+          }
+    }//GEN-LAST:event_seleciltroslibrosActionPerformed
 //---------------------------------------------
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaLibros;
     private javax.swing.JButton btnbscarlibro;
     private javax.swing.JButton btncerrarsesion;
-    private javax.swing.JTextField carreraestudiante;
-    private javax.swing.JTextField correoestudiante;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -425,10 +344,7 @@ public void recargarCatalogo() {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTextField nombreestudiante;
     private javax.swing.JComboBox<String> seleciltroslibros;
-    private javax.swing.JTextField semestreestudiante;
-    private javax.swing.JTextField telefonoestudiante;
     private javax.swing.JTextField textobuscarlibros;
     // End of variables declaration//GEN-END:variables
 }

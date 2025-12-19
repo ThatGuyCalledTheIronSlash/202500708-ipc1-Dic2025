@@ -47,8 +47,8 @@ public class Proyecto1_IPC2025 {
                 "Maria",           // nombre
                 "12345545",        // CUI (DPI)
                 "maria@gmail.com", // correo
-                "bib",             // usuario
-                "bib123",          // contrasena
+                "maria123",        // usuario
+                "bibliotecaria001",// contrasena
                 'F',               // genero
                 123123,            // telefono
                 'S',               // estadoCivil

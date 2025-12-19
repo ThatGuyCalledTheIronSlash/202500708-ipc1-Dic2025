@@ -27,6 +27,7 @@ public class VentanaAdmin extends javax.swing.JFrame {
                     cargarlibrosalatabla();
                     cargarestudiantesalatabla();
                     cargarbibliotecariosalatabla();
+                    actualizarDashboard();
                 
 
         }
@@ -64,6 +65,18 @@ private void configurarTablaBibliotecarios() {
     cargarbibliotecariosalatabla(); //Recarga automaticamente la tabla
 }
 
+//--Actualizar el Dashboard
+private void actualizarDashboard() {
+
+    int totalLibros = controladorAdmin.contarLibros();
+    int totalEstudiantes = controladorAdmin.contarEstudiantes();
+    int totalBibliotecarios = controladorAdmin.contarBibliotecarios();
+    
+    lblTotalLibros.setText(String.valueOf(totalLibros));
+    lblTotalEstudiantes.setText(String.valueOf(totalEstudiantes));
+    lblTotalBibliotecarios.setText(String.valueOf(totalBibliotecarios));
+}
+
 //----------CargarTablas------------
 private void cargarlibrosalatabla(){
         modeloLibros.setRowCount(0);     //limpia las filas anteriores
@@ -87,6 +100,27 @@ private void cargarlibrosalatabla(){
                 }
             }
         }
+}
+
+private void cargarlibrosalatablaconparametro(Libro[] libros){
+    modeloLibros.setRowCount(0); // limpia las filas anteriores
+    if (libros != null) {
+        for (Libro libro : libros) {
+            if (libro != null) {
+                Object[] fila = new Object[] {
+                    libro.getISBN(),
+                    libro.getTitulo(),
+                    libro.getAutor(),
+                    libro.getEditorial(),
+                    libro.getAnioPublicacion(),
+                    libro.getCategoria(),
+                    libro.getCantidad(),
+                    libro.getUbicacion()
+                };
+                modeloLibros.addRow(fila);
+            }
+        }
+    }
 }
 
 private void cargarestudiantesalatabla(){
@@ -146,15 +180,19 @@ private void cargarbibliotecariosalatabla(){
 
         jScrollPane5 = new javax.swing.JScrollPane();
         vistaprevia1 = new javax.swing.JScrollPane();
+        jPanel12 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        label1 = new java.awt.Label();
-        label2 = new java.awt.Label();
-        label3 = new java.awt.Label();
-        label4 = new java.awt.Label();
-        label5 = new java.awt.Label();
-        label6 = new java.awt.Label();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        lblTotalLibros = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        lblTotalEstudiantes = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        lblTotalBibliotecarios = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         TablaBibliotecarios = new javax.swing.JTable();
@@ -208,76 +246,156 @@ private void cargarbibliotecariosalatabla(){
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel7.setText("SISTEMA BIBLIOTECA");
 
-        label1.setAlignment(java.awt.Label.CENTER);
-        label1.setBackground(new java.awt.Color(51, 204, 255));
-        label1.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
+        jPanel9.setBackground(new java.awt.Color(0, 153, 255));
+        jPanel9.setForeground(new java.awt.Color(51, 153, 255));
 
-        label2.setAlignment(java.awt.Label.CENTER);
-        label2.setBackground(new java.awt.Color(51, 204, 255));
-        label2.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setText("TOTAL LIBROS");
 
-        label3.setAlignment(java.awt.Label.CENTER);
-        label3.setBackground(new java.awt.Color(51, 204, 255));
-        label3.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
+        lblTotalLibros.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblTotalLibros.setForeground(new java.awt.Color(0, 0, 0));
+        lblTotalLibros.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTotalLibros.setText("jLabel11");
 
-        label4.setAlignment(java.awt.Label.CENTER);
-        label4.setBackground(new java.awt.Color(51, 204, 255));
-        label4.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTotalLibros, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addContainerGap(60, Short.MAX_VALUE))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap(61, Short.MAX_VALUE)
+                .addComponent(lblTotalLibros, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addGap(14, 14, 14))
+        );
 
-        label5.setAlignment(java.awt.Label.CENTER);
-        label5.setBackground(new java.awt.Color(51, 204, 255));
-        label5.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
+        jPanel10.setBackground(new java.awt.Color(0, 153, 255));
+        jPanel10.setForeground(new java.awt.Color(51, 153, 255));
 
-        label6.setAlignment(java.awt.Label.CENTER);
-        label6.setBackground(new java.awt.Color(51, 204, 255));
-        label6.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel9.setText("TOTAL ESTUDIANTES");
+
+        lblTotalEstudiantes.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblTotalEstudiantes.setForeground(new java.awt.Color(0, 0, 0));
+        lblTotalEstudiantes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTotalEstudiantes.setText("jLabel11");
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jLabel9))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(lblTotalEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(43, Short.MAX_VALUE))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTotalEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel9)
+                .addGap(14, 14, 14))
+        );
+
+        jPanel11.setBackground(new java.awt.Color(0, 153, 255));
+        jPanel11.setForeground(new java.awt.Color(51, 153, 255));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel10.setText("TOTAL BIBLIOTECARIOS");
+
+        lblTotalBibliotecarios.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblTotalBibliotecarios.setForeground(new java.awt.Color(0, 0, 0));
+        lblTotalBibliotecarios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTotalBibliotecarios.setText("jLabel11");
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap(51, Short.MAX_VALUE)
+                .addComponent(jLabel10)
+                .addGap(26, 26, 26))
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGap(68, 68, 68)
+                .addComponent(lblTotalBibliotecarios, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap(61, Short.MAX_VALUE)
+                .addComponent(lblTotalBibliotecarios, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel10)
+                .addGap(14, 14, 14))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(60, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(52, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(66, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(322, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Dashboard", jPanel1);
@@ -336,7 +454,7 @@ private void cargarbibliotecariosalatabla(){
                     .addComponent(btnmodificarbibliotecario)
                     .addComponent(btndesactivarbibliotecario)
                     .addComponent(btnrecargarpaginabibliotecario))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Bibliotecarios", jPanel2);
@@ -368,7 +486,8 @@ private void cargarbibliotecariosalatabla(){
 
         textobuscarlibros.addActionListener(this::textobuscarlibrosActionPerformed);
 
-        seleciltroslibros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Titulo", "Autor", "Categoria", "ISBN" }));
+        seleciltroslibros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ISBN", "Titulo", "Autor", "Año", "Editorial" }));
+        seleciltroslibros.addActionListener(this::seleciltroslibrosActionPerformed);
 
         btnbscarlibro.setText("Buscar");
         btnbscarlibro.addActionListener(this::btnbscarlibroActionPerformed);
@@ -418,7 +537,7 @@ private void cargarbibliotecariosalatabla(){
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnrecargarlibros)
                         .addComponent(btnModificarLibro)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Libros", jPanel3);
@@ -482,7 +601,7 @@ private void cargarbibliotecariosalatabla(){
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnrecargarestudiantes)
                         .addComponent(btnModificarEstudiante)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Estudiantes", jPanel4);
@@ -676,8 +795,8 @@ private void cargarbibliotecariosalatabla(){
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 682, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btncerrarsesion)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -696,7 +815,9 @@ private void cargarbibliotecariosalatabla(){
             vistaResultado.setText(texto);
         }
 
-        cargarlibrosalatabla();   
+        cargarlibrosalatabla(); 
+        actualizarDashboard();
+
     }//GEN-LAST:event_IniciarcargalibrosActionPerformed
 //---
     private void botoncargarestudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoncargarestudiantesActionPerformed
@@ -710,6 +831,8 @@ private void cargarbibliotecariosalatabla(){
         }
 
         cargarestudiantesalatabla();
+        actualizarDashboard();
+
     }//GEN-LAST:event_botoncargarestudiantesActionPerformed
 
     private void botoncargarbibliotecariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoncargarbibliotecariosActionPerformed
@@ -724,6 +847,8 @@ private void cargarbibliotecariosalatabla(){
         }
 
         cargarbibliotecariosalatabla();
+        actualizarDashboard();
+
     }//GEN-LAST:event_botoncargarbibliotecariosActionPerformed
 
     private void btnrecargarestudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrecargarestudiantesActionPerformed
@@ -741,7 +866,9 @@ private void cargarbibliotecariosalatabla(){
             controladorAdmin.getRepoLibros()
     );
     dialog.setVisible(true);
-    cargarlibrosalatabla();    
+    cargarlibrosalatabla();
+    actualizarDashboard();
+    
     }//GEN-LAST:event_btnagregarlibroActionPerformed
 
     private void btnrecargarpaginabibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrecargarpaginabibliotecarioActionPerformed
@@ -772,6 +899,8 @@ private void cargarbibliotecariosalatabla(){
             String mensaje = controladorAdmin.eliminarLibroPorISBN(isbn);
             JOptionPane.showMessageDialog(this, mensaje);
                 cargarlibrosalatabla();
+                actualizarDashboard();
+
     }//GEN-LAST:event_btnBorrarLibroActionPerformed
 
     private void btnagregarestudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarestudianteActionPerformed
@@ -782,6 +911,8 @@ private void cargarbibliotecariosalatabla(){
     );
     dialog.setVisible(true);
     cargarestudiantesalatabla();  //recarga automaticamente
+    actualizarDashboard();
+
     }//GEN-LAST:event_btnagregarestudianteActionPerformed
 
     private void btnModificarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarEstudianteActionPerformed
@@ -818,6 +949,8 @@ private void cargarbibliotecariosalatabla(){
     );
     dialog.setVisible(true);
     cargarbibliotecariosalatabla();
+    actualizarDashboard();
+
     }//GEN-LAST:event_btnagregarbibliotecarioActionPerformed
 
     private void btndesactivarbibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndesactivarbibliotecarioActionPerformed
@@ -859,56 +992,38 @@ private void cargarbibliotecariosalatabla(){
     }//GEN-LAST:event_textobuscarlibrosActionPerformed
 
     private void btnbscarlibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbscarlibroActionPerformed
-        String texto = textobuscarlibros.getText();
-        String opcionFiltro = seleciltroslibros.getSelectedItem().toString();
+            String texto = textobuscarlibros.getText();
 
-        // Filtro que espera el repositorio
-        String filtro;
-        switch (opcionFiltro) {
-            case "Título":
-            filtro = "titulo";
-            break;
-            case "Autor":
-            filtro = "autor";
-            break;
-            case "Categoria":
-            filtro = "categoria";
-            break;
-            case "ISBN":
-            filtro = "isbn";
-            break;
-            default:
-            filtro = "titulo";
-        }
+        Libro[] resultados = controladorAdmin.buscarLibros(texto, "titulo");
 
-        // Llamar al controlador del estudiante
-        Libro[] resultados = controladorAdmin.buscarLibros(texto, filtro);  // método que ya conectamos al Repositorio
-
-        // Crear el modelo de tabla con los resultados
-        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(
-            new Object[] {"ISBN", "Titulo", "Autor", "Editorial", "Año","Categoria", "Cantidad", "Ubicacion"}, 0
-        );
-
-        if (resultados != null) {
-            for (Libro libro : resultados) {
-                if (libro != null) {
-                    Object[] fila = new Object[] {
-                        libro.getISBN(),
-                        libro.getTitulo(),
-                        libro.getAutor(),
-                        libro.getEditorial(),
-                        libro.getAnioPublicacion(),
-                        libro.getCategoria(),
-                        libro.getCantidad(),
-                        libro.getUbicacion()
-                    };
-                    modelo.addRow(fila);
-                }
-            }
-        }
-
-        TablaLibros.setModel(modelo);
+        cargarlibrosalatablaconparametro(resultados);
     }//GEN-LAST:event_btnbscarlibroActionPerformed
+
+    private void seleciltroslibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleciltroslibrosActionPerformed
+        String opcion = seleciltroslibros.getSelectedItem().toString();
+           Libro[] listaOrdenada = null;
+                switch (opcion) {
+                    case "ISBN":
+                        listaOrdenada = controladorAdmin.ordenarLibros_ISBN_Burbuja();
+                        break;
+                    case "Titulo":
+                        listaOrdenada = controladorAdmin.ordenarLibros_Titulo_Seleccion();
+                        break;
+                    case "Autor":
+                        listaOrdenada = controladorAdmin.ordenarLibros_Autor_Insercion();
+                        break;
+                    case "Editorial":
+                        listaOrdenada = controladorAdmin.ordenarLibros_Editorial_QuickSort();
+                        break;
+                    case "Año":
+                        listaOrdenada = controladorAdmin.ordenarLibros_Anio_MergeSort();
+                        break;
+                }
+
+                if (listaOrdenada != null) {
+                    cargarlibrosalatablaconparametro(listaOrdenada);
+            }
+    }//GEN-LAST:event_seleciltroslibrosActionPerformed
 //============================================
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -933,17 +1048,23 @@ private void cargarbibliotecariosalatabla(){
     private javax.swing.JButton btnrecargarlibros;
     private javax.swing.JButton btnrecargarpaginabibliotecario;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -951,6 +1072,7 @@ private void cargarbibliotecariosalatabla(){
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane5;
@@ -960,12 +1082,9 @@ private void cargarbibliotecariosalatabla(){
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private java.awt.Label label1;
-    private java.awt.Label label2;
-    private java.awt.Label label3;
-    private java.awt.Label label4;
-    private java.awt.Label label5;
-    private java.awt.Label label6;
+    private javax.swing.JLabel lblTotalBibliotecarios;
+    private javax.swing.JLabel lblTotalEstudiantes;
+    private javax.swing.JLabel lblTotalLibros;
     private javax.swing.JComboBox<String> seleciltroslibros;
     private javax.swing.JTextField textobuscarlibros;
     private javax.swing.JTextArea vistaResultado;
