@@ -5,7 +5,7 @@ package Repositorios;
 public class RepositorioBiblioteca {
     private Bibliotecario[] bibliotecarios = new Bibliotecario[100];
     
-//----------------------------------------------   
+//--  
     public void agregarBibliotecarios(Bibliotecario nuevoBibliotecario) {
         for (int i = 0; i < bibliotecarios.length; i++) {
             if (bibliotecarios[i] == null) {
@@ -14,7 +14,7 @@ public class RepositorioBiblioteca {
             }
         }
     }
-//----------------------------------------------   
+//-- 
     public void eliminarBibliotecario(String IDEmpleado) {
         for (int i = 0; i < bibliotecarios.length; i++) {
             if (bibliotecarios[i] != null &&
@@ -25,14 +25,14 @@ public class RepositorioBiblioteca {
         }
     }
 
-//----------------------------------------------   
+//-- 
     public void mostrarBibliotecario(String IDEmpleado) {
         Bibliotecario b = retornarBibliotecario(IDEmpleado);
         if (b != null) {
             System.out.println(b.toString());
             }
         }
-//----------------------------------------------   
+//--   
     public Bibliotecario retornarBibliotecario(String IDEmpleado) {
         for (int i = 0; i < bibliotecarios.length; i++) {
             if (bibliotecarios[i] != null && bibliotecarios[i].getIDEmpleado().equals(IDEmpleado)) {
@@ -41,7 +41,7 @@ public class RepositorioBiblioteca {
         }
         return null;
     }
-//----------------------------------------------   
+//--  
     public boolean encontrarBibliotecario(String IDEmpleado, String contrasena){
         for (int i = 0; i < bibliotecarios.length; i++) {
             if (bibliotecarios[i] != null && bibliotecarios[i].getIDEmpleado().equals(IDEmpleado) &&
@@ -51,7 +51,7 @@ public class RepositorioBiblioteca {
         }
         return false;        
     }
-//---------------------------------------------- 
+//--
  public Bibliotecario[] todosLosBibliotecarios(){
   int contador = 0;
         for (Bibliotecario b : bibliotecarios) {
@@ -66,4 +66,20 @@ public class RepositorioBiblioteca {
         }
         return copia;
     }
+//--
+     public String generarNuevoID(){
+        int max = 0;
+        for (Bibliotecario b :todosLosBibliotecarios()) {
+            if (b != null) {
+                try {
+                    int valor = Integer.parseInt(b.getIDEmpleado());
+                    if (valor > max) max = valor;
+                } catch (NumberFormatException e) {
+                }
+            }
+        }
+        int siguiente = max + 1;
+        return String.format("%04d", siguiente);
+    
  }
+}

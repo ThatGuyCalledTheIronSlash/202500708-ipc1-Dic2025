@@ -44,27 +44,6 @@ public class ControladorBiblioteca {
         repoBiblioteca.eliminarBibliotecario(idEmpleado);
         return "Bibliotecario \"" + b.getNombre() + "\" eliminado correctamente.";
     }
-
-    // --- ID automático ---
-
-    public String generarNuevoID() {
-        int max = 0;
-        for (Bibliotecario b : repoBiblioteca.todosLosBibliotecarios()) {
-            if (b != null) {
-                try {
-                    int valor = Integer.parseInt(b.getIDEmpleado());
-                    if (valor > max) max = valor;
-                } catch (NumberFormatException e) {
-                    // ignorar IDs no numéricos
-                }
-            }
-        }
-        int siguiente = max + 1;
-        return String.format("%04d", siguiente);
-    }
-
-    // --- Cerrar sesión ---
-
     public void cerrarSesion() {
         controladorPrincipal.mostrarLogin();
     }

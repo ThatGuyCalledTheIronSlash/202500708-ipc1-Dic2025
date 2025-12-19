@@ -9,7 +9,7 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
     
     private final RepositorioBiblioteca repoBiblioteca;
     private Bibliotecario bibliotecarioEditando;
-//---------------------------------------    
+//--
     public GestionarBibliotecarios(java.awt.Frame parent, boolean modal,RepositorioBiblioteca repoBiblioteca) {
             super(parent, modal);
             this.repoBiblioteca = repoBiblioteca;
@@ -17,8 +17,13 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
             initComponents();
             setLocationRelativeTo(parent);
             setTitle("Agregar Bibliotecario");
+            
+            String nuevoID = repoBiblioteca.generarNuevoID();
+            textoIDEmpleado.setText(nuevoID);
+            textoIDEmpleado.setEnabled(false);
+
     }
-//---------------------------------------
+//--
     public GestionarBibliotecarios(java.awt.Frame parent, boolean modal,RepositorioBiblioteca repoBiblioteca,
         Bibliotecario bibliotecarioEditar) {
             super(parent, modal);
@@ -27,10 +32,13 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
             initComponents();
             setLocationRelativeTo(parent);
             setTitle("Modificar Bibliotecario");
+            
+            String nuevoID = repoBiblioteca.generarNuevoID();
+            textoIDEmpleado.setText(nuevoID);
+            textoIDEmpleado.setEnabled(false);
             cargarDatosEnFormulario();
     }
-
-//------------------------------------
+//--
     private void cargarDatosEnFormulario() {
     if (bibliotecarioEditando == null) {
             return;
@@ -49,8 +57,7 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
 
         textoIDEmpleado.setEnabled(false);
     }
-
-//------------------------------------
+//--
     private void guardarBibliotecario() {
 
         String idEmpleado = textoIDEmpleado.getText().trim();
@@ -134,9 +141,7 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
 
         dispose();
     }
-//-------------------------------------------    
-
-    
+//--
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -295,15 +300,15 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+//--
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
             dispose();
     }//GEN-LAST:event_cancelarActionPerformed
-
+//--
     private void btnguardarnuevoestudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarnuevoestudianteActionPerformed
             guardarBibliotecario();
     }//GEN-LAST:event_btnguardarnuevoestudianteActionPerformed
-
+//--
     private void textoTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoTelefonoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textoTelefonoActionPerformed
@@ -312,10 +317,6 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_textoContrasenaActionPerformed
 //-------------------------------------------------------------------
-    /**
-     * @param args the command line arguments
-     */
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnguardarnuevoestudiante;
     private javax.swing.JButton cancelar;

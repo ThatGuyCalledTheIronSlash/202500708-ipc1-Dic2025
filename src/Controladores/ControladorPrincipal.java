@@ -6,6 +6,7 @@ import Repositorios.RepositorioLibro;
 import InterfacesGraficas.VentanaLogin;
 import InterfacesGraficas.VentanaAdmin;
 import InterfacesGraficas.VentanaEstudiante;
+import modelos.Estudiante;
 
 public class ControladorPrincipal {
 
@@ -35,14 +36,12 @@ public class ControladorPrincipal {
         iniciarControladores();
         iniciarVistas();
     }
-
     //------------ Controladores ----------------
     private void iniciarControladores() {
         controladorLogin = new ControladorLogin(this, bibliotecarios, estudiantes);
         controladorAdmin = new ControladorAdmin(this, bibliotecarios, estudiantes, libros);
         controladorEstudiante = new ControladorEstudiante(this, libros);
     }
-
     //------------ Vistas ----------------
     private void iniciarVistas() {
 
@@ -58,32 +57,34 @@ public class ControladorPrincipal {
         vEstudiante.setLocationRelativeTo(null);
         vEstudiante.setVisible(false);
     }
-
-    //------------ Métodos para cambiar de vista -------------
+    //----------EstabelecerEstudianteActual----------------
+    public void setEstudianteActual(Estudiante est) {
+        controladorEstudiante.setEstudianteActual(est);
+    }
+    //------------ Metodos para cambiar de vista -------------
     public void mostrarLogin() {
         ocultarTodasLasVistas();
         vLogin.limpiarCampos();
         vLogin.setVisible(true);
     }
-
+//--
     public void mostrarVistaAdmin() {
         ocultarTodasLasVistas();
         vAdmin.setVisible(true);
     }
-
+//--
     public void mostrarVistaEstudiante() {
         ocultarTodasLasVistas();
         vEstudiante.recargarCatalogo();
         vEstudiante.setVisible(true);
     }
-
+//--
     private void ocultarTodasLasVistas() {
         if (vLogin != null) vLogin.setVisible(false);
         if (vEstudiante != null) vEstudiante.setVisible(false);
         if (vAdmin != null) vAdmin.setVisible(false);
     }
-
-    // Opcional: getters por si algún controlador necesita los repos
+//--
     public RepositorioBiblioteca getRepoBibliotecarios() { return bibliotecarios; }
     public RepositorioEstudiante getRepoEstudiantes() { return estudiantes; }
     public RepositorioLibro getRepoLibros() { return libros; }
