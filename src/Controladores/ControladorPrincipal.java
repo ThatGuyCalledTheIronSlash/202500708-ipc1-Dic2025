@@ -3,12 +3,14 @@ package Controladores;
 import Repositorios.RepositorioBiblioteca;
 import Repositorios.RepositorioEstudiante;
 import Repositorios.RepositorioLibro;
+import Repositorios.RepositorioPrestamo;
 import InterfacesGraficas.VentanaLogin;
 import InterfacesGraficas.VentanaAdmin;
 import InterfacesGraficas.VentanaBibliotecario;
 import InterfacesGraficas.VentanaEstudiante;
 import modelos.Estudiante;
 import modelos.Bibliotecario;
+import modelos.Prestamo;
 
 public class ControladorPrincipal {
 
@@ -16,6 +18,7 @@ public class ControladorPrincipal {
         private RepositorioBiblioteca bibliotecarios;
         private RepositorioEstudiante estudiantes;
         private RepositorioLibro libros;
+        private RepositorioPrestamo prestamos;
 
     // Vistas
         private VentanaLogin vLogin;
@@ -34,13 +37,14 @@ public class ControladorPrincipal {
             this.bibliotecarios = bibliotecarios;
             this.estudiantes = estudiantes;
             this.libros = libros;
+            this.prestamos = new RepositorioPrestamo(1000);
              iniciarControladores();
              iniciarVistas();
     }   
     //Controladores
     private void iniciarControladores() {
         controladorLogin = new ControladorLogin(this, bibliotecarios, estudiantes);
-        controladorAdmin = new ControladorAdmin(this, bibliotecarios, estudiantes, libros);
+        controladorAdmin = new ControladorAdmin(this, bibliotecarios, estudiantes, libros, prestamos);
         controladorEstudiante = new ControladorEstudiante(this, libros);
         controladorBiblioteca = new ControladorBiblioteca(this, bibliotecarios);
     }
@@ -117,5 +121,9 @@ public class ControladorPrincipal {
 //--
     public RepositorioLibro getRepoLibros() { 
         return libros; 
+    }
+//--
+    public RepositorioPrestamo getRepoPrestamos() {
+        return prestamos;
     }
 }

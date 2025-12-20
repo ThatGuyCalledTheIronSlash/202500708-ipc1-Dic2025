@@ -40,13 +40,27 @@ public class RepositorioLibro {
     }
 //--    
    public Libro buscarLibro(String ISBN) {
-        for (int i = 0; i < libros.length; i++) {
-            if (libros[i] != null && libros[i].getISBN().equals(ISBN)) {
-                return libros[i];
-            }
+        if (ISBN == null) {
+            return null;
         }
+        return buscarLibroRecursivo(ISBN, 0);
+    }
+ private Libro buscarLibroRecursivo(String ISBN, int indice) {
+    // Caso base: llegamos al final del arreglo sin encontrar
+    if (indice >= libros.length) {
         return null;
     }
+
+    Libro actual = libros[indice];
+
+    // Si hay libro en esta posición y coincide el ISBN, lo devolvemos
+    if (actual != null && ISBN.equals(actual.getISBN())) {
+        return actual;
+    }
+
+    // Paso recursivo: buscar en la siguiente posición
+    return buscarLibroRecursivo(ISBN, indice + 1);
+}
 //--
     public boolean verificarLibro(String ISBN) {
             return buscarLibro(ISBN) != null;
@@ -80,17 +94,22 @@ public class RepositorioLibro {
 }
     //--
     public Libro[] buscarLibros(String texto, String filtro) {
-        if (texto == null) texto = "";
-        texto = texto.trim().toLowerCase();
-        if (texto.isEmpty()) {
-            return todosLosLibros();
-        }
-        String[] palabras = texto.split("\\s+");
-            int conteo = contarCoincidenciasRecursivo(texto, filtro, 0);
-                Libro[] resultados = new Libro[conteo];
-            llenarResultadosRecursivo(texto, filtro, 0, resultados, 0);
-                return resultados;
-    
+                if (texto == null) texto = "";
+    texto = texto.trim().toLowerCase();
+
+    // Si no hay texto, regresamos todos los libros
+    if (texto.isEmpty()) {
+        return todosLosLibros();
+    }
+
+    if (filtro == null) {
+        filtro = "titulo"; // valor por defecto para evitar NullPointerException
+    }
+
+    int conteo = contarCoincidenciasRecursivo(texto, filtro, 0);
+    Libro[] resultados = new Libro[conteo];
+    llenarResultadosRecursivo(texto, filtro, 0, resultados, 0);
+    return resultados;
         }
     
 //--------------------------------------------------------

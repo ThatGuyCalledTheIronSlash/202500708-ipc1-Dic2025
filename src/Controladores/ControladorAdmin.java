@@ -4,13 +4,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-
 import modelos.Libro;
 import modelos.Estudiante;
 import modelos.Bibliotecario;
+import modelos.Prestamo;
+import java.time.LocalDate;
 import Repositorios.RepositorioBiblioteca;
 import Repositorios.RepositorioEstudiante;
 import Repositorios.RepositorioLibro;
+import Repositorios.RepositorioPrestamo;
 
 public class ControladorAdmin {
 
@@ -18,21 +20,35 @@ public class ControladorAdmin {
     private RepositorioBiblioteca bibliotecarios;
     private RepositorioEstudiante estudiantes;
     private RepositorioLibro libros;
+    private RepositorioPrestamo prestamos;
 
     public ControladorAdmin(ControladorPrincipal controladorPrincipal,
                             RepositorioBiblioteca bibliotecarios,
                             RepositorioEstudiante estudiantes,
-                            RepositorioLibro libros) {
+                            RepositorioLibro libros, RepositorioPrestamo prestamos) {
         this.controladorPrincipal = controladorPrincipal;
         this.bibliotecarios = bibliotecarios;
         this.estudiantes = estudiantes;
         this.libros = libros;
+        this.prestamos = prestamos;
     }
 
 //getters usados por VentanaAdmin y diálogos
-    public RepositorioBiblioteca getRepoBibliotecarios() { return bibliotecarios; }
-    public RepositorioEstudiante getRepoEstudiantes() { return estudiantes; }
-    public RepositorioLibro getRepoLibros() { return libros; }
+    public RepositorioBiblioteca getRepoBibliotecarios() {
+        return bibliotecarios; 
+    }
+//--
+    public RepositorioEstudiante getRepoEstudiantes() {
+        return estudiantes; 
+    }
+//--
+    public RepositorioLibro getRepoLibros() {
+        return libros; 
+    }
+//--
+    public RepositorioPrestamo getRepoPrestamos() {
+        return prestamos;
+    }
 
 //Obtener Datos
     public Libro[] obtenerLibros() {
@@ -67,8 +83,10 @@ public class ControladorAdmin {
             previa.append("Error al leer archivo: ").append(e.getMessage());
         }
         return previa.toString();
-    }   
-// Carga de Archivos CSV
+    }  
+//--
+
+//---------------------- Carga de Archivos CSV
     public String cargarLibrosCSV(File archivo) {
         int exitosos = 0;
         int errores = 0;
@@ -453,7 +471,7 @@ public class ControladorAdmin {
     public Libro[] buscarLibros(String texto, String filtro) {
         return libros.buscarLibros(texto, filtro);
     }
-//Metodos de Ordenamiento
+//----------------------Metodos de Ordenamiento------------------------
     public Libro[] ordenarLibros_ISBN_Burbuja() {
         Libro[] lista = copiarLibrosSinVacios();
             burbujaPorISBN(lista);
@@ -649,7 +667,179 @@ public class ControladorAdmin {
             lista[x] = auxiliar[x];
         }
     }
-//Contadores para el dashboard
+//-----------------------------Logica de Prestamos----------------------
+    public String realizarPrestamo(String carne, String isbn) {
+    // Validaciones básicas
+    if (carne == null || carne.trim().isEmpty()) {
+        return "Debe ingresar un carné.";
+    }
+    if (isbn == null || isbn.trim().isEmpty()) {
+        return "Debe ingresar un ISBN.";
+    }
+
+    Estudiante est = buscarEstudiantePorCarne(carne);
+    if (est == null) {
+        return "No se encontró estudiante con ese carné.";
+    }
+
+    Libro libro = buscarLibroPorISBN(isbn);
+    if (libro == null) {
+        return "No se encontró un libro con ese ISBN.";
+    }
+
+    if (libro.getCantidad() <= 0) {
+        return "No hay ejemplares disponibles de este libro.";
+    }
+
+    // Regla: máximo 3 préstamos activos por estudiante (opcional pero útil)
+    Prestamo[] activos = prestamos.prestamosActivosPorEstudiante(carne);
+    if (activos != null && activos.length >= 3) {
+        return "El estudiante ya tiene 3 préstamos activos.";
+    }
+
+    // Construir los datos del préstamo
+    String idPrestamo = "P-" + System.currentTimeMillis(); // id simple
+    String idBibliotecario = "BIB-1"; // por ahora fijo; luego puedes usar el bibliotecario logueado
+    String tituloLibro = libro.getTitulo();
+
+    LocalDate hoy = LocalDate.now();
+    LocalDate fechaDevolucionEsperada = hoy.plusDays(7); // plazo de 7 días
+
+    Prestamo nuevo = new Prestamo(
+            idPrestamo,
+            carne,
+            idBibliotecario,
+            isbn,
+            tituloLibro,
+            hoy,
+            fechaDevolucionEsperada
+    );
+
+    // Guardar en el repositorio
+    prestamos.agregarPrestamo(nuevo);   // tu método es void
+
+    // Descontar un ejemplar
+    libro.setCantidad(libro.getCantidad() - 1);
+
+    return "Préstamo registrado correctamente.";
+}
+//--
+    public String realizarDevolucion(String carne, String isbn) {
+    if (carne == null || carne.trim().isEmpty()) {
+        return "Debe ingresar un carné.";
+    }
+    if (isbn == null || isbn.trim().isEmpty()) {
+        return "Debe ingresar un ISBN.";
+    }
+
+    // Verificar que el estudiante exista
+    Estudiante est = buscarEstudiantePorCarne(carne);
+    if (est == null) {
+        return "No se encontró estudiante con ese carné.";
+    }
+
+    // Verificar que el libro exista
+    Libro libro = buscarLibroPorISBN(isbn);
+    if (libro == null) {
+        return "No se encontró un libro con ese ISBN.";
+    }
+
+    // Buscar préstamo activo de ese estudiante y ese libro
+    Prestamo prestamo = prestamos.buscarPrestamoActivo(carne, isbn);
+    if (prestamo == null) {
+        return "No hay un préstamo activo de ese libro para este estudiante.";
+    }
+
+    // Marcar devolución
+    LocalDate hoy = LocalDate.now();
+    prestamo.setFechaDevolucionReal(hoy);
+    prestamo.setEstado("DEVUELTO");
+
+    // Calcular retraso y multa (ejemplo sencillo)
+    int diasRetraso = 0;
+    double multa = 0;
+
+    if (prestamo.getFechaDevolucionEsperada() != null &&
+        hoy.isAfter(prestamo.getFechaDevolucionEsperada())) {
+
+        diasRetraso = (int) java.time.temporal.ChronoUnit.DAYS.between(
+                prestamo.getFechaDevolucionEsperada(), hoy
+        );
+        if (diasRetraso < 0) diasRetraso = 0;
+
+        multa = diasRetraso * 1.0; // Q1 por día, ajusta si quieres
+    }
+
+    prestamo.setDiasRetraso(diasRetraso);
+    prestamo.setMultaGenerada(multa);
+    prestamo.setMultaPagada(false); // por ahora siempre pendiente
+
+    // Devolver ejemplar al inventario
+    libro.setCantidad(libro.getCantidad() + 1);
+
+    if (multa > 0) {
+        return "Devolución registrada. Tiene multa de Q " + multa + ".";
+    } else {
+        return "Devolución registrada sin multa.";
+    }
+ }
+//--    
+    public String generarReporteEstudianteConPrestamos(String carne) {
+    if (carne == null || carne.trim().isEmpty()) {
+        return "Debe ingresar un carné.\n";
+    }
+
+    Estudiante est = buscarEstudiantePorCarne(carne);
+    if (est == null) {
+        return "No se encontró estudiante con ese carné.\n";
+    }
+
+    StringBuilder sb = new StringBuilder();
+    sb.append("__________________________________________\n");
+    sb.append("        INFORMACIÓN DEL ESTUDIANTE       \n");
+    sb.append("__________________________________________\n");
+    sb.append("Carné:   ").append(est.getCarnet()).append("\n");
+    sb.append("Nombre:  ").append(est.getNombre()).append("\n");
+    sb.append("Carrera: ").append(est.getCarrera()).append("\n");
+    sb.append("Correo:  ").append(est.getCorreo()).append("\n");
+    sb.append("Estado:  ").append(est.getEstadoCivil()).append("\n\n");
+
+    Prestamo[] activos = prestamos.prestamosActivosPorEstudiante(carne);
+    Prestamo[] historial = prestamos.historialPorEstudiante(carne);
+
+    int totalActivos = (activos == null) ? 0 : activos.length;
+    int totalPrestamos = (historial == null) ? 0 : historial.length;
+
+    sb.append("Préstamos Activos:   ").append(totalActivos).append("\n");
+    sb.append("Total Préstamos:     ").append(totalPrestamos).append("\n");
+    sb.append("Multas Pendientes:   Q 0.00\n\n"); // por ahora fijo
+
+    sb.append("PRÉSTAMOS ACTIVOS:\n");
+    sb.append("__________________________________________\n");
+
+    if (totalActivos == 0) {
+        sb.append("No tiene préstamos activos.\n");
+    } else {
+        for (Prestamo p : activos) {
+            if (p == null) continue;
+            sb.append("Libro:            ").append(p.getTituloLibro()).append("\n");
+            sb.append("ISBN:             ").append(p.getIsbnLibro()).append("\n");
+            sb.append("Fecha Préstamo:   ").append(p.getFechaPrestamo()).append("\n");
+            sb.append("Fecha Devolución: ").append(p.getFechaDevolucionEsperada()).append("\n");
+            sb.append("Días Restantes:   ").append(
+                    java.time.Period.between(
+                            java.time.LocalDate.now(),
+                            p.getFechaDevolucionEsperada()
+                    ).getDays()
+            ).append("\n");
+            sb.append("__________________________________________\n");
+        }
+    }
+
+    return sb.toString();
+}
+
+//------------------------------Contadores para el dashboard
     public int contarLibros() {
         Libro[] lista = libros.todosLosLibros();
         int contador = 0;
