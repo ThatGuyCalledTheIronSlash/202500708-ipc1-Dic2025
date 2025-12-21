@@ -5,6 +5,8 @@ import modelos.Libro;
 import modelos.Estudiante;
 import modelos.Bibliotecario;
 import Controladores.ControladorAdmin;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
 
@@ -24,6 +26,7 @@ public class VentanaAdmin extends javax.swing.JFrame {
                 this.controladorAdmin = controladorAdmin;  
                     setLocationRelativeTo(null);
                 //Cargar
+                    
                     cargarlibroenlatabla(controladorAdmin.obtenerLibros());
                     cargarestudiantesalatabla(controladorAdmin.obtenerEstudiantes());
                     cargarbibliotecariosalatabla(controladorAdmin.obtenerBibliotecarios());
@@ -95,15 +98,24 @@ private void cargarbibliotecariosalatabla(Bibliotecario[] bibliotecarios){
                 }
             }
         } 
-
+//==============================DASHBOARD =====================================
 private void actualizarDashboard() {
     int totalLibros = controladorAdmin.contarLibros();
     int totalEstudiantes = controladorAdmin.contarEstudiantes();
     int totalBibliotecarios = controladorAdmin.contarBibliotecarios();
-    
+    int totalPrestamos = controladorAdmin.contarPrestamos();
         lblTotalLibros.setText(String.valueOf(totalLibros));
         lblTotalEstudiantes.setText(String.valueOf(totalEstudiantes));
         lblTotalBibliotecarios.setText(String.valueOf(totalBibliotecarios));
+        lblTotalprestamo.setText(String.valueOf(totalPrestamos));
+        
+        actualizarFecha();
+}
+
+private void actualizarFecha() {
+        LocalDateTime ahora = LocalDateTime.now();
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                lblFecha.setText(ahora.format(formato));
 }
 //----------------------------------------
     @SuppressWarnings("unchecked")
@@ -125,6 +137,10 @@ private void actualizarDashboard() {
         jPanel11 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         lblTotalBibliotecarios = new javax.swing.JLabel();
+        jPanel13 = new javax.swing.JPanel();
+        lblTotalprestamo = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        lblFecha1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         TablaBibliotecarios = new javax.swing.JTable();
@@ -175,6 +191,7 @@ private void actualizarDashboard() {
         jScrollPane8 = new javax.swing.JScrollPane();
         vistaResultado3 = new javax.swing.JTextArea();
         btncerrarsesion = new javax.swing.JButton();
+        lblFecha = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -232,7 +249,7 @@ private void actualizarDashboard() {
                 .addGap(14, 14, 14))
         );
 
-        jPanel10.setBackground(new java.awt.Color(0, 153, 255));
+        jPanel10.setBackground(new java.awt.Color(0, 204, 51));
         jPanel10.setForeground(new java.awt.Color(51, 153, 255));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -268,7 +285,7 @@ private void actualizarDashboard() {
                 .addGap(14, 14, 14))
         );
 
-        jPanel11.setBackground(new java.awt.Color(0, 153, 255));
+        jPanel11.setBackground(new java.awt.Color(255, 153, 102));
         jPanel11.setForeground(new java.awt.Color(51, 153, 255));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -285,13 +302,14 @@ private void actualizarDashboard() {
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
-                .addComponent(jLabel10)
-                .addGap(26, 26, 26))
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addComponent(lblTotalBibliotecarios, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                        .addComponent(lblTotalBibliotecarios, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(35, 35, 35))))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -301,6 +319,46 @@ private void actualizarDashboard() {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel10)
                 .addGap(14, 14, 14))
+        );
+
+        jPanel13.setBackground(new java.awt.Color(204, 51, 255));
+
+        lblTotalprestamo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblTotalprestamo.setForeground(new java.awt.Color(0, 0, 0));
+        lblTotalprestamo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTotalprestamo.setText("jLabel6");
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel11.setText("TOTAL PRESTAMOS");
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                        .addComponent(lblFecha1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(45, 45, 45))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                        .addComponent(lblTotalprestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(76, 76, 76))))
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addComponent(lblTotalprestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblFecha1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -316,7 +374,9 @@ private void actualizarDashboard() {
                         .addGap(43, 43, 43)
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39)
-                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(29, 29, 29)
                         .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(44, Short.MAX_VALUE))
@@ -324,14 +384,16 @@ private void actualizarDashboard() {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(313, 313, 313))
+                .addGap(40, 40, 40)
+                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55))
         );
 
         jTabbedPane1.addTab("Dashboard", jPanel1);
@@ -370,7 +432,7 @@ private void actualizarDashboard() {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btndesactivarbibliotecario)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnmodificarbibliotecario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnrecargarpaginabibliotecario))
@@ -385,12 +447,12 @@ private void actualizarDashboard() {
                 .addComponent(btnagregarbibliotecario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnmodificarbibliotecario)
                     .addComponent(btndesactivarbibliotecario)
+                    .addComponent(btnmodificarbibliotecario)
                     .addComponent(btnrecargarpaginabibliotecario))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Bibliotecarios", jPanel2);
@@ -448,7 +510,7 @@ private void actualizarDashboard() {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(btnBorrarLibro)
-                                .addGap(14, 14, 14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnModificarLibro)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnrecargarlibros))
@@ -466,14 +528,13 @@ private void actualizarDashboard() {
                         .addComponent(seleciltroslibros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnbscarlibro)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBorrarLibro)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnrecargarlibros)
-                        .addComponent(btnModificarLibro)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                    .addComponent(btnModificarLibro)
+                    .addComponent(btnrecargarlibros))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Libros", jPanel3);
@@ -547,7 +608,7 @@ private void actualizarDashboard() {
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnrecargarestudiantes)
                         .addComponent(btnModificarEstudiante)))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Estudiantes", jPanel4);
@@ -717,6 +778,9 @@ private void actualizarDashboard() {
         btncerrarsesion.setText("Cerrar Sesión");
         btncerrarsesion.addActionListener(this::btncerrarsesionActionPerformed);
 
+        lblFecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFecha.setText("jLabel11");
+
         jMenu1.setText("Archivo");
 
         jMenuItem2.setText("Guardar Estudiantes");
@@ -745,18 +809,25 @@ private void actualizarDashboard() {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 930, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 930, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btncerrarsesion))
+                .addComponent(btncerrarsesion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 676, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btncerrarsesion)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btncerrarsesion)
+                    .addComponent(lblFecha))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1028,6 +1099,7 @@ private void actualizarDashboard() {
     private javax.swing.JButton btnrecargarpaginabibliotecario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1047,6 +1119,7 @@ private void actualizarDashboard() {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1064,9 +1137,12 @@ private void actualizarDashboard() {
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblFecha1;
     private javax.swing.JLabel lblTotalBibliotecarios;
     private javax.swing.JLabel lblTotalEstudiantes;
     private javax.swing.JLabel lblTotalLibros;
+    private javax.swing.JLabel lblTotalprestamo;
     private javax.swing.JComboBox<String> seleciltroslibros;
     private javax.swing.JTextField textobuscarestudiante;
     private javax.swing.JTextField textobuscarlibros;

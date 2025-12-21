@@ -38,7 +38,7 @@ public class Proyecto1_IPC2025 {
                 18,                         //Edad
                 'S'                         //Estado
         );
-        estudiantes.agregarEstudiante(nuevoEstudiante);
+            estudiantes.agregarEstudiante(nuevoEstudiante);
 
         Bibliotecario nuevoBibliotecario = new Bibliotecario(
                 "emple001",        // IDEmpleado
@@ -54,6 +54,6 @@ public class Proyecto1_IPC2025 {
                 'S',               // estadoCivil
                 4500.0             // salario
         );
-        bibliotecarios.agregarBibliotecarios(nuevoBibliotecario);
+            bibliotecarios.agregarBibliotecarios(nuevoBibliotecario);
     }
 }
