@@ -11,7 +11,7 @@ public class RepositorioPrestamo {
         this.contador = 0;
     }
 
-//Utilidades
+//===================================Utilidades====================================
     public void agregarPrestamo(Prestamo p) {
         if (p == null) {
             return;
@@ -22,15 +22,23 @@ public class RepositorioPrestamo {
         prestamos[contador] = p;
         contador++;
     }
-//--
+
     public Prestamo[] todosLosPrestamos() {
+        int contador = 0;
+        for (Prestamo prestamo :prestamos){
+            if(prestamo != null) contador++;
+        }
         Prestamo[] copia = new Prestamo[contador];
-            for (int i = 0; i < contador; i++) {
-                copia[i] = prestamos[i];
-            }
+         int idx = 0;
+         for (Prestamo prestamo :prestamos){
+             if(prestamo != null){
+                 copia[idx++] = prestamo;
+             }
+         }
+  
         return copia;
     }
-//--
+
     public Prestamo[] prestamosActivosPorEstudiante(String carnet) {
         if (carnet == null) return null;
             carnet = carnet.trim();
@@ -58,7 +66,7 @@ public class RepositorioPrestamo {
             }
         return resultado;
     }
-//--
+
     public Prestamo[] historialPorEstudiante(String carnet) {
         if (carnet == null) return null;
             carnet = carnet.trim();
@@ -82,7 +90,7 @@ public class RepositorioPrestamo {
             }
         return resultado;
     }
-//--
+
     public Prestamo buscarPrestamoActivo(String carnet, String isbn) {
         if (carnet == null || isbn == null) return null;
             carnet = carnet.trim();
@@ -100,7 +108,5 @@ public class RepositorioPrestamo {
         }
         return null;
     }
-//--
-    
 }
 

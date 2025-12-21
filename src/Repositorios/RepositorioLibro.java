@@ -64,13 +64,13 @@ public class RepositorioLibro {
                 if (texto == null) texto = "";
     texto = texto.trim().toLowerCase();
 
-    // Si no hay texto, regresamos todos los libros
+    // Si no hay texto, se muestran todos los libros
     if (texto.isEmpty()) {
         return todosLosLibros();
     }
 
     if (filtro == null) {
-        filtro = "titulo"; // valor por defecto para evitar NullPointerException
+        filtro = "titulo"; 
     }
 
     int conteo = contarCoincidenciasRecursivo(texto, filtro, 0);
@@ -84,41 +84,47 @@ public class RepositorioLibro {
             return 0;
         }
            Libro actual = libros[indice];
-               int suma = coincideConFiltro(actual, texto, filtro) ? 1 : 0;
-                    return suma + contarCoincidenciasRecursivo(texto, filtro, indice + 1);
+                int suma;
+                    if (coincideConFiltro(actual, texto, filtro)) {
+                        suma = 1;
+                    } else {
+                        suma = 0;
+                    }
+                return suma + contarCoincidenciasRecursivo(texto, filtro, indice + 1);
         }
     
     private int llenarResultadosRecursivo(String texto, String filtro, int indiceArreglo, Libro[] resultados, int indiceResultado) {
         if (indiceArreglo >= libros.length || indiceResultado >= resultados.length) {
             return indiceResultado;
         }
-    Libro actual = libros[indiceArreglo];
-        if (coincideConFiltro(actual, texto, filtro)) {
-            resultados[indiceResultado] = actual;
-            return llenarResultadosRecursivo(texto, filtro, indiceArreglo + 1, resultados, indiceResultado + 1);
-    } else {
-            return llenarResultadosRecursivo(texto, filtro, indiceArreglo + 1, resultados, indiceResultado);
-         }
-    }
- 
-    private boolean coincideConFiltro(Libro libro, String texto, String filtro) {
-    if (libro == null) return false;
+        
+        Libro actual = libros[indiceArreglo];
+            if (coincideConFiltro(actual, texto, filtro)) {
+                resultados[indiceResultado] = actual;
+                return llenarResultadosRecursivo(texto, filtro, indiceArreglo + 1, resultados, indiceResultado + 1);
+        } else {
+                return llenarResultadosRecursivo(texto, filtro, indiceArreglo + 1, resultados, indiceResultado);
+             }
+        }
 
-    switch (filtro.toLowerCase()) {
-        case "titulo":
-            return contieneSeguro(libro.getTitulo(), texto);
-        case "autor":
-            return contieneSeguro(libro.getAutor(), texto);
-        case "categoria":
-            return contieneSeguro(libro.getCategoria(), texto);
-        case "isbn":
-            return contieneSeguro(libro.getISBN(), texto);
-        case "editorial":
-            return contieneSeguro(libro.getEditorial(), texto);
-        default:
-            return contieneSeguro(libro.getTitulo(), texto);
-    }
-}
+    private boolean coincideConFiltro(Libro libro, String texto, String filtro) {
+        if (libro == null) return false;
+
+            switch (filtro.toLowerCase()) {
+                case "titulo":
+                    return contieneSeguro(libro.getTitulo(), texto);
+                case "autor":
+                    return contieneSeguro(libro.getAutor(), texto);
+                case "categoria":
+                    return contieneSeguro(libro.getCategoria(), texto);
+                case "isbn":
+                    return contieneSeguro(libro.getISBN(), texto);
+                case "editorial":
+                    return contieneSeguro(libro.getEditorial(), texto);
+                default:
+                    return contieneSeguro(libro.getTitulo(), texto);
+            }
+        }
     
     private boolean contieneSeguro(String campo, String texto) {
         if (campo == null) return false;
@@ -126,19 +132,19 @@ public class RepositorioLibro {
         }
     
     private Libro buscarLibroRecursivo(String ISBN, int indice) {
-    // Caso base: llegamos al final del arreglo sin encontrar
+    // Se regresa valor vacio si se llega el final y no encuentra coincidencia.
     if (indice >= libros.length) {
         return null;
     }
 
     Libro actual = libros[indice];
 
-    // Si hay libro en esta posición y coincide el ISBN, lo devolvemos
+    // Si hay libro en esta posición y coincide con el ISBN, se devuelve
     if (actual != null && ISBN.equals(actual.getISBN())) {
         return actual;
     }
 
-    // Paso recursivo: buscar en la siguiente posición
+    //buscar en la siguiente posición
     return buscarLibroRecursivo(ISBN, indice + 1);
 }
 //==========================Ordenamiento==================
@@ -150,8 +156,20 @@ public class RepositorioLibro {
 
                 if (a == null || b == null) continue;
 
-                String ta = a.getTitulo() == null ? "" : a.getTitulo();
-                String tb = b.getTitulo() == null ? "" : b.getTitulo();
+                String ta;
+                    if (a.getTitulo() == null) {
+                        ta = "";
+                    } else {
+                        ta = a.getTitulo();
+                    }
+
+                String tb;
+                    if (b.getTitulo() == null) {
+                        tb = "";
+                    } else {
+                        tb = b.getTitulo();
+                    }
+
 
                 if (ta.compareToIgnoreCase(tb) > 0) {
                     libros[j] = b;
@@ -159,7 +177,7 @@ public class RepositorioLibro {
                 }
             }
         }
-}   
+    }   
     
 
 }

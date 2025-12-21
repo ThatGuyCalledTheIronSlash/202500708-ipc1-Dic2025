@@ -67,7 +67,12 @@ public class ControladorAdmin {
 
     public Estudiante[] buscarEstudiantes(String texto) {
         return estudiantes.buscarEstudiantes(texto);
+     }
+    
+    public Prestamo[] obtenerPrestamos(){
+        return prestamos.todosLosPrestamos();
     }
+    
 
 //========================CARGA DE CSV===============================
     public String generarVistaPrevia(File archivo, int maxLineas) {
@@ -203,10 +208,25 @@ public class ControladorAdmin {
                 String correo    = datos[6].trim();
                 String contrasena= datos[7].trim();
                 String usuario   = datos[8].trim();
-                char genero      = datos[9].trim().isEmpty() ? 'N' : datos[9].trim().charAt(0);
+                
+                char genero;
+                    String generoStr = datos[9].trim();
+                    if (generoStr.isEmpty()) {
+                        genero = 'N';
+                    } else {
+                        genero = generoStr.charAt(0);
+                    }
+                    
                 int telefono     = Integer.parseInt(datos[10].trim());
                 int edad         = Integer.parseInt(datos[11].trim());
-                char estadoCivil = datos[12].trim().isEmpty() ? 'N' : datos[12].trim().charAt(0);
+                
+                char estadoCivil;
+                    String estadoStr = datos[12].trim();
+                    if (estadoStr.isEmpty()) {
+                        estadoCivil = 'N';
+                    } else {
+                        estadoCivil = estadoStr.charAt(0);
+                    }
                 
                 // Validación para evitar carnet duplicados
                 if (estudiantes.buscarPorCarne(carnet) != null) {
@@ -285,10 +305,27 @@ public class ControladorAdmin {
                 String correo = datos[5].trim();
                 String usuario = datos[6].trim();
                 String contrasena = datos[7].trim();
-                char genero = datos[8].trim().isEmpty() ? 'N' : datos[8].trim().charAt(0);
+                
+                char genero;
+                    String generoStr = datos[9].trim();
+                    if (generoStr.isEmpty()) {
+                        genero = 'N';
+                    } else {
+                        genero = generoStr.charAt(0);
+                    }
+                    
                 int telefono = Integer.parseInt(datos[9].trim());
                 double salario = Double.parseDouble(datos[10].trim());
-                char estadoCivil = datos[11].trim().isEmpty() ? 'N' : datos[11].trim().charAt(0);
+                
+                
+                char estadoCivil;
+                     String estadoStr = datos[12].trim();
+                     if (estadoStr.isEmpty()) {
+                         estadoCivil = 'N';
+                     } else {
+                         estadoCivil = estadoStr.charAt(0);
+                     }
+                     
                 //Validacion para evitar duplicados
                 if (bibliotecarios.retornarBibliotecario(idEmpleado) != null) {
                     reporte.append("Linea ").append(numeroLinea).append(": ID duplicado (").append(idEmpleado).append(")\n");
@@ -388,17 +425,17 @@ public class ControladorAdmin {
     }  
 
 //====================== PRESTAMOS =========================== 
-public String realizarPrestamo(String carne, String isbn) {
-    return controladorPrestamos.realizarPrestamo(carne, isbn);
-}
+    public String realizarPrestamo(String carne, String isbn) {
+        return controladorPrestamos.realizarPrestamo(carne, isbn);
+    }
 
-public String realizarDevolucion(String carne, String isbn) {
-    return controladorPrestamos.realizarDevolucion(carne, isbn);
-}
+    public String realizarDevolucion(String carne, String isbn) {
+        return controladorPrestamos.realizarDevolucion(carne, isbn);
+    }
 
-public String generarReporteEstudianteConPrestamos(String carne) {
-    return controladorPrestamos.generarReporteEstudianteConPrestamos(carne);
-}  
+    public String generarReporteEstudianteConPrestamos(String carne) {
+        return controladorPrestamos.generarReporteEstudianteConPrestamos(carne);
+    }  
 
 //======================CONTADORES DASHBOARD==============================
     public int contarLibros() {
@@ -731,97 +768,179 @@ public String generarReporteEstudianteConPrestamos(String carne) {
     }
   
 //===================================PERSISTENCIA DE ARHCIVOS ===========================
- public String guardarEstudiantesCSV(File archivo) {
-    Estudiante[] lista = estudiantes.todoslosestudiantes();
-        if (lista == null || lista.length == 0) {
-         return "No hay estudiantes para guardar.";
+    public String guardarEstudiantesCSV(File archivo) {
+       Estudiante[] lista = estudiantes.todoslosestudiantes();
+           if (lista == null || lista.length == 0) {
+            return "No hay estudiantes para guardar.";
+           }
+
+       try (PrintWriter pw = new PrintWriter(new FileWriter(archivo))) {
+           pw.println("Carrera,Semestre,Facultad,Carnet,Nombre,CUI,Correo,Contrasena,Usuario,Genero,Telefono,Edad,EstadoCivil");
+
+           for (Estudiante e : lista) {
+               if (e == null) continue;
+               pw.printf("%s,%d,%s,%s,%s,%s,%s,%s,%s,%c,%d,%d,%c%n",
+                   e.getCarrera(),
+                   e.getSemestre(),
+                   e.getFacultad(),
+                   e.getCarnet(),
+                   e.getNombre(),
+                   e.getCUI(),
+                   e.getCorreo(),
+                   e.getContrasena(),
+                   e.getUsuario(),
+                   e.getGenero(),
+                   e.getTelefono(),
+                   e.getEdad(),
+                   e.getEstadoCivil()
+               );
+           }
+           return "Archivo de estudiantes guardado correctamente.";
+       } catch (Exception ex) {
+           return "Error al guardar estudiantes: " + ex.getMessage();
+       }
+   }
+
+    public String guardarLibrosCSV(File archivo) {
+       Libro[] lista = libros.todosLosLibros();
+           if (lista == null || lista.length == 0) {
+               return "No hay libros para guardar.";
+           }
+
+       try (PrintWriter pw = new PrintWriter(new FileWriter(archivo))) {
+           pw.println("ISBN,Titulo,Autor,Editorial,Anio,Categoria,Cantidad,Ubicacion,Descripcion");
+           for (Libro l : lista) {
+               if (l == null) continue;
+               pw.printf("%s,%s,%s,%s,%d,%s,%d,%s,%s%n",
+                   l.getISBN(),
+                   l.getTitulo(),
+                   l.getAutor(),
+                   l.getEditorial(),
+                   l.getAnioPublicacion(),
+                   l.getCategoria(),
+                   l.getCantidad(),
+                   l.getUbicacion(),
+                   l.getDescripcion()
+               );
+           }
+           return "Archivo de libros guardado correctamente.";
+       } catch (Exception ex) {
+           return "Error al guardar libros: " + ex.getMessage();
+       }
+   }
+
+    public String guardarBibliotecariosCSV(File archivo) {
+       Bibliotecario[] lista = bibliotecarios.todosLosBibliotecarios();
+       if (lista == null || lista.length == 0) {
+           return "No hay bibliotecarios para guardar.";
+       }
+
+       try (PrintWriter pw = new PrintWriter(new FileWriter(archivo))) {
+           pw.println("IDEmpleado,Turno,AreaTrabajo,Nombre,CUI,Correo,Usuario,Contrasena,Genero,Telefono,Salario,EstadoCivil");
+           for (Bibliotecario b : lista) {
+               if (b == null) continue;
+               pw.printf("%s,%s,%s,%s,%s,%s,%s,%s,%c,%d,%.2f,%c%n",
+                   b.getIDEmpleado(),
+                   b.getTurno(),
+                   b.getAreaTrabajo(),
+                   b.getNombre(),
+                   b.getCUI(),
+                   b.getCorreo(),
+                   b.getUsuario(),
+                   b.getContrasena(),
+                   b.getGenero(),
+                   b.getTelefono(),
+                   b.getSalario(),
+                   b.getEstadoCivil()
+               );
+           }
+           return "Archivo de bibliotecarios guardado correctamente.";
+       } catch (Exception ex) {
+           return "Error al guardar bibliotecarios: " + ex.getMessage();
+       }
+   }   
+  
+//====================================REPORTE HTML =======================================
+    public String generarReporteHTML(String carnet, File archivo) {
+        if (carnet == null || carnet.trim().isEmpty()) {
+            return "Debe ingresar un carné.";
+        }
+        carnet = carnet.trim();
+
+        Estudiante est = buscarEstudiantePorCarne(carnet);
+        if (est == null) {
+            return "No se encontró estudiante con ese carné.";
         }
 
-    try (PrintWriter pw = new PrintWriter(new FileWriter(archivo))) {
-        pw.println("Carrera,Semestre,Facultad,Carnet,Nombre,CUI,Correo,Contrasena,Usuario,Genero,Telefono,Edad,EstadoCivil");
+        Prestamo[] activos = prestamos.prestamosActivosPorEstudiante(carnet);
+        Prestamo[] historial = prestamos.historialPorEstudiante(carnet);
 
-        for (Estudiante e : lista) {
-            if (e == null) continue;
-            pw.printf("%s,%d,%s,%s,%s,%s,%s,%s,%s,%c,%d,%d,%c%n",
-                e.getCarrera(),
-                e.getSemestre(),
-                e.getFacultad(),
-                e.getCarnet(),
-                e.getNombre(),
-                e.getCUI(),
-                e.getCorreo(),
-                e.getContrasena(),
-                e.getUsuario(),
-                e.getGenero(),
-                e.getTelefono(),
-                e.getEdad(),
-                e.getEstadoCivil()
-            );
+        try (PrintWriter pw = new PrintWriter(new FileWriter(archivo))) {
+            pw.println("<!DOCTYPE html>");
+            pw.println("<html><head><meta charset=\"UTF-8\"><title>Reporte de Estudiante</title>");
+            pw.println("<style>");
+            pw.println("table { border-collapse: collapse; width: 100%; }");
+            pw.println("th, td { border: 1px solid #000; padding: 4px; text-align: left; }");
+            pw.println("th { background-color: #ddd; }");
+            pw.println("</style>");
+            pw.println("</head><body>");
+
+            pw.println("<h1>Información del Estudiante</h1>");
+            pw.println("<p><b>Carné:</b> " + est.getCarnet() + "</p>");
+            pw.println("<p><b>Nombre:</b> " + est.getNombre() + "</p>");
+            pw.println("<p><b>Carrera:</b> " + est.getCarrera() + "</p>");
+            pw.println("<p><b>Correo:</b> " + est.getCorreo() + "</p>");
+            pw.println("<p><b>Estado:</b> " + est.getEstadoCivil() + "</p>");
+
+            int totalActivos;
+            if (activos == null) {
+                totalActivos = 0;
+            } else {
+                totalActivos = activos.length;  
+            }
+
+            int totalPrestamos;
+            if (historial == null) {
+                totalPrestamos = 0;
+            } else {
+                totalPrestamos = historial.length;
+            }
+
+            pw.println("<h2>Resumen</h2>");
+            pw.println("<p><b>Préstamos activos:</b> " + totalActivos + "</p>");
+            pw.println("<p><b>Total préstamos:</b> " + totalPrestamos + "</p>");
+
+            pw.println("<h2>Préstamos activos</h2>");
+            pw.println("<table>");
+            pw.println("<tr><th>Libro</th><th>ISBN</th><th>Fecha préstamo</th><th>Fecha devolución</th><th>Días restantes</th></tr>");
+
+            if (activos != null) {
+                for (Prestamo p : activos) {
+                    if (p == null) continue;
+                    int diasRestantes = 0;
+                    if (p.getFechaDevolucionEsperada() != null) {
+                        diasRestantes = java.time.Period.between(
+                            java.time.LocalDate.now(),
+                            p.getFechaDevolucionEsperada()
+                        ).getDays();
+                    }
+                    pw.println("<tr>"
+                        + "<td>" + p.getTituloLibro() + "</td>"
+                        + "<td>" + p.getIsbnLibro() + "</td>"
+                        + "<td>" + p.getFechaPrestamo() + "</td>"
+                        + "<td>" + p.getFechaDevolucionEsperada() + "</td>"
+                        + "<td>" + diasRestantes + "</td>"
+                        + "</tr>");
+                }
+            }
+            pw.println("</table>");
+
+            pw.println("</body></html>");
+            return "Reporte HTML generado correctamente.";
+        } catch (Exception e) {
+            return "Error al generar el reporte HTML: " + e.getMessage();
         }
-        return "Archivo de estudiantes guardado correctamente.";
-    } catch (Exception ex) {
-        return "Error al guardar estudiantes: " + ex.getMessage();
-    }
 }
 
-public String guardarLibrosCSV(File archivo) {
-    Libro[] lista = libros.todosLosLibros();
-        if (lista == null || lista.length == 0) {
-            return "No hay libros para guardar.";
-        }
-
-    try (PrintWriter pw = new PrintWriter(new FileWriter(archivo))) {
-        pw.println("ISBN,Titulo,Autor,Editorial,Anio,Categoria,Cantidad,Ubicacion,Descripcion");
-        for (Libro l : lista) {
-            if (l == null) continue;
-            pw.printf("%s,%s,%s,%s,%d,%s,%d,%s,%s%n",
-                l.getISBN(),
-                l.getTitulo(),
-                l.getAutor(),
-                l.getEditorial(),
-                l.getAnioPublicacion(),
-                l.getCategoria(),
-                l.getCantidad(),
-                l.getUbicacion(),
-                l.getDescripcion()
-            );
-        }
-        return "Archivo de libros guardado correctamente.";
-    } catch (Exception ex) {
-        return "Error al guardar libros: " + ex.getMessage();
-    }
-}
-
-public String guardarBibliotecariosCSV(File archivo) {
-    Bibliotecario[] lista = bibliotecarios.todosLosBibliotecarios();
-    if (lista == null || lista.length == 0) {
-        return "No hay bibliotecarios para guardar.";
-    }
-
-    try (PrintWriter pw = new PrintWriter(new FileWriter(archivo))) {
-        pw.println("IDEmpleado,Turno,AreaTrabajo,Nombre,CUI,Correo,Usuario,Contrasena,Genero,Telefono,Salario,EstadoCivil");
-        for (Bibliotecario b : lista) {
-            if (b == null) continue;
-            pw.printf("%s,%s,%s,%s,%s,%s,%s,%s,%c,%d,%.2f,%c%n",
-                b.getIDEmpleado(),
-                b.getTurno(),
-                b.getAreaTrabajo(),
-                b.getNombre(),
-                b.getCUI(),
-                b.getCorreo(),
-                b.getUsuario(),
-                b.getContrasena(),
-                b.getGenero(),
-                b.getTelefono(),
-                b.getSalario(),
-                b.getEstadoCivil()
-            );
-        }
-        return "Archivo de bibliotecarios guardado correctamente.";
-    } catch (Exception ex) {
-        return "Error al guardar bibliotecarios: " + ex.getMessage();
-    }
-}   
-    
 }
 

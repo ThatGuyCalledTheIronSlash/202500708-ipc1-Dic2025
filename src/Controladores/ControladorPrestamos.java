@@ -151,8 +151,19 @@ public String realizarPrestamo(String carne, String isbn) {
         Prestamo[] activos = prestamos.prestamosActivosPorEstudiante(carne);
         Prestamo[] historial = prestamos.historialPorEstudiante(carne);
 
-        int totalActivos = (activos == null) ? 0 : activos.length;
-        int totalPrestamos = (historial == null) ? 0 : historial.length;
+        int totalActivos;
+            if (activos == null) {
+                totalActivos = 0;
+            } else {
+                totalActivos = activos.length;
+        }
+        
+        int totalPrestamos;
+            if (historial == null) {
+                totalPrestamos = 0;
+            } else {
+                totalPrestamos = historial.length;
+        }
 
         sb.append("Préstamos Activos:   ").append(totalActivos).append("\n");
         sb.append("Total Préstamos:     ").append(totalPrestamos).append("\n");

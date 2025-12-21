@@ -117,6 +117,7 @@ public class VentanaEstudiante extends javax.swing.JFrame {
             modeloPrestamos.addRow(fila);
         }
     }
+    actualizarDashboardPrestamos();
 }
     @SuppressWarnings("unchecked")
 //==========================DASHBOARD=====================================
@@ -133,8 +134,19 @@ public class VentanaEstudiante extends javax.swing.JFrame {
        Prestamo[] activos = controladorAdmin.getRepoPrestamos() .prestamosActivosPorEstudiante(carnet);
        Prestamo[] historial = controladorAdmin.getRepoPrestamos().historialPorEstudiante(carnet);
 
-       int prestamosActivos = (activos == null) ? 0 : activos.length;
-       int totalPrestamos = (historial == null) ? 0 : historial.length;
+       int prestamosActivos;
+            if (activos == null) {
+                prestamosActivos = 0;
+            } else {
+                prestamosActivos = activos.length;
+            }
+
+        int totalPrestamos;
+            if (historial == null) {
+                totalPrestamos = 0;
+            } else {
+                totalPrestamos = historial.length;
+            }
        double multasPendientes = 0;
 
        if (historial != null) {
@@ -259,14 +271,14 @@ public class VentanaEstudiante extends javax.swing.JFrame {
                         .addGap(41, 41, 41))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80))))
+                        .addGap(78, 78, 78))))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(76, Short.MAX_VALUE)
+                .addContainerGap(78, Short.MAX_VALUE)
                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGap(43, 43, 43)
                 .addComponent(jLabel12)
                 .addGap(5, 5, 5))
         );

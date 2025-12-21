@@ -10,7 +10,7 @@ import InterfacesGraficas.VentanaBibliotecario;
 import InterfacesGraficas.VentanaEstudiante;
 import modelos.Estudiante;
 import modelos.Bibliotecario;
-import modelos.Prestamo;
+
 
 public class ControladorPrincipal {
 
@@ -130,4 +130,23 @@ public class ControladorPrincipal {
     public RepositorioPrestamo getRepoPrestamos() {
         return prestamos;
     }
+    
+//===================================================================
+    public void configurarInfoUsuario(JLabel label, String nombreUsuario, String rol) {
+    if (label == null) return;
+
+    String nombre = (nombreUsuario == null || nombreUsuario.isBlank())
+            ? "Usuario"
+            : nombreUsuario;
+
+    String rolTexto = (rol == null || rol.isBlank())
+            ? ""
+            : " (" + rol + ")";
+
+    LocalDateTime ahora = LocalDateTime.now();
+    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    String texto = nombre + rolTexto + " - " + ahora.format(fmt);
+
+    label.setText(texto);
+}
 }
