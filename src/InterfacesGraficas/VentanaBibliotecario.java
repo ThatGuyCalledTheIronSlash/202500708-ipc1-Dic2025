@@ -40,8 +40,10 @@ public class VentanaBibliotecario extends javax.swing.JFrame {
     private void actualizarDashboard() {
     int totalLibros = controladorAdmin.contarLibros();
     int totalEstudiantes = controladorAdmin.contarEstudiantes();  
+    int totalPrestamos = controladorAdmin.contarPrestamos();
         lblTotalLibros.setText(String.valueOf(totalLibros));
         lblTotalEstudiantes.setText(String.valueOf(totalEstudiantes));
+        lbltotalprestamos.setText(String.valueOf(totalPrestamos));
 }
 
     public void recargarTodo() {
@@ -94,6 +96,9 @@ public class VentanaBibliotecario extends javax.swing.JFrame {
         lblTotalEstudiantes = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         textobibliotecario = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        lbltotalprestamos = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         TablaLibros = new javax.swing.JTable();
@@ -210,12 +215,12 @@ public class VentanaBibliotecario extends javax.swing.JFrame {
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(63, 63, 63)
                         .addComponent(lblTotalEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap(61, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblTotalEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9)
@@ -225,6 +230,42 @@ public class VentanaBibliotecario extends javax.swing.JFrame {
         jLabel1.setText("BIENVENIDO");
 
         textobibliotecario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jPanel11.setBackground(new java.awt.Color(0, 153, 255));
+        jPanel11.setForeground(new java.awt.Color(51, 153, 255));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel10.setText("TOTAL PRESTAMOS");
+
+        lbltotalprestamos.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lbltotalprestamos.setForeground(new java.awt.Color(0, 0, 0));
+        lbltotalprestamos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbltotalprestamos.setText("jLabel11");
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jLabel10))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(lbltotalprestamos, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(43, Short.MAX_VALUE))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap(61, Short.MAX_VALUE)
+                .addComponent(lbltotalprestamos, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel10)
+                .addGap(14, 14, 14))
+        );
 
         javax.swing.GroupLayout TextoBibliotecarioLayout = new javax.swing.GroupLayout(TextoBibliotecario);
         TextoBibliotecario.setLayout(TextoBibliotecarioLayout);
@@ -237,16 +278,19 @@ public class VentanaBibliotecario extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TextoBibliotecarioLayout.createSequentialGroup()
-                .addContainerGap(211, Short.MAX_VALUE)
+                .addContainerGap(199, Short.MAX_VALUE)
                 .addGroup(TextoBibliotecarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TextoBibliotecarioLayout.createSequentialGroup()
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
+                        .addGap(38, 38, 38)
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(182, 182, 182))
+                        .addGap(179, 179, 179))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TextoBibliotecarioLayout.createSequentialGroup()
                         .addComponent(textobibliotecario, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(274, 274, 274))))
+                        .addGap(274, 274, 274))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TextoBibliotecarioLayout.createSequentialGroup()
+                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(327, 327, 327))))
         );
         TextoBibliotecarioLayout.setVerticalGroup(
             TextoBibliotecarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,11 +301,13 @@ public class VentanaBibliotecario extends javax.swing.JFrame {
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(textobibliotecario, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67)
-                .addGroup(TextoBibliotecarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(229, Short.MAX_VALUE))
+                .addGap(52, 52, 52)
+                .addGroup(TextoBibliotecarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
 
         jTabbedPane1.addTab("Dashboard", TextoBibliotecario);
@@ -547,7 +593,7 @@ public class VentanaBibliotecario extends javax.swing.JFrame {
                 .addComponent(btncerrarsesion)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -788,6 +834,9 @@ public class VentanaBibliotecario extends javax.swing.JFrame {
     private javax.swing.JTextField isbnlibroaprestat;
     private javax.swing.JTextField isbnlibrodevolucion;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -801,7 +850,10 @@ public class VentanaBibliotecario extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -813,6 +865,9 @@ public class VentanaBibliotecario extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblTotalEstudiantes;
     private javax.swing.JLabel lblTotalLibros;
+    private javax.swing.JLabel lblTotalPrestamos;
+    private javax.swing.JLabel lblTotalPrestamos1;
+    private javax.swing.JLabel lbltotalprestamos;
     private javax.swing.JComboBox<String> seleciltroslibros;
     private javax.swing.JLabel textobibliotecario;
     private javax.swing.JTextField textobuscarestudiante;

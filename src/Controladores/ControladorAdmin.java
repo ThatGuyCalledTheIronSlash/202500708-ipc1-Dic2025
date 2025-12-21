@@ -9,6 +9,7 @@ import java.io.IOException;
 import modelos.Libro;
 import modelos.Estudiante;
 import modelos.Bibliotecario;
+import modelos.Prestamo;
 import Repositorios.RepositorioBiblioteca;
 import Repositorios.RepositorioEstudiante;
 import Repositorios.RepositorioLibro;
@@ -432,6 +433,17 @@ public String generarReporteEstudianteConPrestamos(String carne) {
             }
             return contador;
         }
+    
+    public int contarPrestamos() {
+        Prestamo[] lista = prestamos.todosLosPrestamos();
+            int contador = 0;
+                if (lista != null) {
+            for (Prestamo p : lista) {
+                if (p != null) contador++;
+            }
+        }
+        return contador;
+    }
 //=================================NAVEGACION============================ 
         public void cerrarSesion() {
         controladorPrincipal.mostrarLogin();
