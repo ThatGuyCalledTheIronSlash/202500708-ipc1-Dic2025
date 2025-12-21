@@ -132,21 +132,4 @@ public class ControladorPrincipal {
     }
     
 //===================================================================
-    public void configurarInfoUsuario(JLabel label, String nombreUsuario, String rol) {
-    if (label == null) return;
-
-    String nombre = (nombreUsuario == null || nombreUsuario.isBlank())
-            ? "Usuario"
-            : nombreUsuario;
-
-    String rolTexto = (rol == null || rol.isBlank())
-            ? ""
-            : " (" + rol + ")";
-
-    LocalDateTime ahora = LocalDateTime.now();
-    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-    String texto = nombre + rolTexto + " - " + ahora.format(fmt);
-
-    label.setText(texto);
-}
 }
