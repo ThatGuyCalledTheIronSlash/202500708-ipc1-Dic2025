@@ -1047,31 +1047,22 @@ private void actualizarFecha() {
     }//GEN-LAST:event_btnbuscarestudianteActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-            javax.swing.JFileChooser chooser = new javax.swing.JFileChooser();
-        int resultado = chooser.showSaveDialog(this);
-        if (resultado == javax.swing.JFileChooser.APPROVE_OPTION) {
-            java.io.File archivo = chooser.getSelectedFile();
-            String mensaje = controladorAdmin.guardarEstudiantesCSV(archivo);
-            javax.swing.JOptionPane.showMessageDialog(this, mensaje);
-            } 
+        String ruta = "estudiantes.csv";   // o "data/estudiantes.csv" si quieres una subcarpeta
+            java.io.File archivo = new java.io.File(ruta);
+                String mensaje = controladorAdmin.guardarEstudiantesCSV(archivo);
+                    javax.swing.JOptionPane.showMessageDialog(this, mensaje + "\nArchivo: " + archivo.getAbsolutePath());    
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-            javax.swing.JFileChooser chooser = new javax.swing.JFileChooser();
-        if (chooser.showSaveDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
-            java.io.File archivo = chooser.getSelectedFile();
-            String mensaje = controladorAdmin.guardarLibrosCSV(archivo);
-            javax.swing.JOptionPane.showMessageDialog(this, mensaje);
-            }
+        java.io.File archivo = new java.io.File("libros.csv");
+             String mensaje = controladorAdmin.guardarLibrosCSV(archivo);
+                JOptionPane.showMessageDialog(this, mensaje + "\nArchivo: " + archivo.getAbsolutePath());
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        javax.swing.JFileChooser chooser = new javax.swing.JFileChooser();
-     if (chooser.showSaveDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
-         java.io.File archivo = chooser.getSelectedFile();
-         String mensaje = controladorAdmin.guardarBibliotecariosCSV(archivo);
-         javax.swing.JOptionPane.showMessageDialog(this, mensaje);
-     }
+        java.io.File archivo = new java.io.File("bibliotecarios.csv");
+            String mensaje = controladorAdmin.guardarBibliotecariosCSV(archivo);
+                JOptionPane.showMessageDialog(this, mensaje + "\nArchivo: " + archivo.getAbsolutePath());
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 //============================================
    

@@ -1,0 +1,6 @@
+ISBN,titulo,autor,editorial,anioPublicacion,categoria,cantidad,ubicacion,descripcion
+978000000001,Introduccion a Java,Juan Perez,Editorial USAC,2022,Programacion,5,Estante A1,Libro basico para aprender Java
+978000000002,Estructuras de Datos,Ana Lopez,Editorial USAC,2021,Programacion,3,Estante A2,Arreglos y algoritmos
+978000000003,Calculo I,Mario Diaz,McGrawHill,2019,Matematica,2,Estante B1,Derivadas e integrales
+978000000004,Redes de Computadoras,Carlos Ruiz,Pearson,2020,Redes,4,Estante C3,Conceptos de redes y protocolos
+978000000005,Bases de Datos,Sofia Gomez,Alfaomega,2018,Datos,6,Estante D2,Modelo relacional y SQL
