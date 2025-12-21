@@ -1,0 +1,8 @@
+carrera,semestre,facultad,carnet,nombre,cui,correo,contrasena,usuario,genero,telefono,edad,estadoCivil
+Sistemas,5,Ingenieria,20200001,Juan Perez,1234567890101,juan@gmail.com,1234,usuario1,M,55512345,20,S
+Civil,3,Ingenieria,20200002,Ana Lopez,9876543210101,ana@gmail.com,abcd,usuario2,F,55567890,21,S
+Industrial,4,Ingenieria,20200003,Carlos Ramirez,1020304050607,carlos.ramirez@correo.com,car123,usuario3,M,55511122,22,S
+Arquitectura,2,Arquitectura,20200004,Lucia Fernandez,2030405060708,lucia.fernandez@correo.com,luc456,usuario4,F,55522233,19,S
+Sistemas,6,Ingenieria,20200005,Marco Castillo,3040506070809,marco.castillo@correo.com,mar789,usuario5,M,55533344,23,C
+Derecho,3,Ciencias Juridicas,20200006,Paola Ruiz,4050607080910,paola.ruiz@correo.com,paola12,usuario6,F,55544455,21,S
+Medicina,1,Ciencias de la Salud,20200007,Diego Morales,5060708091011,diego.morales@correo.com,diego34,usuario7,M,55555566,18,S

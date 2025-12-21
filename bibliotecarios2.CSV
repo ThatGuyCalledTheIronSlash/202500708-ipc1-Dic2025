@@ -1,0 +1,4 @@
+ID,Turno,AreaTrabajo,Nombre,CUI,Correo,Usuario,Contrasena,Genero,Telefono,Edad,EstadoCivil,Salario
+emple009,Nocturno,Referencia,María Fernanda Ruiz,22334455,mfernanda.ruiz@correo.com,mfernandar,clavefernanda,F,55577112,26,S,4350.00
+emple010,Matutino,Prestamo,José Luis Ortega,33445566,jl.ortega@correo.com,jlortega,clavejose,M,55588223,38,C,4850.25
+emple011,Vespertino,Inventario,Paola Mendoza,44556677,paola.mendoza@correo.com,paolam,clavepaola,F,55599334,31,S,4520.00

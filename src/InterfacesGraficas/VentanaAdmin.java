@@ -2,6 +2,7 @@
 package InterfacesGraficas;
 
 import modelos.Libro;
+import java.io.File;
 import modelos.Estudiante;
 import modelos.Bibliotecario;
 import Controladores.ControladorAdmin;
@@ -1047,20 +1048,19 @@ private void actualizarFecha() {
     }//GEN-LAST:event_btnbuscarestudianteActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        String ruta = "estudiantes.csv";   // o "data/estudiantes.csv" si quieres una subcarpeta
-            java.io.File archivo = new java.io.File(ruta);
+        File archivo = new File("estudiantes.csv");
                 String mensaje = controladorAdmin.guardarEstudiantesCSV(archivo);
                     javax.swing.JOptionPane.showMessageDialog(this, mensaje + "\nArchivo: " + archivo.getAbsolutePath());    
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        java.io.File archivo = new java.io.File("libros.csv");
+        File archivo = new File("libros.csv");
              String mensaje = controladorAdmin.guardarLibrosCSV(archivo);
                 JOptionPane.showMessageDialog(this, mensaje + "\nArchivo: " + archivo.getAbsolutePath());
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        java.io.File archivo = new java.io.File("bibliotecarios.csv");
+        File archivo = new File("bibliotecarios.csv");
             String mensaje = controladorAdmin.guardarBibliotecariosCSV(archivo);
                 JOptionPane.showMessageDialog(this, mensaje + "\nArchivo: " + archivo.getAbsolutePath());
     }//GEN-LAST:event_jMenuItem3ActionPerformed

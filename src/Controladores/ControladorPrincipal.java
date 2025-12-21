@@ -8,6 +8,7 @@ import InterfacesGraficas.VentanaLogin;
 import InterfacesGraficas.VentanaAdmin;
 import InterfacesGraficas.VentanaBibliotecario;
 import InterfacesGraficas.VentanaEstudiante;
+import java.io.File;
 import modelos.Estudiante;
 import modelos.Bibliotecario;
 
@@ -49,6 +50,7 @@ public class ControladorPrincipal {
         controladorAdmin = new ControladorAdmin(this, bibliotecarios, estudiantes, libros, prestamos);
         controladorEstudiante = new ControladorEstudiante(this, libros);
         controladorBiblioteca = new ControladorBiblioteca(this, bibliotecarios);
+        cargarDatosIniciales();
     }
     
 //====================== INICIALIZAR VISTAS =======================
@@ -132,4 +134,28 @@ public class ControladorPrincipal {
     }
     
 //===================================================================
+    
+    private void cargarDatosIniciales() {
+        try {
+            // Estudiantes
+            File estFile = new File("estudiantes.csv");
+                if (estFile.exists()) {
+                    controladorAdmin.cargarEstudiantesCSV(estFile);
+            }
+
+            // Libros
+            File libFile = new File("libros.csv");
+                if (libFile.exists()) {
+                    controladorAdmin.cargarLibrosCSV(libFile);
+            }
+
+            // Bibliotecarios
+            File bibFile = new File("bibliotecarios.csv");
+                if (bibFile.exists()) {
+                    controladorAdmin.cargarBibliotecariosCSV(bibFile);
+            }
+        } catch (Exception e) {
+                System.out.println("Error al cargar datos iniciales: " + e.getMessage());
+        }
+    }
 }

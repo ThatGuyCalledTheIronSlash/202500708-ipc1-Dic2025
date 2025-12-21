@@ -1,0 +1,9 @@
+ID,Turno,AreaTrabajo,Nombre,CUI,Correo,Usuario,Contrasena,Genero,Telefono,Edad,EstadoCivil,Salario
+emple001,Matutino,Secretaria,Maria Lopez,12345545,maria@gmail.com,maria123,bibliotecaria001,F,55512345,30,S,4500.00
+emple002,Vespertino,Prestamo,Juan Perez,98765432,juan.perez@correo.com,juanp,clavejuan,M,55567890,28,S,4200.50
+emple003,Nocturno,Inventario,Ana Gomez,11223344,ana.gomez@correo.com,anag,claveana,F,55598765,35,C,4800.00
+emple004,Matutino,Referencia,Luis Martínez,55667788,luis.martinez@correo.com,luism,claveluis,M,55511223,32,C,4600.00
+emple005,Vespertino,Registro,Sofía Hernández,66778899,sofia.hdz@correo.com,sofiah,clavesofia,F,55533445,27,S,4300.75
+emple006,Nocturno,Prestamo,Carlos Ramírez,77889911,carlos.r@correo.com,carlosr,clavecarlos,M,55544667,40,C,4900.00
+emple007,Matutino,Inventario,Elena Torres,88991122,elena.torres@correo.com,elenat,claveelena,F,55555889,29,S,4400.50
+emple008,Vespertino,Secretaria,Diego Castillo,99112233,diego.castillo@correo.com,diegoC,clavedia,M,55566990,33,C,4700.00
