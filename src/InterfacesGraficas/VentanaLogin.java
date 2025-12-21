@@ -4,16 +4,18 @@ import Controladores.ControladorLogin;
 
 
 public class VentanaLogin extends javax.swing.JFrame {
-    
-        private final ControladorLogin controladorLogin;
-        private static final java.util.logging.Logger logger =
-            java.util.logging.Logger.getLogger(VentanaLogin.class.getName());
-    
-    
-    public VentanaLogin(ControladorLogin controladorLogin) {
-        this.controladorLogin = controladorLogin;
-        initComponents();
-        setLocationRelativeTo(null);
+    private final ControladorLogin controladorLogin;
+       
+        public VentanaLogin(ControladorLogin controladorLogin) {
+            this.controladorLogin = controladorLogin;
+            initComponents();
+            setLocationRelativeTo(null);
+    }
+        
+//================== LIMPIAR ============================
+    public void limpiarCampos() {
+        CampoUsuario.setText("");
+        campoContrasena.setText("");
     }
     
     @SuppressWarnings("unchecked")
@@ -99,18 +101,13 @@ public class VentanaLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//--------------------------------------------
-    public void limpiarCampos() {
-        CampoUsuario.setText("");
-        campoContrasena.setText("");
-    }
-//--------------------------------------------
+//====================BOTONES=============================
     private void iniciarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarsesionActionPerformed
     String usuario = CampoUsuario.getText();
     String contrasena = new String(campoContrasena.getPassword());
          controladorLogin.iniciarSesion(usuario, contrasena);
     }//GEN-LAST:event_iniciarsesionActionPerformed
-//----------------------------------------------
+
     private void salirbotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirbotonActionPerformed
             System.exit(0);    
     }//GEN-LAST:event_salirbotonActionPerformed

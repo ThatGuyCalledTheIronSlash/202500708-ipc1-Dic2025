@@ -7,9 +7,13 @@ import javax.swing.JOptionPane;
 
 public class GestionarEstudiantes extends javax.swing.JDialog {
     
-    private final RepositorioEstudiante repoEstudiantes;
+//==========================OBTENER ATRIBUTOS=======================    
+    private RepositorioEstudiante repoEstudiantes;
+    
     private Estudiante estudianteEditando;
-//---------------------------------------    
+    
+//===========================CONSTRUCTORES=========================== 
+    //Para Crear
     public GestionarEstudiantes(java.awt.Frame parent, boolean modal, RepositorioEstudiante repoEstudiantes) {
         super(parent, modal);
         initComponents();
@@ -18,8 +22,7 @@ public class GestionarEstudiantes extends javax.swing.JDialog {
         this.estudianteEditando = null;
         setTitle("Agregar Estudiante");
     }
-
-//---------------------------------------
+    //Para Editar
     public GestionarEstudiantes(java.awt.Frame parent, boolean modal, RepositorioEstudiante repoEstudiantes, Estudiante estudiante) {
         super(parent, modal);
         initComponents();
@@ -30,7 +33,7 @@ public class GestionarEstudiantes extends javax.swing.JDialog {
         cargarDatosEnFormulario();
     }
 
-    //------------------------------------
+//============================METODOS================================
     private void cargarDatosEnFormulario() {
         if (estudianteEditando == null) {
             return;
@@ -51,7 +54,6 @@ public class GestionarEstudiantes extends javax.swing.JDialog {
             textoCarne.setEnabled(false); //No cambia el Carnet
     }
 
-    //------------------------------------
     private void guardarEstudiante() {
         String carne = textoCarne.getText().trim();
         String nombre = textoNombre.getText().trim();
@@ -137,7 +139,9 @@ public class GestionarEstudiantes extends javax.swing.JDialog {
         }
 
         dispose();
-    }    
+    } 
+
+//-------------------------------------------------------------------
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -307,7 +311,7 @@ public class GestionarEstudiantes extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+//===========================BOTONES=================================
     private void textoSemestreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoSemestreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textoSemestreActionPerformed
@@ -323,11 +327,8 @@ public class GestionarEstudiantes extends javax.swing.JDialog {
     private void textoTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoTelefonoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textoTelefonoActionPerformed
-//-------------------------------------------------------------------
-    /**
-     * @param args the command line arguments
-     */
 
+//====================================================================
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnguardarnuevoestudiante;
     private javax.swing.JButton cancelar;

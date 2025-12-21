@@ -7,9 +7,13 @@ import javax.swing.JOptionPane;
 
 public class GestionarBibliotecarios extends javax.swing.JDialog {
     
+//==========================OBTENER ATRIBUTOS=======================     
     private final RepositorioBiblioteca repoBiblioteca;
+    
     private Bibliotecario bibliotecarioEditando;
-//--
+    
+//===========================CONSTRUCTORES=========================== 
+    //Para Crear
     public GestionarBibliotecarios(java.awt.Frame parent, boolean modal,RepositorioBiblioteca repoBiblioteca) {
             super(parent, modal);
             this.repoBiblioteca = repoBiblioteca;
@@ -23,9 +27,8 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
             textoIDEmpleado.setEnabled(false);
 
     }
-//--
-    public GestionarBibliotecarios(java.awt.Frame parent, boolean modal,RepositorioBiblioteca repoBiblioteca,
-        Bibliotecario bibliotecarioEditar) {
+    //Para Editar
+    public GestionarBibliotecarios(java.awt.Frame parent, boolean modal,RepositorioBiblioteca repoBiblioteca,Bibliotecario bibliotecarioEditar) {
             super(parent, modal);
             this.repoBiblioteca = repoBiblioteca;
             this.bibliotecarioEditando = bibliotecarioEditar;
@@ -33,12 +36,10 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
             setLocationRelativeTo(parent);
             setTitle("Modificar Bibliotecario");
             
-            String nuevoID = repoBiblioteca.generarNuevoID();
-            textoIDEmpleado.setText(nuevoID);
-            textoIDEmpleado.setEnabled(false);
             cargarDatosEnFormulario();
     }
-//--
+  
+//============================METODOS================================    
     private void cargarDatosEnFormulario() {
         if (bibliotecarioEditando == null) {
             return;
@@ -55,9 +56,9 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
                 textoEstadoCivil.setText(String.valueOf(bibliotecarioEditando.getEstadoCivil()));
                 textoSalario.setText(String.valueOf(bibliotecarioEditando.getSalario()));
 
-                    textoIDEmpleado.setEnabled(false);
+                textoIDEmpleado.setEnabled(false);
             }
-//--
+
     private void guardarBibliotecario() {
         String idEmpleado = textoIDEmpleado.getText().trim();
         String nombre = textoNombre.getText().trim();
@@ -140,7 +141,7 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
 
                     dispose();
                 }
-//--
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -299,15 +300,15 @@ public class GestionarBibliotecarios extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//--
+//==========================BOTONES=================================
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
             dispose();
     }//GEN-LAST:event_cancelarActionPerformed
-//--
+
     private void btnguardarnuevoestudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarnuevoestudianteActionPerformed
             guardarBibliotecario();
     }//GEN-LAST:event_btnguardarnuevoestudianteActionPerformed
-//--
+
     private void textoTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoTelefonoActionPerformed
 
     }//GEN-LAST:event_textoTelefonoActionPerformed

@@ -4,58 +4,8 @@ import modelos.Estudiante;
 
 public class RepositorioEstudiante {
     private Estudiante[] estudiantes = new Estudiante[100];
-//-- 
-    public void agregarEstudiante(Estudiante estudianteAgregar){
-        for(int i=0; i<estudiantes.length;i++){
-            if(estudiantes[i]==null){
-                estudiantes[i]= estudianteAgregar;
-                break;
-            }
-        }
-    }
-//--  
-    public void eliminarEstudiante(String carnet){
-        for(int i=0;i<estudiantes.length;i++){
-            if(estudiantes[i]!=null && estudiantes[i].getCarnet().equals(carnet)){
-                estudiantes[i].setActivo(false);
-            }
-        }
-    }
-//--       
-    public void mostrarEstudiante(String carnet){
-        for(int i=0;i<estudiantes.length;i++){
-            if(estudiantes[i]!=null && estudiantes[i].getCarnet().equals(carnet) && 
-                estudiantes[i].isActivo()){
-                System.out.println(estudiantes[i].toString());
-            }
-        }
-    }
-//--       
-    public Estudiante retornarEstudiante(String carnet){
-        for(int i=0;i<estudiantes.length;i++){
-            if(estudiantes[i]!=null && estudiantes[i].getCarnet().equals(carnet)){
-                return estudiantes[i];
-            }
-        }
-        return null;
-    }
-//----------------------------------        
-    public boolean encontrarEstudiante(String usuario, String contrasena){
-        if (usuario == null || contrasena == null) {
-            return false;
-        }
-                usuario = usuario.trim();
-                contrasena = contrasena.trim();
-        for (Estudiante e : estudiantes) {
-            if (e != null &&
-                e.getUsuario().equals(usuario) &&
-                e.getContrasena().equals(contrasena)) {
-                return true;
-                }
-            }
-        return false;
-    }
-//--       
+
+//================================UTILIDADES=================================
     public Estudiante[] todoslosestudiantes(){
         int contador = 0;
             for (Estudiante e : estudiantes) {
@@ -69,21 +19,40 @@ public class RepositorioEstudiante {
                 }
             }
             return copia;
+    } 
+
+    public void agregarEstudiante(Estudiante estudianteAgregar){
+        for(int i=0; i<estudiantes.length;i++){
+            if(estudiantes[i]==null){
+                estudiantes[i]= estudianteAgregar;
+                break;
+            }
+        }
     }
-//--  
+    
     public Estudiante buscarPorCarne(String carne) {
         if (carne == null) return null;
-        carne = carne.trim();
-            for (int i = 0; i < estudiantes.length; i++) {
-                if (estudiantes[i] != null &&
-                    estudiantes[i].getCarnet().equals(carne)) {
-                    return estudiantes[i];
-                }
-            }
-            return null;
+            carne = carne.trim();
+        if (carne.isEmpty()) return null;
+            return buscarPorCarneRecursivo(carne, 0);
     }
-//--
+    
+    private Estudiante buscarPorCarneRecursivo(String carne, int indice) {
+        if (indice >= estudiantes.length) {
+            return null;
+        }
+        Estudiante actual = estudiantes[indice];
+        if (actual != null && carne.equals(actual.getCarnet())) {
+            return actual;
+        }
+        return buscarPorCarneRecursivo(carne, indice + 1);
+}
+    
     public void eliminarPorCarne(String carne) {
+        if (carne == null) return;
+            carne = carne.trim();
+        if (carne.isEmpty()) return;
+
         for (int i = 0; i < estudiantes.length; i++) {
             if (estudiantes[i] != null &&
                 estudiantes[i].getCarnet().equals(carne)) {
@@ -92,18 +61,8 @@ public class RepositorioEstudiante {
             }
         }
     }
-//--
-    public Estudiante buscarPorCredenciales(String usuario, String contrasena) {
-        for (Estudiante e : estudiantes) {
-            if (e != null &&
-                e.getUsuario().equals(usuario) &&
-                e.getContrasena().equals(contrasena)) {
-                return e;
-            }
-        }
-        return null;
-    }
-//--
+       
+//===============================BUSQUEDAS====================================
     public Estudiante[] buscarEstudiantes(String texto) {
         if (texto == null) texto = "";
             texto = texto.trim().toLowerCase();
@@ -126,7 +85,7 @@ public class RepositorioEstudiante {
             }
             return resultado;
         }
-//--
+//===============================METODOS======================================    
     private boolean coincidencia(Estudiante e, String texto) {
            String nombre = e.getNombre();
             if (nombre == null) {
@@ -150,10 +109,25 @@ public class RepositorioEstudiante {
             }
 
             return nombre.contains(texto) || carnet.contains(texto) || usuario.contains(texto);
+        
         }
+//================================PARA EL LOGIN ==============================
+    public Estudiante buscarPorCredenciales(String usuario, String contrasena) {
+        if (usuario == null || contrasena == null) {
+                    return null;
+                }
+                usuario = usuario.trim();
+                contrasena = contrasena.trim();
+                for (Estudiante e : estudiantes) {
+                    if (e != null &&
+                        e.getUsuario().equals(usuario) &&
+                        e.getContrasena().equals(contrasena)) {
+                        return e;
+                    }
+                }
+                return null;
+            }
+//============================================================================
 }
-
-
-
 
     

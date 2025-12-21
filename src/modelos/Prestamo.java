@@ -22,7 +22,7 @@ public class Prestamo {
     private String estado;
     private String estadoLibroAlDevolver;
     
-//Constructor   
+//===========================Constructor=======================  
      public Prestamo(String idPrestamo,String carnetEstudiante,String idBibliotecario,
         String isbnLibro,String tituloLibro, LocalDate fechaPrestamo,
         LocalDate fechaDevolucionEsperada){
@@ -42,7 +42,7 @@ public class Prestamo {
             this.estadoLibroAlDevolver = null;
      }
      
-//Getters y Setters
+//============================== Getters y Setters ==================================
     public String getIdPrestamo() {
         return idPrestamo;
    }

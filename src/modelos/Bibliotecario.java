@@ -4,7 +4,8 @@ public class Bibliotecario extends Usuario{
     private String turno;
     private String areaTrabajo;
     private double salario;
-
+    
+//===========================Constructor=======================
     public Bibliotecario(String IDEmpleado, String turno, String areaTrabajo,
                          String nombre, String CUI, String correo, String usuario,
                          String contrasena, char genero, int telefono,
@@ -20,6 +21,7 @@ public class Bibliotecario extends Usuario{
     public Bibliotecario(){
         super();
     }
+    //============================== Getters y Setters ==================================
 //----------------------------------------    
     public String getIDEmpleado() {
         return IDEmpleado;

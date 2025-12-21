@@ -1,77 +1,56 @@
 
 package InterfacesGraficas;
 
-import modelos.Prestamo;
 import modelos.Libro;
 import modelos.Estudiante;
-
 import Controladores.ControladorAdmin;
 
 
 public class VentanaBibliotecario extends javax.swing.JFrame {
         private javax.swing.table.DefaultTableModel modeloLibros; 
-        private javax.swing.table.DefaultTableModel modeloEstudiantes;
-        private javax.swing.table.DefaultTableModel modeloBibliotecarios;
 
     private final ControladorAdmin controladorAdmin;
+ 
     
-        public VentanaBibliotecario(ControladorAdmin controladorAdmin) {
+    public VentanaBibliotecario(ControladorAdmin controladorAdmin) {
             initComponents();
                 this.controladorAdmin = controladorAdmin;  
-                    setLocationRelativeTo(null);
+                setLocationRelativeTo(null);
                 //Configurar las tablas
-                    configurarTablaLibros();
+                configurarTablaLibros();
                 //Cargar
-                    cargarlibrosalatabla();
-                    actualizarDashboard();
+                recargarLibrosDesdeRepositorio();
+                actualizarDashboard();
         }
-//-ConfigurarTablas
-private void configurarTablaLibros() {
+//===========================CONFIGURAR TABLAS==============================
+    private void configurarTablaLibros() {
     modeloLibros = new javax.swing.table.DefaultTableModel(
         new Object[] {"ISBN", "Titulo", "Autor", "Editorial", "Año", "Categoria", "Cantidad", "Ubicacion"},
         0
     );
     TablaLibros.setModel(modeloLibros);
-        cargarlibrosalatabla(); //Recarga automaticamente la tabla
+        recargarLibrosDesdeRepositorio(); //Recarga automaticamente la tabla
 }
-//--Actualizar el Dashboard
-private void actualizarDashboard() {
+
+    public void cargarPerfil(modelos.Bibliotecario bib) {
+    if (bib == null) return;
+        textobibliotecario.setText(bib.getNombre());
+}
+
+    private void actualizarDashboard() {
     int totalLibros = controladorAdmin.contarLibros();
     int totalEstudiantes = controladorAdmin.contarEstudiantes();  
         lblTotalLibros.setText(String.valueOf(totalLibros));
         lblTotalEstudiantes.setText(String.valueOf(totalEstudiantes));
 }
-//--
-public void cargarPerfil(modelos.Bibliotecario bib) {
-    if (bib == null) return;
-        textobibliotecario.setText(bib.getNombre());
-}
-//CargarTablas con datos
-private void cargarlibrosalatabla(){
-    modeloLibros.setRowCount(0);     //limpia las filas anteriores
-        
-        Libro[] libros = controladorAdmin.getRepoLibros().todosLosLibros();
 
-        if (libros != null) {
-            for (Libro libro : libros) {
-                if (libro != null) {
-                    Object[] fila = new Object[] {
-                        libro.getISBN(),
-                        libro.getTitulo(),
-                        libro.getAutor(),
-                        libro.getEditorial(),
-                        libro.getAnioPublicacion(),
-                        libro.getCategoria(),
-                        libro.getCantidad(),
-                        libro.getUbicacion()
-                    };
-                    modeloLibros.addRow(fila); 
-                }
-            }
-        }
-    }
-//--
-private void cargarlibrosalatablaconparametro(Libro[] libros){  //Sirve para los ordenamientos(considere mejor simplemente crear una copia)
+    public void recargarTodo() {
+    recargarLibrosDesdeRepositorio();
+    actualizarDashboard();
+}
+
+//========================CARGAR TABLAS=======================================
+    private void cargarlibrosalatabla(Libro[] libros){  //Sirve para los ordenamientos(considere mejor simplemente crear una copia)
     modeloLibros.setRowCount(0); // limpia las filas anteriores
     
         if (libros != null) {
@@ -92,12 +71,11 @@ private void cargarlibrosalatablaconparametro(Libro[] libros){  //Sirve para los
             }
         }
     }
-//--
-public void recargarTodo() {
-    cargarlibrosalatabla();
-    actualizarDashboard();
+
+    private void recargarLibrosDesdeRepositorio() {
+    Libro[] libros = controladorAdmin.getRepoLibros().todosLosLibros();
+    cargarlibrosalatabla(libros);
 }
-//----------------------------------------
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -140,7 +118,7 @@ public void recargarTodo() {
         isbnlibroaprestat = new javax.swing.JTextField();
         btnbuscarcarnet = new javax.swing.JButton();
         btnbuscarisbn = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        RealizarPrestamo = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         Area4 = new javax.swing.JScrollPane();
         txtlibroadevolver = new javax.swing.JTextArea();
@@ -259,11 +237,11 @@ public void recargarTodo() {
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TextoBibliotecarioLayout.createSequentialGroup()
-                .addContainerGap(195, Short.MAX_VALUE)
+                .addContainerGap(211, Short.MAX_VALUE)
                 .addGroup(TextoBibliotecarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TextoBibliotecarioLayout.createSequentialGroup()
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51)
+                        .addGap(35, 35, 35)
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(182, 182, 182))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TextoBibliotecarioLayout.createSequentialGroup()
@@ -408,8 +386,8 @@ public void recargarTodo() {
         btnbuscarisbn.setText("Buscar");
         btnbuscarisbn.addActionListener(this::btnbuscarisbnActionPerformed);
 
-        jButton1.setText("Realizar Prestamo");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        RealizarPrestamo.setText("Realizar Prestamo");
+        RealizarPrestamo.addActionListener(this::RealizarPrestamoActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -440,7 +418,7 @@ public void recargarTodo() {
                             .addComponent(Area1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(384, 384, 384)
-                        .addComponent(jButton1)))
+                        .addComponent(RealizarPrestamo)))
                 .addContainerGap(75, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -461,7 +439,7 @@ public void recargarTodo() {
                 .addGap(27, 27, 27)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(RealizarPrestamo)
                 .addContainerGap(74, Short.MAX_VALUE))
         );
 
@@ -585,27 +563,27 @@ public void recargarTodo() {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-//--
+//=============================BOTONES========================================
     private void btnrecargarlibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrecargarlibrosActionPerformed
-        cargarlibrosalatabla();
+        recargarLibrosDesdeRepositorio();
     }//GEN-LAST:event_btnrecargarlibrosActionPerformed
-//--
+
     private void btncerrarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncerrarsesionActionPerformed
         controladorAdmin.cerrarSesion();
     }//GEN-LAST:event_btncerrarsesionActionPerformed
-//--
+
     private void textobuscarlibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textobuscarlibrosActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_textobuscarlibrosActionPerformed
-//--
+
     private void btnbscarlibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbscarlibroActionPerformed
         String texto = textobuscarlibros.getText();
 
             Libro[] resultados = controladorAdmin.buscarLibros(texto, "titulo");
 
-                cargarlibrosalatablaconparametro(resultados);
+                 cargarlibrosalatabla(resultados);
     }//GEN-LAST:event_btnbscarlibroActionPerformed
-//--
+
     private void seleciltroslibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleciltroslibrosActionPerformed
         String opcion = seleciltroslibros.getSelectedItem().toString();
            Libro[] listaOrdenada = null;
@@ -628,16 +606,16 @@ public void recargarTodo() {
                 }
 
                 if (listaOrdenada != null) {
-                    cargarlibrosalatablaconparametro(listaOrdenada);
+                     cargarlibrosalatabla(listaOrdenada);
             }
     }//GEN-LAST:event_seleciltroslibrosActionPerformed
 
     private void btnbuscarestudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarestudianteActionPerformed
-           String carne = textobuscarestudiante.getText(); // o el campo que uses
+           String carne = textobuscarestudiante.getText();
            String reporte = controladorAdmin.generarReporteEstudianteConPrestamos(carne);
-            ConsultarEstudiantetextArea.setText(reporte);
+           ConsultarEstudiantetextArea.setText(reporte);
     }//GEN-LAST:event_btnbuscarestudianteActionPerformed
-//--
+
     private void btnbuscarcarnetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarcarnetActionPerformed
         String carne = Textocarnet.getText();
         if (carne == null || carne.trim().isEmpty()) {
@@ -663,7 +641,7 @@ public void recargarTodo() {
 
         txtestudianteprestar.setText(info.toString());
     }//GEN-LAST:event_btnbuscarcarnetActionPerformed
-//--
+
     private void btnbuscarisbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarisbnActionPerformed
         String isbn = isbnlibroaprestat.getText();
         if (isbn == null || isbn.trim().isEmpty()) {
@@ -690,7 +668,7 @@ public void recargarTodo() {
 
         txtlibroprestar.setText(info.toString());
     }//GEN-LAST:event_btnbuscarisbnActionPerformed
-//--
+
     private void btnbuscarcarnetdevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarcarnetdevolucionActionPerformed
         String carne = Textocarnetdevolucion.getText();
         if (carne == null || carne.trim().isEmpty()) {
@@ -716,7 +694,7 @@ public void recargarTodo() {
 
         txtestudiantedevolver.setText(info.toString());
     }//GEN-LAST:event_btnbuscarcarnetdevolucionActionPerformed
-//--
+
     private void btnbuscarisbndevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarisbndevolucionActionPerformed
         String isbn = isbnlibrodevolucion.getText();
         if (isbn == null || isbn.trim().isEmpty()) {
@@ -744,7 +722,7 @@ public void recargarTodo() {
         txtlibroadevolver.setText(info.toString());
     }//GEN-LAST:event_btnbuscarisbndevolucionActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void RealizarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RealizarPrestamoActionPerformed
         String carne = Textocarnet.getText();
     String isbn = isbnlibroaprestat.getText();
 
@@ -752,13 +730,13 @@ public void recargarTodo() {
     javax.swing.JOptionPane.showMessageDialog(this, mensaje);
 
     if (mensaje.startsWith("Préstamo registrado")) {
-        cargarlibrosalatabla();
+        recargarLibrosDesdeRepositorio();
         txtestudianteprestar.setText("");
         txtlibroprestar.setText("");
         Textocarnet.setText("");
         isbnlibroaprestat.setText("");
     }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_RealizarPrestamoActionPerformed
 
     private void btnrealizardevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrealizardevolucionActionPerformed
         String carne = Textocarnetdevolucion.getText();
@@ -778,7 +756,7 @@ public void recargarTodo() {
 
         // Si se registró la devolución, refrescar datos y limpiar
         if (mensaje.startsWith("Devolución registrada")) {
-            cargarlibrosalatabla();
+            recargarLibrosDesdeRepositorio();
             txtestudiantedevolver.setText("");
             txtlibroadevolver.setText("");
             Textocarnetdevolucion.setText("");
@@ -792,6 +770,7 @@ public void recargarTodo() {
     private javax.swing.JScrollPane Area3;
     private javax.swing.JScrollPane Area4;
     private javax.swing.JTextArea ConsultarEstudiantetextArea;
+    private javax.swing.JButton RealizarPrestamo;
     private javax.swing.JTable TablaLibros;
     private javax.swing.JPanel TextoBibliotecario;
     private javax.swing.JTextField Textocarnet;
@@ -808,7 +787,6 @@ public void recargarTodo() {
     private javax.swing.JButton btnrecargarlibros;
     private javax.swing.JTextField isbnlibroaprestat;
     private javax.swing.JTextField isbnlibrodevolucion;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

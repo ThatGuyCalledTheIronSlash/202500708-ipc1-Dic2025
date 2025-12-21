@@ -11,21 +11,20 @@ public class ControladorLogin {
     private RepositorioBiblioteca bibliotecarios;
     private RepositorioEstudiante estudiantes;
 
+    
+//=============================CONSTRUCTOR================================
     public ControladorLogin(ControladorPrincipal controladorPrincipal,
-                            RepositorioBiblioteca bibliotecarios,
-                            RepositorioEstudiante estudiantes) {
-
+         RepositorioBiblioteca bibliotecarios, RepositorioEstudiante estudiantes) {
         this.controladorPrincipal = controladorPrincipal;
         this.bibliotecarios = bibliotecarios;
         this.estudiantes = estudiantes;
     }
-
+//============================METODOS=======================================
     public void iniciarSesion(String usuario, String contrasena) {
-
         // Admin
         if (usuario.equals("admin") && contrasena.equals("admin123")) {
             System.out.println("Bienvenido a Admin");
-            controladorPrincipal.mostrarVistaAdmin();
+                controladorPrincipal.mostrarVistaAdmin();
             return;
         }
 
@@ -33,8 +32,8 @@ public class ControladorLogin {
         Estudiante est = estudiantes.buscarPorCredenciales(usuario, contrasena);
         if (est != null) {
             System.out.println("Bienvenido a Estudiante");
-            controladorPrincipal.setEstudianteActual(est);  // << importante
-            controladorPrincipal.mostrarVistaEstudiante();
+                controladorPrincipal.setEstudianteActual(est);
+                controladorPrincipal.mostrarVistaEstudiante();
             return;
         }
 
@@ -42,12 +41,12 @@ public class ControladorLogin {
         Bibliotecario bib = bibliotecarios.buscarPorCredenciales(usuario, contrasena); 
         if (bib != null) {
             System.out.println("Bienvenido a Bibliotecario");
-            controladorPrincipal.setBibliotecarioActual(bib);
-            controladorPrincipal.mostrarVistaBibliotecario();
+                controladorPrincipal.setBibliotecarioActual(bib);
+                controladorPrincipal.mostrarVistaBibliotecario();
             return;
         }
 
         // Ninguno
-        System.out.println("No se encontrÃ³ usuario");
+        System.out.println("No se encontro usuario");
     }
 }

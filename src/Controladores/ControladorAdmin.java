@@ -3,25 +3,25 @@ package Controladores;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.io.IOException;
 import modelos.Libro;
 import modelos.Estudiante;
 import modelos.Bibliotecario;
-import modelos.Prestamo;
-import java.time.LocalDate;
 import Repositorios.RepositorioBiblioteca;
 import Repositorios.RepositorioEstudiante;
 import Repositorios.RepositorioLibro;
 import Repositorios.RepositorioPrestamo;
 
 public class ControladorAdmin {
-
+    private ControladorPrestamos controladorPrestamos;
     private ControladorPrincipal controladorPrincipal;
     private RepositorioBiblioteca bibliotecarios;
     private RepositorioEstudiante estudiantes;
     private RepositorioLibro libros;
     private RepositorioPrestamo prestamos;
-
+//===================================CONSTRUCTOR==================================
     public ControladorAdmin(ControladorPrincipal controladorPrincipal,
                             RepositorioBiblioteca bibliotecarios,
                             RepositorioEstudiante estudiantes,
@@ -31,42 +31,44 @@ public class ControladorAdmin {
         this.estudiantes = estudiantes;
         this.libros = libros;
         this.prestamos = prestamos;
+        this.controladorPrestamos = new ControladorPrestamos(prestamos, libros, estudiantes);
     }
 
-//getters usados por VentanaAdmin y diálogos
+// ================================GETTERS===================================
     public RepositorioBiblioteca getRepoBibliotecarios() {
         return bibliotecarios; 
     }
-//--
+
     public RepositorioEstudiante getRepoEstudiantes() {
         return estudiantes; 
     }
-//--
+
     public RepositorioLibro getRepoLibros() {
         return libros; 
     }
-//--
+
     public RepositorioPrestamo getRepoPrestamos() {
         return prestamos;
     }
 
-//Obtener Datos
+//================================OBTENER DATOS =============================
     public Libro[] obtenerLibros() {
         return libros.todosLosLibros();
     }
-//--
+
     public Estudiante[] obtenerEstudiantes() {
         return estudiantes.todoslosestudiantes();
     }
-//--
+
     public Bibliotecario[] obtenerBibliotecarios() {
         return bibliotecarios.todosLosBibliotecarios();
     }
-//--
+
     public Estudiante[] buscarEstudiantes(String texto) {
         return estudiantes.buscarEstudiantes(texto);
     }
-//--   
+
+//========================CARGA DE CSV===============================
     public String generarVistaPrevia(File archivo, int maxLineas) {
         StringBuilder previa = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
@@ -84,9 +86,7 @@ public class ControladorAdmin {
         }
         return previa.toString();
     }  
-//--
-
-//---------------------- Carga de Archivos CSV
+    
     public String cargarLibrosCSV(File archivo) {
         int exitosos = 0;
         int errores = 0;
@@ -162,7 +162,7 @@ public class ControladorAdmin {
             reporte.append("Total de líneas procesadas: ").append(exitosos + errores).append("\n");
             return reporte.toString();
     }
-//--
+
     public String cargarEstudiantesCSV(File archivo) {
         int exitosos = 0;
         int errores = 0;
@@ -245,7 +245,7 @@ public class ControladorAdmin {
         return reporte.toString();
     
     }
-//--
+
     public String cargarBibliotecariosCSV(File archivo) {
         int exitosos = 0;
         int errores = 0;
@@ -327,7 +327,7 @@ public class ControladorAdmin {
 
 
     }
-//--
+
     public String cargarLibrosConDialogo() {
         javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
         javax.swing.filechooser.FileNameExtensionFilter filter =
@@ -346,7 +346,7 @@ public class ControladorAdmin {
 
          return preview + "\n\n" + reporte;
     }
-//--
+
     public String cargarEstudiantesConDialogo() {
         javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
         javax.swing.filechooser.FileNameExtensionFilter filter =
@@ -366,7 +366,7 @@ public class ControladorAdmin {
 
         return preview + "\n\n" + reporte;
     }
-//--
+
     public String cargarBibliotecariosConDialogo() {
         javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
         javax.swing.filechooser.FileNameExtensionFilter filter =
@@ -385,14 +385,87 @@ public class ControladorAdmin {
 
             return preview + "\n\n" + reporte;
     }  
-//Utilidades
+
+//====================== PRESTAMOS =========================== 
+public String realizarPrestamo(String carne, String isbn) {
+    return controladorPrestamos.realizarPrestamo(carne, isbn);
+}
+
+public String realizarDevolucion(String carne, String isbn) {
+    return controladorPrestamos.realizarDevolucion(carne, isbn);
+}
+
+public String generarReporteEstudianteConPrestamos(String carne) {
+    return controladorPrestamos.generarReporteEstudianteConPrestamos(carne);
+}  
+
+//======================CONTADORES DASHBOARD==============================
+    public int contarLibros() {
+        Libro[] lista = libros.todosLosLibros();
+        int contador = 0;
+        if (lista != null) {
+            for (Libro l : lista) {
+                if (l != null) contador++;
+            }
+        }
+        return contador;   
+    }
+
+    public int contarEstudiantes() {
+    Estudiante[] lista = estudiantes.todoslosestudiantes();
+        int contador = 0;
+        if (lista != null) {
+            for (Estudiante e : lista) {
+                if (e != null) contador++;
+            }
+        }
+        return contador;
+    }
+
+    public int contarBibliotecarios() {
+        Bibliotecario[] lista = bibliotecarios.todosLosBibliotecarios();
+            int contador = 0;
+            if (lista != null) {
+                for (Bibliotecario b : lista) {
+                    if (b != null) contador++;
+                }
+            }
+            return contador;
+        }
+//=================================NAVEGACION============================ 
+        public void cerrarSesion() {
+        controladorPrincipal.mostrarLogin();
+    }
+//=================================BUSQUEDAS=============================
+    public Libro[] buscarLibros(String texto, String filtro) {
+        return libros.buscarLibros(texto, filtro);
+    } 
+    
     public Libro buscarLibroPorISBN(String isbn){
         if (isbn == null) return null;
             isbn = isbn.trim();
                 if (isbn.isEmpty()) return null;
                     return libros.buscarLibro(isbn);
     }
-//--
+        
+    public Bibliotecario buscarBibliotecarioPorID(String idEmpleado) {
+        if (idEmpleado == null) return null;
+            idEmpleado = idEmpleado.trim();
+        if (idEmpleado.isEmpty()) return null;
+            return bibliotecarios.retornarBibliotecario(idEmpleado);
+}   
+        
+    public Estudiante buscarEstudiantePorCarne(String carne) {
+        if (carne == null){
+            return null;
+        }
+            carne = carne.trim();
+                if (carne.isEmpty()) return null;
+                    return estudiantes.buscarPorCarne(carne);
+}
+    
+//===================================OPERACIONES===========================
+
     public String eliminarLibroPorISBN(String isbn){
         
         if (isbn == null) {
@@ -411,16 +484,7 @@ public class ControladorAdmin {
                     libros.eliminarLibro(isbn);
                         return "Libro \"" + libro.getTitulo() + "\" eliminado correctamente.";
     }
-//--
-    public Estudiante buscarEstudiantePorCarne(String carne) {
-        if (carne == null){
-            return null;
-        }
-            carne = carne.trim();
-                if (carne.isEmpty()) return null;
-                    return estudiantes.buscarPorCarne(carne);
-}
-//--
+
     public String eliminarEstudiantePorCarne(String carne) {
         if (carne == null) {
             return "Operación cancelada.";
@@ -438,14 +502,7 @@ public class ControladorAdmin {
             estudiantes.eliminarPorCarne(carne);
                 return "Estudiante \"" + est.getNombre() + "\" eliminado correctamente.";
     }
-//--
-    public Bibliotecario buscarBibliotecarioPorID(String idEmpleado) {
-        if (idEmpleado == null) return null;
-            idEmpleado = idEmpleado.trim();
-        if (idEmpleado.isEmpty()) return null;
-            return bibliotecarios.retornarBibliotecario(idEmpleado);
-}
-//--
+
     public String eliminarBibliotecarioPorID(String idEmpleado) {
         if (idEmpleado == null) {
             return "Operación cancelada.";
@@ -463,45 +520,38 @@ public class ControladorAdmin {
             bibliotecarios.eliminarBibliotecario(idEmpleado);
             return "Bibliotecario \"" + bib.getNombre() + "\" eliminado correctamente.";
         }
-//--
-    public void cerrarSesion() {
-        controladorPrincipal.mostrarLogin();
-    }
-//--
-    public Libro[] buscarLibros(String texto, String filtro) {
-        return libros.buscarLibros(texto, filtro);
-    }
-//----------------------Metodos de Ordenamiento------------------------
+
+//===============================-Metodos de Ordenamiento==============================
     public Libro[] ordenarLibros_ISBN_Burbuja() {
         Libro[] lista = copiarLibrosSinVacios();
             burbujaPorISBN(lista);
                 return lista;
     }
-//--
+
     public Libro[] ordenarLibros_Titulo_Seleccion() {
         Libro[] lista = copiarLibrosSinVacios();
             seleccionPorTitulo(lista);
                 return lista;
     }
-//--
+
     public Libro[] ordenarLibros_Autor_Insercion() {
         Libro[] lista = copiarLibrosSinVacios();
             insercionPorAutor(lista);
                 return lista;
     }
-//--    
+   
     public Libro[] ordenarLibros_Editorial_QuickSort() {
         Libro[] lista = copiarLibrosSinVacios();
             quickSortPorEditorial(lista, 0, lista.length - 1);
                 return lista;
     }
-//--
+
     public Libro[] ordenarLibros_Anio_MergeSort() {
         Libro[] lista = copiarLibrosSinVacios();
             mergeSortPorAnio(lista);
                 return lista;
     }
-//--
+
     private Libro[] copiarLibrosSinVacios() {
         Libro[] todos = libros.todosLosLibros(); 
         int cantidad = 0;
@@ -524,13 +574,13 @@ public class ControladorAdmin {
 
         return copia;
     }
-//--
+
     private void intercambiar(Libro[] lista, int i, int j) {
         Libro aux = lista[i];
         lista[i] = lista[j];
         lista[j] = aux;
     }
-// Burbujas
+
     private void burbujaPorISBN(Libro[] lista) {
         for (int i = 0; i < lista.length - 1; i++) {
             boolean huboCambio = false;
@@ -550,7 +600,7 @@ public class ControladorAdmin {
             }
         }
     }
-//--
+
     private void seleccionPorTitulo(Libro[] lista) {
         for (int i = 0; i < lista.length - 1; i++) {
             int posMenor = i;
@@ -569,7 +619,7 @@ public class ControladorAdmin {
             }
         }
     }
-//--
+
     private void insercionPorAutor(Libro[] lista) {
         for (int i = 1; i < lista.length; i++) {
             Libro actual = lista[i];
@@ -583,7 +633,7 @@ public class ControladorAdmin {
             lista[j + 1] = actual;
         }
     }
-//--
+
     private void quickSortPorEditorial(Libro[] lista, int inicio, int fin) {
         if (inicio >= fin) {
             return;
@@ -594,7 +644,7 @@ public class ControladorAdmin {
         quickSortPorEditorial(lista, inicio, p - 1);
         quickSortPorEditorial(lista, p + 1, fin);
     }
-//--
+
     private int partirPorEditorial(Libro[] lista, int inicio, int fin) {
         Libro pivote = lista[fin];
         String editorialPivote = pivote.getEditorial();
@@ -613,12 +663,12 @@ public class ControladorAdmin {
         intercambiar(lista, i + 1, fin);
         return i + 1;
     }
-//--
+
     private void mergeSortPorAnio(Libro[] lista) {
         Libro[] auxiliar = new Libro[lista.length];
         mergeSortPorAnio(lista, auxiliar, 0, lista.length - 1);
     }
-//--
+
     private void mergeSortPorAnio(Libro[] lista, Libro[] auxiliar, int izquierda, int derecha) {
         if (izquierda >= derecha) {
             return;
@@ -631,7 +681,7 @@ public class ControladorAdmin {
 
         mezclarPorAnio(lista, auxiliar, izquierda, mitad, derecha);
     }
-//--
+
     private void mezclarPorAnio(Libro[] lista, Libro[] auxiliar, int izquierda, int mitad, int derecha) {
         int i = izquierda;
         int j = mitad + 1;
@@ -667,210 +717,99 @@ public class ControladorAdmin {
             lista[x] = auxiliar[x];
         }
     }
-//-----------------------------Logica de Prestamos----------------------
-    public String realizarPrestamo(String carne, String isbn) {
-    // Validaciones básicas
-    if (carne == null || carne.trim().isEmpty()) {
-        return "Debe ingresar un carné.";
-    }
-    if (isbn == null || isbn.trim().isEmpty()) {
-        return "Debe ingresar un ISBN.";
-    }
-
-    Estudiante est = buscarEstudiantePorCarne(carne);
-    if (est == null) {
-        return "No se encontró estudiante con ese carné.";
-    }
-
-    Libro libro = buscarLibroPorISBN(isbn);
-    if (libro == null) {
-        return "No se encontró un libro con ese ISBN.";
-    }
-
-    if (libro.getCantidad() <= 0) {
-        return "No hay ejemplares disponibles de este libro.";
-    }
-
-    // Regla: máximo 3 préstamos activos por estudiante (opcional pero útil)
-    Prestamo[] activos = prestamos.prestamosActivosPorEstudiante(carne);
-    if (activos != null && activos.length >= 3) {
-        return "El estudiante ya tiene 3 préstamos activos.";
-    }
-
-    // Construir los datos del préstamo
-    String idPrestamo = "P-" + System.currentTimeMillis(); // id simple
-    String idBibliotecario = "BIB-1"; // por ahora fijo; luego puedes usar el bibliotecario logueado
-    String tituloLibro = libro.getTitulo();
-
-    LocalDate hoy = LocalDate.now();
-    LocalDate fechaDevolucionEsperada = hoy.plusDays(7); // plazo de 7 días
-
-    Prestamo nuevo = new Prestamo(
-            idPrestamo,
-            carne,
-            idBibliotecario,
-            isbn,
-            tituloLibro,
-            hoy,
-            fechaDevolucionEsperada
-    );
-
-    // Guardar en el repositorio
-    prestamos.agregarPrestamo(nuevo);   // tu método es void
-
-    // Descontar un ejemplar
-    libro.setCantidad(libro.getCantidad() - 1);
-
-    return "Préstamo registrado correctamente.";
-}
-//--
-    public String realizarDevolucion(String carne, String isbn) {
-    if (carne == null || carne.trim().isEmpty()) {
-        return "Debe ingresar un carné.";
-    }
-    if (isbn == null || isbn.trim().isEmpty()) {
-        return "Debe ingresar un ISBN.";
-    }
-
-    // Verificar que el estudiante exista
-    Estudiante est = buscarEstudiantePorCarne(carne);
-    if (est == null) {
-        return "No se encontró estudiante con ese carné.";
-    }
-
-    // Verificar que el libro exista
-    Libro libro = buscarLibroPorISBN(isbn);
-    if (libro == null) {
-        return "No se encontró un libro con ese ISBN.";
-    }
-
-    // Buscar préstamo activo de ese estudiante y ese libro
-    Prestamo prestamo = prestamos.buscarPrestamoActivo(carne, isbn);
-    if (prestamo == null) {
-        return "No hay un préstamo activo de ese libro para este estudiante.";
-    }
-
-    // Marcar devolución
-    LocalDate hoy = LocalDate.now();
-    prestamo.setFechaDevolucionReal(hoy);
-    prestamo.setEstado("DEVUELTO");
-
-    // Calcular retraso y multa (ejemplo sencillo)
-    int diasRetraso = 0;
-    double multa = 0;
-
-    if (prestamo.getFechaDevolucionEsperada() != null &&
-        hoy.isAfter(prestamo.getFechaDevolucionEsperada())) {
-
-        diasRetraso = (int) java.time.temporal.ChronoUnit.DAYS.between(
-                prestamo.getFechaDevolucionEsperada(), hoy
-        );
-        if (diasRetraso < 0) diasRetraso = 0;
-
-        multa = diasRetraso * 1.0; // Q1 por día, ajusta si quieres
-    }
-
-    prestamo.setDiasRetraso(diasRetraso);
-    prestamo.setMultaGenerada(multa);
-    prestamo.setMultaPagada(false); // por ahora siempre pendiente
-
-    // Devolver ejemplar al inventario
-    libro.setCantidad(libro.getCantidad() + 1);
-
-    if (multa > 0) {
-        return "Devolución registrada. Tiene multa de Q " + multa + ".";
-    } else {
-        return "Devolución registrada sin multa.";
-    }
- }
-//--    
-    public String generarReporteEstudianteConPrestamos(String carne) {
-    if (carne == null || carne.trim().isEmpty()) {
-        return "Debe ingresar un carné.\n";
-    }
-
-    Estudiante est = buscarEstudiantePorCarne(carne);
-    if (est == null) {
-        return "No se encontró estudiante con ese carné.\n";
-    }
-
-    StringBuilder sb = new StringBuilder();
-    sb.append("__________________________________________\n");
-    sb.append("        INFORMACIÓN DEL ESTUDIANTE       \n");
-    sb.append("__________________________________________\n");
-    sb.append("Carné:   ").append(est.getCarnet()).append("\n");
-    sb.append("Nombre:  ").append(est.getNombre()).append("\n");
-    sb.append("Carrera: ").append(est.getCarrera()).append("\n");
-    sb.append("Correo:  ").append(est.getCorreo()).append("\n");
-    sb.append("Estado:  ").append(est.getEstadoCivil()).append("\n\n");
-
-    Prestamo[] activos = prestamos.prestamosActivosPorEstudiante(carne);
-    Prestamo[] historial = prestamos.historialPorEstudiante(carne);
-
-    int totalActivos = (activos == null) ? 0 : activos.length;
-    int totalPrestamos = (historial == null) ? 0 : historial.length;
-
-    sb.append("Préstamos Activos:   ").append(totalActivos).append("\n");
-    sb.append("Total Préstamos:     ").append(totalPrestamos).append("\n");
-    sb.append("Multas Pendientes:   Q 0.00\n\n"); // por ahora fijo
-
-    sb.append("PRÉSTAMOS ACTIVOS:\n");
-    sb.append("__________________________________________\n");
-
-    if (totalActivos == 0) {
-        sb.append("No tiene préstamos activos.\n");
-    } else {
-        for (Prestamo p : activos) {
-            if (p == null) continue;
-            sb.append("Libro:            ").append(p.getTituloLibro()).append("\n");
-            sb.append("ISBN:             ").append(p.getIsbnLibro()).append("\n");
-            sb.append("Fecha Préstamo:   ").append(p.getFechaPrestamo()).append("\n");
-            sb.append("Fecha Devolución: ").append(p.getFechaDevolucionEsperada()).append("\n");
-            sb.append("Días Restantes:   ").append(
-                    java.time.Period.between(
-                            java.time.LocalDate.now(),
-                            p.getFechaDevolucionEsperada()
-                    ).getDays()
-            ).append("\n");
-            sb.append("__________________________________________\n");
-        }
-    }
-
-    return sb.toString();
-}
-
-//------------------------------Contadores para el dashboard
-    public int contarLibros() {
-        Libro[] lista = libros.todosLosLibros();
-        int contador = 0;
-        if (lista != null) {
-            for (Libro l : lista) {
-                if (l != null) contador++;
-            }
-        }
-        return contador;   
-    }
-//--
-    public int contarEstudiantes() {
+  
+//===================================PERSISTENCIA DE ARHCIVOS ===========================
+ public String guardarEstudiantesCSV(File archivo) {
     Estudiante[] lista = estudiantes.todoslosestudiantes();
-        int contador = 0;
-        if (lista != null) {
-            for (Estudiante e : lista) {
-                if (e != null) contador++;
-            }
+        if (lista == null || lista.length == 0) {
+         return "No hay estudiantes para guardar.";
         }
-        return contador;
+
+    try (PrintWriter pw = new PrintWriter(new FileWriter(archivo))) {
+        pw.println("Carrera,Semestre,Facultad,Carnet,Nombre,CUI,Correo,Contrasena,Usuario,Genero,Telefono,Edad,EstadoCivil");
+
+        for (Estudiante e : lista) {
+            if (e == null) continue;
+            pw.printf("%s,%d,%s,%s,%s,%s,%s,%s,%s,%c,%d,%d,%c%n",
+                e.getCarrera(),
+                e.getSemestre(),
+                e.getFacultad(),
+                e.getCarnet(),
+                e.getNombre(),
+                e.getCUI(),
+                e.getCorreo(),
+                e.getContrasena(),
+                e.getUsuario(),
+                e.getGenero(),
+                e.getTelefono(),
+                e.getEdad(),
+                e.getEstadoCivil()
+            );
+        }
+        return "Archivo de estudiantes guardado correctamente.";
+    } catch (Exception ex) {
+        return "Error al guardar estudiantes: " + ex.getMessage();
     }
-//--
-    public int contarBibliotecarios() {
-        Bibliotecario[] lista = bibliotecarios.todosLosBibliotecarios();
-            int contador = 0;
-            if (lista != null) {
-                for (Bibliotecario b : lista) {
-                    if (b != null) contador++;
-                }
-            }
-            return contador;
+}
+
+public String guardarLibrosCSV(File archivo) {
+    Libro[] lista = libros.todosLosLibros();
+        if (lista == null || lista.length == 0) {
+            return "No hay libros para guardar.";
         }
+
+    try (PrintWriter pw = new PrintWriter(new FileWriter(archivo))) {
+        pw.println("ISBN,Titulo,Autor,Editorial,Anio,Categoria,Cantidad,Ubicacion,Descripcion");
+        for (Libro l : lista) {
+            if (l == null) continue;
+            pw.printf("%s,%s,%s,%s,%d,%s,%d,%s,%s%n",
+                l.getISBN(),
+                l.getTitulo(),
+                l.getAutor(),
+                l.getEditorial(),
+                l.getAnioPublicacion(),
+                l.getCategoria(),
+                l.getCantidad(),
+                l.getUbicacion(),
+                l.getDescripcion()
+            );
+        }
+        return "Archivo de libros guardado correctamente.";
+    } catch (Exception ex) {
+        return "Error al guardar libros: " + ex.getMessage();
+    }
+}
+
+public String guardarBibliotecariosCSV(File archivo) {
+    Bibliotecario[] lista = bibliotecarios.todosLosBibliotecarios();
+    if (lista == null || lista.length == 0) {
+        return "No hay bibliotecarios para guardar.";
+    }
+
+    try (PrintWriter pw = new PrintWriter(new FileWriter(archivo))) {
+        pw.println("IDEmpleado,Turno,AreaTrabajo,Nombre,CUI,Correo,Usuario,Contrasena,Genero,Telefono,Salario,EstadoCivil");
+        for (Bibliotecario b : lista) {
+            if (b == null) continue;
+            pw.printf("%s,%s,%s,%s,%s,%s,%s,%s,%c,%d,%.2f,%c%n",
+                b.getIDEmpleado(),
+                b.getTurno(),
+                b.getAreaTrabajo(),
+                b.getNombre(),
+                b.getCUI(),
+                b.getCorreo(),
+                b.getUsuario(),
+                b.getContrasena(),
+                b.getGenero(),
+                b.getTelefono(),
+                b.getSalario(),
+                b.getEstadoCivil()
+            );
+        }
+        return "Archivo de bibliotecarios guardado correctamente.";
+    } catch (Exception ex) {
+        return "Error al guardar bibliotecarios: " + ex.getMessage();
+    }
+}   
+    
 }
 

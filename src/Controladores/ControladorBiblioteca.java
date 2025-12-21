@@ -9,31 +9,32 @@ public class ControladorBiblioteca {
     private RepositorioBiblioteca repoBiblioteca;
     private Bibliotecario bibliotecarioActual;
 
-    public ControladorBiblioteca(ControladorPrincipal controladorPrincipal,
-                                 RepositorioBiblioteca repoBiblioteca) {
+    public ControladorBiblioteca(ControladorPrincipal controladorPrincipal, RepositorioBiblioteca repoBiblioteca) {
         this.controladorPrincipal = controladorPrincipal;
         this.repoBiblioteca = repoBiblioteca;
     }
 
- //Acceso al repositorio
+ //============================= OBTENER DATOS =======================
     public Bibliotecario[] obtenerBibliotecarios() {
         return repoBiblioteca.todosLosBibliotecarios();
     }
- //Obtiene el bibliotecarioactual
+
     public void setBibliotecarioActual(Bibliotecario bibliotecario) {
         this.bibliotecarioActual = bibliotecario;
     }
+    
     public Bibliotecario getBibliotecarioActual() {
        return bibliotecarioActual;
     }
-//--Utilidades
+
+//============================= OPERACIONES ===========================
     public Bibliotecario buscarPorID(String idEmpleado) {
         if (idEmpleado == null) return null;
         idEmpleado = idEmpleado.trim();
         if (idEmpleado.isEmpty()) return null;
         return repoBiblioteca.retornarBibliotecario(idEmpleado);
     }
-//--
+
     public String eliminarBibliotecario(String idEmpleado) {
         if (idEmpleado == null) {
                 return "Operación cancelada.";
@@ -51,10 +52,11 @@ public class ControladorBiblioteca {
             repoBiblioteca.eliminarBibliotecario(idEmpleado);
                 return "Bibliotecario \"" + b.getNombre() + "\" eliminado correctamente.";
         }
-//--
+    
+//============================= NAVEGACION =============================
+    
     public void cerrarSesion() {
         controladorPrincipal.mostrarLogin();
     }
-//--
     
 }

@@ -3,96 +3,153 @@ package InterfacesGraficas;
 
 import Controladores.ControladorEstudiante;
 import modelos.Libro;
+import Controladores.ControladorAdmin;
+import modelos.Prestamo;
+import java.time.LocalDate;
+import java.time.Period;
 
-public class VentanaEstudiante extends javax.swing.JFrame { 
-    
+public class VentanaEstudiante extends javax.swing.JFrame {  
     private javax.swing.table.DefaultTableModel modeloLibros;
+    private javax.swing.table.DefaultTableModel modeloPrestamos;
+        
+        private final ControladorEstudiante controladorEstudiante;
+        private final ControladorAdmin controladorAdmin;
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaEstudiante.class.getName());
-    
-        private final ControladorEstudiante controladorEstudiante;   
-    
-            public VentanaEstudiante(ControladorEstudiante controladorEstudiante) {
+            public VentanaEstudiante(ControladorEstudiante controladorEstudiante, ControladorAdmin controladorAdmin) {
                 initComponents();
+                this.controladorAdmin = controladorAdmin;
                 this.controladorEstudiante = controladorEstudiante;
                 setLocationRelativeTo(null);
-                      
+                configurarTablaPrestamos();      
                 configurarTablaLibros();
-                cargarlibrosalatabla();
+                recargarCatalogo();
+                actualizarDashboardPrestamos();
+                cargarMisPrestamos();
 }          
-//Obtener Tabla de Libros
-private void configurarTablaLibros() {
-    modeloLibros = new javax.swing.table.DefaultTableModel(
-        new Object[] {
-            "ISBN", "Título", "Autor", "Editorial",
-            "Año", "Categoría", "Cantidad", "Ubicación"
-        },
-        0
-    );
-    TablaLibros.setModel(modeloLibros);
-    cargarlibrosalatabla();
-}
-//--
-private void cargarlibrosalatabla() {
-    modelos.Libro[] libros = controladorEstudiante.obtenerCatalogoLibros();
-    System.out.println("Libros para estudiante: " + (libros == null ? "null" : libros.length));
+//===========================CONFIGURAR TABLAS=============================
+    private void configurarTablaLibros() {
+        modeloLibros = new javax.swing.table.DefaultTableModel(
+            new Object[] {
+                "ISBN", "Título", "Autor", "Editorial",
+                "Año", "Categoría", "Cantidad", "Ubicación"
+            },
+            0
+        );
+            TablaLibros.setModel(modeloLibros);
+            recargarCatalogo();
+    }
 
-    // Limpia filas anteriores
-    modeloLibros.setRowCount(0);
+    private void configurarTablaPrestamos() {
+        modeloPrestamos = new javax.swing.table.DefaultTableModel(
+            new Object[] { "ID", "Libro", "Fecha Prestamo", "Dias Restantes", "Multa", "Estado" },
+            0
+        );
+        jTable1.setModel(modeloPrestamos);
+        cargarMisPrestamos();
+    }
 
-    if (libros != null) {
-        for (modelos.Libro libro : libros) {
-            if (libro != null) {
-                Object[] fila = new Object[] {
-                    libro.getISBN(),
-                    libro.getTitulo(),
-                    libro.getAutor(),
-                    libro.getEditorial(),
-                    libro.getAnioPublicacion(),
-                    libro.getCategoria(),
-                    libro.getCantidad(),
-                    libro.getUbicacion()
-                };
-                modeloLibros.addRow(fila);
+    public void recargarCatalogo() {
+        Libro[] libros = controladorEstudiante.obtenerCatalogoLibros();
+        cargarlibrosalatabla(libros);
+    }
+
+    public void cargarPerfil(modelos.Estudiante est) {
+        if (est == null) return;
+            nombreusuario.setText(est.getNombre());
+            carrerausuario.setText(est.getCarrera());
+            Semestreusuario.setText(String.valueOf(est.getSemestre()));
+            emailusuario.setText(est.getCorreo());
+            telefonousuario.setText(String.valueOf(est.getTelefono()));
+
+            cargarMisPrestamos();
+        }
+
+//========================CARGAR TABLAS=====================================
+    private void cargarlibrosalatabla(Libro[] libros){
+        modeloLibros.setRowCount(0); // limpia las filas anteriores
+        if (libros != null) {
+            for (Libro libro : libros) {
+                if (libro != null) {
+                    Object[] fila = new Object[] {
+                        libro.getISBN(),
+                        libro.getTitulo(),
+                        libro.getAutor(),
+                        libro.getEditorial(),
+                        libro.getAnioPublicacion(),
+                        libro.getCategoria(),
+                        libro.getCantidad(),
+                        libro.getUbicacion()
+                    };
+                    modeloLibros.addRow(fila);
+                }
             }
         }
     }
-}
-//--
-private void cargarlibrosalatablaconparametro(Libro[] libros){
-    modeloLibros.setRowCount(0); // limpia las filas anteriores
-    if (libros != null) {
-        for (Libro libro : libros) {
-            if (libro != null) {
-                Object[] fila = new Object[] {
-                    libro.getISBN(),
-                    libro.getTitulo(),
-                    libro.getAutor(),
-                    libro.getEditorial(),
-                    libro.getAnioPublicacion(),
-                    libro.getCategoria(),
-                    libro.getCantidad(),
-                    libro.getUbicacion()
-                };
-                modeloLibros.addRow(fila);
+
+    public void cargarMisPrestamos() {
+    modelos.Estudiante est = controladorEstudiante.getEstudianteActual();
+        if (est == null) {
+            modeloPrestamos.setRowCount(0);
+            return;
+        }
+    String carnet = est.getCarnet();
+        Prestamo[] activos = controladorAdmin.getRepoPrestamos().prestamosActivosPorEstudiante(carnet);
+            modeloPrestamos.setRowCount(0);
+
+    if (activos != null) {
+        LocalDate hoy = LocalDate.now();
+        for (Prestamo p : activos) {
+            if (p == null) continue;
+
+            // Calcular días restantes
+            int diasRestantes = 0;
+            if (p.getFechaDevolucionEsperada() != null) {
+                diasRestantes = Period.between(hoy, p.getFechaDevolucionEsperada()).getDays();
             }
+
+            Object[] fila = new Object[] {
+                p.getIdPrestamo(),        
+                p.getTituloLibro(),
+                p.getFechaPrestamo(),
+                diasRestantes,
+                p.getMultaGenerada(),      
+            };
+            modeloPrestamos.addRow(fila);
         }
     }
 }
-//--
-public void recargarCatalogo() {
-    cargarlibrosalatabla();
-}
-//--
-public void cargarPerfil(modelos.Estudiante est) {
-    if (est == null) return;
-        nombreusuario.setText(est.getNombre());
-        carrerausuario.setText(est.getCarrera());
-        Semestreusuario.setText(String.valueOf(est.getSemestre()));
-        emailusuario.setText(est.getCorreo());
-        telefonousuario.setText(String.valueOf(est.getTelefono()));
-    }
     @SuppressWarnings("unchecked")
+//==========================DASHBOARD=====================================
+    public void actualizarDashboardPrestamos() {
+       modelos.Estudiante est = controladorEstudiante.getEstudianteActual();
+       if (est == null) {
+           jLabel14.setText("0");          // préstamos activos
+           jLabel15.setText("0");          // total préstamos
+           jLabel13.setText("Q 0.00");     // multas pendientes
+           return;
+       }
+
+       String carnet = est.getCarnet();
+       Prestamo[] activos = controladorAdmin.getRepoPrestamos() .prestamosActivosPorEstudiante(carnet);
+       Prestamo[] historial = controladorAdmin.getRepoPrestamos().historialPorEstudiante(carnet);
+
+       int prestamosActivos = (activos == null) ? 0 : activos.length;
+       int totalPrestamos = (historial == null) ? 0 : historial.length;
+       double multasPendientes = 0;
+
+       if (historial != null) {
+           for (Prestamo p : historial) {
+               if (p == null) continue;
+               if (!p.isMultaPagada()) {
+                   multasPendientes += p.getMultaGenerada();
+               }
+           }
+       }
+
+       jLabel14.setText(String.valueOf(prestamosActivos));
+       jLabel15.setText(String.valueOf(totalPrestamos));
+       jLabel13.setText("Q " + String.format("%.2f", multasPendientes));
+    }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -131,8 +188,10 @@ public void cargarPerfil(modelos.Estudiante est) {
         seleciltroslibros = new javax.swing.JComboBox<>();
         btnbscarlibro = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
-        jPanel4 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel16 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         btncerrarsesion = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -424,32 +483,49 @@ public void cargarPerfil(modelos.Estudiante est) {
 
         jTabbedPane1.addTab("Catálogo", jPanel2);
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Libro", "Fecha Prestamo", "Dias Restantes", "Multa", "Estado"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jLabel16.setText("Mis Prestamos");
+
+        jButton1.setText("Refrescar");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1027, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel16)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 597, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(43, Short.MAX_VALUE)
+                .addComponent(jLabel16)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addGap(21, 21, 21))
         );
 
         jTabbedPane1.addTab("Mis Préstamos", jPanel3);
-        jTabbedPane1.addTab("Historial", jTabbedPane2);
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1027, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 597, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Mis Multas", jPanel4);
 
         btncerrarsesion.setText("Cerrar Sesión");
         btncerrarsesion.addActionListener(this::btncerrarsesionActionPerformed);
@@ -485,43 +561,46 @@ public void cargarPerfil(modelos.Estudiante est) {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//Botones
+//=======================BOTONES===========================================
     private void btncerrarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncerrarsesionActionPerformed
      controladorEstudiante.CerrarSesion();
     }//GEN-LAST:event_btncerrarsesionActionPerformed
-//--
+
     private void btnbscarlibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbscarlibroActionPerformed
         String texto = textobuscarlibros.getText();
-            Libro[] resultados = controladorEstudiante.buscarLibros(texto, "titulo");
-            cargarlibrosalatablaconparametro(resultados);   
+        Libro[] resultados = controladorEstudiante.buscarLibros(texto, "titulo");
+        cargarlibrosalatabla(resultados);
     }//GEN-LAST:event_btnbscarlibroActionPerformed
-//--
+
     private void seleciltroslibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleciltroslibrosActionPerformed
-          String opcion = seleciltroslibros.getSelectedItem().toString();
-           Libro[] listaOrdenada = null;
+        String opcion = seleciltroslibros.getSelectedItem().toString();
+        Libro[] listaOrdenada = null;
 
-           switch (opcion) {
-               case "ISBN":
-                   listaOrdenada = controladorEstudiante.ordenarLibros_ISBN_Burbuja();
-                   break;
-               case "Titulo":
-                   listaOrdenada = controladorEstudiante.ordenarLibros_Titulo_Seleccion();
-                   break;
-               case "Autor":
-                   listaOrdenada = controladorEstudiante.ordenarLibros_Autor_Insercion();
-                   break;
-               case "Editorial":
-                   listaOrdenada = controladorEstudiante.ordenarLibros_Editorial_QuickSort();
-                   break;
-               case "Año":
-                   listaOrdenada = controladorEstudiante.ordenarLibros_Anio_MergeSort();
-                   break;
-           }
-
-           if (listaOrdenada != null) {
-               cargarlibrosalatablaconparametro(listaOrdenada);
-          }
+        switch (opcion) {
+            case "ISBN":
+            listaOrdenada = controladorAdmin.ordenarLibros_ISBN_Burbuja();
+            break;
+            case "Titulo":
+            listaOrdenada = controladorAdmin.ordenarLibros_Titulo_Seleccion();
+            break;
+            case "Autor":
+            listaOrdenada = controladorAdmin.ordenarLibros_Autor_Insercion();
+            break;
+            case "Editorial":
+            listaOrdenada = controladorAdmin.ordenarLibros_Editorial_QuickSort();
+            break;
+            case "Año":
+            listaOrdenada = controladorAdmin.ordenarLibros_Anio_MergeSort();
+            break;
+        }
+        if (listaOrdenada != null) {
+            cargarlibrosalatabla(listaOrdenada);
+        }
     }//GEN-LAST:event_seleciltroslibrosActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        cargarMisPrestamos();
+    }//GEN-LAST:event_jButton1ActionPerformed
 //---------------------------------------------
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -531,6 +610,7 @@ public void cargarPerfil(modelos.Estudiante est) {
     private javax.swing.JButton btncerrarsesion;
     private javax.swing.JLabel carrerausuario;
     private javax.swing.JTextField emailusuario;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -538,6 +618,7 @@ public void cargarPerfil(modelos.Estudiante est) {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -552,15 +633,15 @@ public void cargarPerfil(modelos.Estudiante est) {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JLabel nombreusuario;
     private javax.swing.JComboBox<String> seleciltroslibros;

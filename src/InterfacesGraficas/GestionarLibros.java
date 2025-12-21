@@ -6,9 +6,12 @@ import javax.swing.JOptionPane;
 
 public class GestionarLibros extends javax.swing.JDialog {
     
+//==========================OBTENER ATRIBUTOS=======================     
     private final RepositorioLibro repoLibros;
     private Libro libroEditando;
     
+//===========================CONSTRUCTORES===========================     
+    //Para Crear
     public GestionarLibros(java.awt.Frame parent, boolean modal,RepositorioLibro repoLibros) {
         super(parent, modal);
         initComponents();
@@ -17,7 +20,8 @@ public class GestionarLibros extends javax.swing.JDialog {
         this.libroEditando = null;
         setTitle("Agregar Libro");
     }
-     public GestionarLibros(java.awt.Frame parent, boolean modal, RepositorioLibro repoLibros, Libro libro) {
+    //Para Editar
+    public GestionarLibros(java.awt.Frame parent, boolean modal, RepositorioLibro repoLibros, Libro libro) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(parent);
@@ -26,8 +30,9 @@ public class GestionarLibros extends javax.swing.JDialog {
         setTitle("Modificar Libro");
         cargarDatosEnFormulario();
     }
-   //------------------------------------     
-       private void cargarDatosEnFormulario() {
+
+//============================METODOS================================
+    private void cargarDatosEnFormulario() {
         if (libroEditando == null) {
             return;
         }
@@ -42,7 +47,7 @@ public class GestionarLibros extends javax.swing.JDialog {
             textoDesc.setText(libroEditando.getDescripcion());
             textoISBN.setEnabled(false);
     }
-    //------------------------------------
+
     private void guardarLibro() {
         String isbn = textoISBN.getText().trim();
         String titulo = textoTitulo.getText().trim();
@@ -106,6 +111,8 @@ public class GestionarLibros extends javax.swing.JDialog {
 
         dispose();
     }
+    
+//--------------------------------------------------------------------
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -127,7 +134,7 @@ public class GestionarLibros extends javax.swing.JDialog {
         textoDesc = new javax.swing.JTextField();
         textoISBN = new javax.swing.JTextField();
         textoTitulo = new javax.swing.JTextField();
-        btnguardarnuevolibro = new javax.swing.JButton();
+        btnguardarlibro = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -152,8 +159,8 @@ public class GestionarLibros extends javax.swing.JDialog {
 
         textoEditorial.addActionListener(this::textoEditorialActionPerformed);
 
-        btnguardarnuevolibro.setText("Guardar");
-        btnguardarnuevolibro.addActionListener(this::btnguardarnuevolibroActionPerformed);
+        btnguardarlibro.setText("Guardar");
+        btnguardarlibro.addActionListener(this::btnguardarlibroActionPerformed);
 
         cancelar.setText("Cancelar");
         cancelar.addActionListener(this::cancelarActionPerformed);
@@ -182,7 +189,7 @@ public class GestionarLibros extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnguardarnuevolibro, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnguardarlibro, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(textoTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                         .addComponent(textoISBN)
@@ -237,27 +244,27 @@ public class GestionarLibros extends javax.swing.JDialog {
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelar)
-                    .addComponent(btnguardarnuevolibro))
+                    .addComponent(btnguardarlibro))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+//===========================BOTONES==================================
     private void textoEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoEditorialActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_textoEditorialActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
             dispose();
     }//GEN-LAST:event_cancelarActionPerformed
 
-    private void btnguardarnuevolibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarnuevolibroActionPerformed
+    private void btnguardarlibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarlibroActionPerformed
             guardarLibro();
-    }//GEN-LAST:event_btnguardarnuevolibroActionPerformed
-//-------------------------------------------------------
+    }//GEN-LAST:event_btnguardarlibroActionPerformed
+//-------------------------------------------------------------------
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnguardarnuevolibro;
+    private javax.swing.JButton btnguardarlibro;
     private javax.swing.JButton cancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

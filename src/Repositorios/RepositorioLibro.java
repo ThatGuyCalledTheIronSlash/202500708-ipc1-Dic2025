@@ -5,7 +5,8 @@ import modelos.Libro;
 public class RepositorioLibro {
     
     private Libro[] libros = new Libro[200];
-
+    
+    
     public Libro[] todosLosLibros() {
         int contador = 0;
             for (Libro libro : libros) {
@@ -20,7 +21,7 @@ public class RepositorioLibro {
                 }
         return copia;
     }  
-//--
+//======================Utilidades========================
     public void agregarLibro(Libro libroNuevo) {
         for (int i = 0; i < libros.length; i++) {
             if (libros[i] == null) {
@@ -29,7 +30,7 @@ public class RepositorioLibro {
             }
         }
     }
-//--
+
     public void eliminarLibro(String ISBN) {
         for (int i = 0; i < libros.length; i++) {
             if (libros[i] != null && libros[i].getISBN().equals(ISBN)) {
@@ -38,62 +39,28 @@ public class RepositorioLibro {
             }
         }
     }
-//--    
+   
    public Libro buscarLibro(String ISBN) {
         if (ISBN == null) {
             return null;
         }
         return buscarLibroRecursivo(ISBN, 0);
     }
- private Libro buscarLibroRecursivo(String ISBN, int indice) {
-    // Caso base: llegamos al final del arreglo sin encontrar
-    if (indice >= libros.length) {
-        return null;
-    }
 
-    Libro actual = libros[indice];
-
-    // Si hay libro en esta posición y coincide el ISBN, lo devolvemos
-    if (actual != null && ISBN.equals(actual.getISBN())) {
-        return actual;
-    }
-
-    // Paso recursivo: buscar en la siguiente posición
-    return buscarLibroRecursivo(ISBN, indice + 1);
-}
-//--
-    public boolean verificarLibro(String ISBN) {
+   public boolean verificarLibro(String ISBN) {
             return buscarLibro(ISBN) != null;
     } 
-//--   
+   
+//=====================Metodos de ayuda====================
     public void mostarTodosLibros(){
         for (int i = 0; i < libros.length; i++) {
             if(libros[i]!=null){
                 System.out.println(libros[i].toString());
             }
         }        
-    }
-//--
-    public void ordenarPorTitulo() {
-        for (int i = 0; i < libros.length - 1; i++) {
-            for (int j = 0; j < libros.length - 1 - i; j++) {
-                Libro a = libros[j];
-                Libro b = libros[j + 1];
-
-                if (a == null || b == null) continue;
-
-                String ta = a.getTitulo() == null ? "" : a.getTitulo();
-                String tb = b.getTitulo() == null ? "" : b.getTitulo();
-
-                if (ta.compareToIgnoreCase(tb) > 0) {
-                    libros[j] = b;
-                    libros[j + 1] = a;
-                }
-            }
-        }
-}
-    //--
-    public Libro[] buscarLibros(String texto, String filtro) {
+    }   
+//=======================Busqueda =====================
+    public Libro[] buscarLibros(String texto, String filtro){
                 if (texto == null) texto = "";
     texto = texto.trim().toLowerCase();
 
@@ -112,7 +79,6 @@ public class RepositorioLibro {
     return resultados;
         }
     
-//--------------------------------------------------------
     private int contarCoincidenciasRecursivo(String texto, String filtro, int indice) {
         if (indice >= libros.length) {
             return 0;
@@ -121,9 +87,8 @@ public class RepositorioLibro {
                int suma = coincideConFiltro(actual, texto, filtro) ? 1 : 0;
                     return suma + contarCoincidenciasRecursivo(texto, filtro, indice + 1);
         }
-//----------------------------------------------------------
-    private int llenarResultadosRecursivo(String texto, String filtro,
-    int indiceArreglo, Libro[] resultados, int indiceResultado) {
+    
+    private int llenarResultadosRecursivo(String texto, String filtro, int indiceArreglo, Libro[] resultados, int indiceResultado) {
         if (indiceArreglo >= libros.length || indiceResultado >= resultados.length) {
             return indiceResultado;
         }
@@ -135,9 +100,8 @@ public class RepositorioLibro {
             return llenarResultadosRecursivo(texto, filtro, indiceArreglo + 1, resultados, indiceResultado);
          }
     }
-
-//--------------------------------------------------------------
-private boolean coincideConFiltro(Libro libro, String texto, String filtro) {
+ 
+    private boolean coincideConFiltro(Libro libro, String texto, String filtro) {
     if (libro == null) return false;
 
     switch (filtro.toLowerCase()) {
@@ -149,17 +113,55 @@ private boolean coincideConFiltro(Libro libro, String texto, String filtro) {
             return contieneSeguro(libro.getCategoria(), texto);
         case "isbn":
             return contieneSeguro(libro.getISBN(), texto);
+        case "editorial":
+            return contieneSeguro(libro.getEditorial(), texto);
         default:
-            // Si el filtro no es válido, buscar en título por defecto
             return contieneSeguro(libro.getTitulo(), texto);
     }
 }
-//------------------------------------------------------
+    
     private boolean contieneSeguro(String campo, String texto) {
         if (campo == null) return false;
             return campo.toLowerCase().contains(texto);
         }
-//---------------------------------------------------------
+    
+    private Libro buscarLibroRecursivo(String ISBN, int indice) {
+    // Caso base: llegamos al final del arreglo sin encontrar
+    if (indice >= libros.length) {
+        return null;
+    }
+
+    Libro actual = libros[indice];
+
+    // Si hay libro en esta posición y coincide el ISBN, lo devolvemos
+    if (actual != null && ISBN.equals(actual.getISBN())) {
+        return actual;
+    }
+
+    // Paso recursivo: buscar en la siguiente posición
+    return buscarLibroRecursivo(ISBN, indice + 1);
+}
+//==========================Ordenamiento==================
+   public void ordenarPorTitulo() {
+        for (int i = 0; i < libros.length - 1; i++) {
+            for (int j = 0; j < libros.length - 1 - i; j++) {
+                Libro a = libros[j];
+                Libro b = libros[j + 1];
+
+                if (a == null || b == null) continue;
+
+                String ta = a.getTitulo() == null ? "" : a.getTitulo();
+                String tb = b.getTitulo() == null ? "" : b.getTitulo();
+
+                if (ta.compareToIgnoreCase(tb) > 0) {
+                    libros[j] = b;
+                    libros[j + 1] = a;
+                }
+            }
+        }
+}   
+    
+
 }
 
 

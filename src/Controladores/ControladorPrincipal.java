@@ -14,24 +14,25 @@ import modelos.Prestamo;
 
 public class ControladorPrincipal {
 
-    // Repositorios
+//========================REPOSITORIOS===========================
         private RepositorioBiblioteca bibliotecarios;
         private RepositorioEstudiante estudiantes;
         private RepositorioLibro libros;
         private RepositorioPrestamo prestamos;
 
-    // Vistas
+//========================= VISTAS =================================
         private VentanaLogin vLogin;
         private VentanaAdmin vAdmin;
         private VentanaEstudiante vEstudiante;
         private VentanaBibliotecario vBibliotecario;
 
-    // Controladores
+//============================= CONTROLADORES =========================
         private ControladorLogin controladorLogin;
         private ControladorAdmin controladorAdmin;
         private ControladorEstudiante controladorEstudiante;
         private ControladorBiblioteca controladorBiblioteca;
 
+//CONSTRUCTOR
     public ControladorPrincipal(RepositorioBiblioteca bibliotecarios,RepositorioEstudiante estudiantes,
         RepositorioLibro libros) {
             this.bibliotecarios = bibliotecarios;
@@ -41,14 +42,16 @@ public class ControladorPrincipal {
              iniciarControladores();
              iniciarVistas();
     }   
-    //Controladores
+    
+//==================== INICIALIZAR CONTROLADORES ==================
     private void iniciarControladores() {
         controladorLogin = new ControladorLogin(this, bibliotecarios, estudiantes);
         controladorAdmin = new ControladorAdmin(this, bibliotecarios, estudiantes, libros, prestamos);
         controladorEstudiante = new ControladorEstudiante(this, libros);
         controladorBiblioteca = new ControladorBiblioteca(this, bibliotecarios);
     }
-    //Vistas
+    
+//====================== INICIALIZAR VISTAS =======================
     private void iniciarVistas() {
 
         vLogin = new VentanaLogin(controladorLogin);
@@ -59,7 +62,7 @@ public class ControladorPrincipal {
         vAdmin.setLocationRelativeTo(null);
         vAdmin.setVisible(false);
 
-        vEstudiante = new VentanaEstudiante(controladorEstudiante);
+        vEstudiante = new VentanaEstudiante(controladorEstudiante, controladorAdmin );
         vEstudiante.setLocationRelativeTo(null);
         vEstudiante.setVisible(false);
         
@@ -67,7 +70,7 @@ public class ControladorPrincipal {
         vBibliotecario.setLocationRelativeTo(null);
         vBibliotecario.setVisible(false);
     }
-    //EstabelecerEstudianteActual
+//================ESTABLECER USUARIO ACTUAL ======================
     public void setEstudianteActual(Estudiante est) {
         controladorEstudiante.setEstudianteActual(est);
     }
@@ -76,18 +79,18 @@ public class ControladorPrincipal {
         controladorBiblioteca.setBibliotecarioActual(b);
     }
     
-    //Metodos para cambiar de vista
+//=========================NAVEGACION============================
     public void mostrarLogin() {
         ocultarTodasLasVistas();
             vLogin.limpiarCampos();
             vLogin.setVisible(true);
     }
-//--
+
     public void mostrarVistaAdmin() {
         ocultarTodasLasVistas();
             vAdmin.setVisible(true);
     }
-//--
+
     public void mostrarVistaEstudiante() {
         ocultarTodasLasVistas();
             Estudiante est = controladorEstudiante.getEstudianteActual();
@@ -95,7 +98,7 @@ public class ControladorPrincipal {
                 vEstudiante.recargarCatalogo();
                 vEstudiante.setVisible(true);
     }
-//--
+
     public void mostrarVistaBibliotecario() {
         ocultarTodasLasVistas();
         Bibliotecario bib = controladorBiblioteca.getBibliotecarioActual();
@@ -103,26 +106,27 @@ public class ControladorPrincipal {
         vBibliotecario.recargarTodo();
         vBibliotecario.setVisible(true);
     }    
-//--
+
     private void ocultarTodasLasVistas() {
         if (vLogin != null) vLogin.setVisible(false);
         if (vEstudiante != null) vEstudiante.setVisible(false);
         if (vAdmin != null) vAdmin.setVisible(false);
         if (vBibliotecario != null) vBibliotecario.setVisible(false);
     }
-//Obtener Repositorios
+
+//=====================OBTENER REPOSITORIOS =======================
     public RepositorioBiblioteca getRepoBibliotecarios() {
         return bibliotecarios; 
     }
-//--
+    
     public RepositorioEstudiante getRepoEstudiantes() {
         return estudiantes; 
     }
-//--
+    
     public RepositorioLibro getRepoLibros() { 
         return libros; 
     }
-//--
+
     public RepositorioPrestamo getRepoPrestamos() {
         return prestamos;
     }
