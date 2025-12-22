@@ -25,54 +25,54 @@ public class ControladorPrestamos {
     }
 //=============================PRESTAMOS ==================================  
  
-public String realizarPrestamo(String carne, String isbn) {
-        if (carne == null || carne.trim().isEmpty()) {
-            return "Ingresar Carnet.";
+    public String realizarPrestamo(String carne, String isbn) {
+            if (carne == null || carne.trim().isEmpty()) {
+                return "Ingresar Carnet.";
+            }
+            if (isbn == null || isbn.trim().isEmpty()) {
+                return "ingresar un ISBN.";
+            }
+            Estudiante est = repoEstudiantes.buscarPorCarne(carne);
+            if (est == null) {
+                return "No se encontró estudiante.";
+            }
+            Libro libro = repoLibros.buscarLibro(isbn);
+            if (libro == null) {
+                return "No se encontró ISBN.";
+            }
+            if (libro.getCantidad() <= 0) {
+                return "No hay ejemplares este libro.";
+            }
+
+            Prestamo[] activos = prestamos.prestamosActivosPorEstudiante(carne);
+            if (activos != null && activos.length >= 3) {
+                return "El estudiante ya tiene 3 préstamos activos";
+            }
+
+
+            String idPrestamo = "P-" + System.currentTimeMillis();
+            String idBibliotecario = "BIB-1";
+            String tituloLibro = libro.getTitulo();
+
+            LocalDate hoy = LocalDate.now();
+            LocalDate fechaDevolucionEsperada = hoy.plusDays(7); // plazo de 7 días
+
+            Prestamo nuevo = new Prestamo(
+                    idPrestamo,
+                    carne,
+                    idBibliotecario,
+                    isbn,
+                    tituloLibro,
+                    hoy,
+                    fechaDevolucionEsperada
+            );
+            // Guardar en el repositorio
+            prestamos.agregarPrestamo(nuevo);
+
+            libro.setCantidad(libro.getCantidad() - 1);     // Descontar un ejemplar
+
+            return "Préstamo registrado correctamente.";
         }
-        if (isbn == null || isbn.trim().isEmpty()) {
-            return "ingresar un ISBN.";
-        }
-        Estudiante est = repoEstudiantes.buscarPorCarne(carne);
-        if (est == null) {
-            return "No se encontró estudiante.";
-        }
-        Libro libro = repoLibros.buscarLibro(isbn);
-        if (libro == null) {
-            return "No se encontró ISBN.";
-        }
-        if (libro.getCantidad() <= 0) {
-            return "No hay ejemplares este libro.";
-        }
-
-        Prestamo[] activos = prestamos.prestamosActivosPorEstudiante(carne);
-        if (activos != null && activos.length >= 3) {
-            return "El estudiante ya tiene 3 préstamos activos";
-        }
-
-
-        String idPrestamo = "P-" + System.currentTimeMillis();
-        String idBibliotecario = "BIB-1";
-        String tituloLibro = libro.getTitulo();
-
-        LocalDate hoy = LocalDate.now();
-        LocalDate fechaDevolucionEsperada = hoy.plusDays(7); // plazo de 7 días
-
-        Prestamo nuevo = new Prestamo(
-                idPrestamo,
-                carne,
-                idBibliotecario,
-                isbn,
-                tituloLibro,
-                hoy,
-                fechaDevolucionEsperada
-        );
-        // Guardar en el repositorio
-        prestamos.agregarPrestamo(nuevo);
-
-        libro.setCantidad(libro.getCantidad() - 1);     // Descontar un ejemplar
-
-        return "Préstamo registrado correctamente.";
-    }
  
 
     public String realizarDevolucion(String carne, String isbn) {
@@ -83,27 +83,27 @@ public String realizarPrestamo(String carne, String isbn) {
             return "Ingresar un ISBN.";
         }
 
-    Estudiante est = repoEstudiantes.buscarPorCarne(carne);
-        if (est == null) {
-            return "No se encontro estudiante.";
-        }
+        Estudiante est = repoEstudiantes.buscarPorCarne(carne);
+            if (est == null) {
+                return "No se encontro estudiante.";
+            }
 
-    Libro libro = repoLibros.buscarLibro(isbn);
-        if (libro == null) {
-            return "No se encontro ISBN.";
-        }
+        Libro libro = repoLibros.buscarLibro(isbn);
+            if (libro == null) {
+                return "No se encontro ISBN.";
+            }
 
-    Prestamo prestamo = prestamos.buscarPrestamoActivo(carne, isbn);
-        if (prestamo == null) {
-            return "No hay un préstamo activo de ese libro para este estudiante.";
-        }
+        Prestamo prestamo = prestamos.buscarPrestamoActivo(carne, isbn);
+            if (prestamo == null) {
+                return "No hay un préstamo activo de ese libro para este estudiante.";
+            }
 
-    LocalDate hoy = LocalDate.now(); //Fecha de devolución
-    prestamo.setFechaDevolucionReal(hoy);
-    prestamo.setEstado("DEVUELTO");
+        LocalDate hoy = LocalDate.now(); //Fecha de devolución
+        prestamo.setFechaDevolucionReal(hoy);
+        prestamo.setEstado("DEVUELTO");
 
-    int diasRetraso = 0;
-    double multa = 0;
+        int diasRetraso = 0;
+        double multa = 0;
 
         if (prestamo.getFechaDevolucionEsperada() != null &&
             hoy.isAfter(prestamo.getFechaDevolucionEsperada())) {
@@ -115,11 +115,11 @@ public String realizarPrestamo(String carne, String isbn) {
                 multa = diasRetraso * 2; //2Q por día
             }
 
-    prestamo.setDiasRetraso(diasRetraso);
-    prestamo.setMultaGenerada(multa);
-    prestamo.setMultaPagada(false);
+        prestamo.setDiasRetraso(diasRetraso);
+        prestamo.setMultaGenerada(multa);
+        prestamo.setMultaPagada(false);
 
-    libro.setCantidad(libro.getCantidad() + 1);  // Devolver ejemplar al inventario
+        libro.setCantidad(libro.getCantidad() + 1);  // Devolver ejemplar al inventario
 
         if (multa > 0) {
             return "Devolución registrada. Mullta de Q " + multa ;
@@ -133,10 +133,10 @@ public String realizarPrestamo(String carne, String isbn) {
             return "Debe ingresar un carné.\n";
         }
 
-    Estudiante est = repoEstudiantes.buscarPorCarne(carne);
-        if (est == null) {
-            return "No se encontró estudiante con ese carné.\n";
-        }
+        Estudiante est = repoEstudiantes.buscarPorCarne(carne);
+            if (est == null) {
+                return "No se encontró estudiante con ese carné.\n";
+            }
 
         StringBuilder sb = new StringBuilder();
         sb.append("__________________________________________\n");
@@ -188,11 +188,7 @@ public String realizarPrestamo(String carne, String isbn) {
                 }
             }
         return sb.toString();
-    }        
-        
-        
-        
-        
+    }               
  }
 
 

@@ -161,7 +161,6 @@ public class ControladorAdmin {
         } catch (IOException e) {
             return "Error crítico al leer el archivo: " + e.getMessage();
         }
-
             reporte.append("\n=== RESUMEN ===\n");
             reporte.append("Libros cargados exitosamente: ").append(exitosos).append("\n");
             reporte.append("Errores encontrados: ").append(errores).append("\n");
@@ -257,7 +256,7 @@ public class ControladorAdmin {
             }
         } catch (IOException e) {
             return "Error crítico al leer el archivo: " + e.getMessage();
-    }
+        }
 
         reporte.append("\n=== RESUMEN ===\n");
         reporte.append("Estudiantes cargados exitosamente: ").append(exitosos).append("\n");
@@ -628,7 +627,7 @@ public class ControladorAdmin {
         Libro aux = lista[i];
         lista[i] = lista[j];
         lista[j] = aux;
-    }
+     }
 
     private void burbujaPorISBN(Libro[] lista) {
         for (int i = 0; i < lista.length - 1; i++) {
@@ -940,7 +939,7 @@ public class ControladorAdmin {
         } catch (Exception e) {
             return "Error al generar el reporte HTML: " + e.getMessage();
         }
-}
+    }
 
 }
 

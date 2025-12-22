@@ -61,22 +61,22 @@ public class RepositorioLibro {
     }   
 //=======================Busqueda =====================
     public Libro[] buscarLibros(String texto, String filtro){
-                if (texto == null) texto = "";
-    texto = texto.trim().toLowerCase();
+        if (texto == null) texto = "";
+            texto = texto.trim().toLowerCase();
 
-    // Si no hay texto, se muestran todos los libros
-    if (texto.isEmpty()) {
-        return todosLosLibros();
-    }
+        // Si no hay texto, se muestran todos los libros
+        if (texto.isEmpty()) {
+            return todosLosLibros();
+        }
 
-    if (filtro == null) {
-        filtro = "titulo"; 
-    }
+        if (filtro == null) {
+            filtro = "titulo"; 
+        }
 
-    int conteo = contarCoincidenciasRecursivo(texto, filtro, 0);
-    Libro[] resultados = new Libro[conteo];
-    llenarResultadosRecursivo(texto, filtro, 0, resultados, 0);
-    return resultados;
+        int conteo = contarCoincidenciasRecursivo(texto, filtro, 0);
+            Libro[] resultados = new Libro[conteo];
+            llenarResultadosRecursivo(texto, filtro, 0, resultados, 0);
+                return resultados;
         }
     
     private int contarCoincidenciasRecursivo(String texto, String filtro, int indice) {
@@ -132,21 +132,21 @@ public class RepositorioLibro {
         }
     
     private Libro buscarLibroRecursivo(String ISBN, int indice) {
-    // Se regresa valor vacio si se llega el final y no encuentra coincidencia.
-    if (indice >= libros.length) {
-        return null;
+        // Se regresa valor vacio si se llega el final y no encuentra coincidencia.
+        if (indice >= libros.length) {
+            return null;
+        }
+
+        Libro actual = libros[indice];
+
+        // Si hay libro en esta posición y coincide con el ISBN, se devuelve
+        if (actual != null && ISBN.equals(actual.getISBN())) {
+            return actual;
+        }
+
+        //buscar en la siguiente posición
+        return buscarLibroRecursivo(ISBN, indice + 1);
     }
-
-    Libro actual = libros[indice];
-
-    // Si hay libro en esta posición y coincide con el ISBN, se devuelve
-    if (actual != null && ISBN.equals(actual.getISBN())) {
-        return actual;
-    }
-
-    //buscar en la siguiente posición
-    return buscarLibroRecursivo(ISBN, indice + 1);
-}
 //==========================Ordenamiento==================
    public void ordenarPorTitulo() {
         for (int i = 0; i < libros.length - 1; i++) {

@@ -5,7 +5,7 @@ package Repositorios;
 public class RepositorioPrestamo {
    private Prestamo[] prestamos;
     private int contador;
-
+    
     public RepositorioPrestamo(int capacidadInicial) {
         this.prestamos = new Prestamo[capacidadInicial];
         this.contador = 0;

@@ -67,7 +67,7 @@ public class RepositorioEstudiante {
         if (texto == null) texto = "";
             texto = texto.trim().toLowerCase();
                 if (texto.isEmpty()) {
-                    return todoslosestudiantes(); // ya lo tienes
+                    return todoslosestudiantes();
             }
                 int conteo = 0;
                     for (Estudiante e : estudiantes) {
