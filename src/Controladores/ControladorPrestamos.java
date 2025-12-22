@@ -112,7 +112,7 @@ public String realizarPrestamo(String carne, String isbn) {
                     prestamo.getFechaDevolucionEsperada(), hoy);
         
             if (diasRetraso < 0) diasRetraso = 0;
-                multa = diasRetraso * 1; //1Q por día
+                multa = diasRetraso * 2; //2Q por día
             }
 
     prestamo.setDiasRetraso(diasRetraso);
