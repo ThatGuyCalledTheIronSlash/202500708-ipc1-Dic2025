@@ -123,7 +123,6 @@ public class VentanaBibliotecario extends javax.swing.JFrame {
         btnbuscarestudiante = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         ConsultarEstudiantetextArea = new javax.swing.JTextArea();
-        btngenerarreporte = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         Area1 = new javax.swing.JScrollPane();
         txtestudianteprestar = new javax.swing.JTextArea();
@@ -407,9 +406,6 @@ public class VentanaBibliotecario extends javax.swing.JFrame {
         ConsultarEstudiantetextArea.setRows(5);
         jScrollPane1.setViewportView(ConsultarEstudiantetextArea);
 
-        btngenerarreporte.setText("Generar Reporte");
-        btngenerarreporte.addActionListener(this::btngenerarreporteActionPerformed);
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -423,10 +419,6 @@ public class VentanaBibliotecario extends javax.swing.JFrame {
                         .addComponent(btnbuscarestudiante))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 884, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(56, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btngenerarreporte)
-                .addGap(437, 437, 437))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -437,9 +429,7 @@ public class VentanaBibliotecario extends javax.swing.JFrame {
                     .addComponent(btnbuscarestudiante))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btngenerarreporte)
-                .addContainerGap())
+                .addGap(51, 51, 51))
         );
 
         jTabbedPane1.addTab("Consultar Estudiantes", jPanel4);
@@ -854,26 +844,6 @@ public class VentanaBibliotecario extends javax.swing.JFrame {
         }
         recargarTodo();
     }//GEN-LAST:event_btnrealizardevolucionActionPerformed
-
-    private void btngenerarreporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngenerarreporteActionPerformed
-            String carne = textobuscarestudiante.getText();
-        if (carne == null || carne.trim().isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un carné.");
-            return;
-        }
-
-        javax.swing.JFileChooser chooser = new javax.swing.JFileChooser();
-        if (chooser.showSaveDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
-            java.io.File archivo = chooser.getSelectedFile();
-            String path = archivo.getAbsolutePath();
-            if (!path.toLowerCase().endsWith(".html") && !path.toLowerCase().endsWith(".htm")) {
-                archivo = new java.io.File(path + ".html");
-            }
-
-            String mensaje = controladorAdmin.generarReporteHTML(carne, archivo);
-            javax.swing.JOptionPane.showMessageDialog(this, mensaje);
-        }
-    }//GEN-LAST:event_btngenerarreporteActionPerformed
 //============================================
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -894,7 +864,6 @@ public class VentanaBibliotecario extends javax.swing.JFrame {
     private javax.swing.JButton btnbuscarisbn;
     private javax.swing.JButton btnbuscarisbndevolucion;
     private javax.swing.JButton btncerrarsesion;
-    private javax.swing.JButton btngenerarreporte;
     private javax.swing.JButton btnrealizardevolucion;
     private javax.swing.JButton btnrecargarlibros;
     private javax.swing.JTextField isbnlibroaprestat;

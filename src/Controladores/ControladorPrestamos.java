@@ -50,8 +50,8 @@ public class ControladorPrestamos {
             }
 
 
-            String idPrestamo = "P-" + System.currentTimeMillis();
-            String idBibliotecario = "BIB-1";
+            String idPrestamo = "Prestamo-" + System.currentTimeMillis();
+            String idBibliotecario = "Bibliotecario";
             String tituloLibro = libro.getTitulo();
 
             LocalDate hoy = LocalDate.now();
@@ -100,24 +100,24 @@ public class ControladorPrestamos {
 
         LocalDate hoy = LocalDate.now(); //Fecha de devolución
         prestamo.setFechaDevolucionReal(hoy);
-        prestamo.setEstado("DEVUELTO");
+        prestamo.setEstado("Devuelto");
 
-        int diasRetraso = 0;
+        int diasRetraso = 5;
         double multa = 0;
 
         if (prestamo.getFechaDevolucionEsperada() != null &&
             hoy.isAfter(prestamo.getFechaDevolucionEsperada())) {
 
             diasRetraso = (int) java.time.temporal.ChronoUnit.DAYS.between(
-                    prestamo.getFechaDevolucionEsperada(), hoy);
+                   prestamo.getFechaDevolucionEsperada(), hoy);
         
             if (diasRetraso < 0) diasRetraso = 0;
                 multa = diasRetraso * 2; //2Q por día
             }
 
-        prestamo.setDiasRetraso(diasRetraso);
-        prestamo.setMultaGenerada(multa);
-        prestamo.setMultaPagada(false);
+            prestamo.setDiasRetraso(diasRetraso);
+            prestamo.setMultaGenerada(multa);
+            prestamo.setMultaPagada(false);
 
         libro.setCantidad(libro.getCantidad() + 1);  // Devolver ejemplar al inventario
 
@@ -164,10 +164,21 @@ public class ControladorPrestamos {
             } else {
                 totalPrestamos = historial.length;
         }
+            
+        double multasPendientes = 0;
+            if (historial != null) {
+                for (Prestamo p : historial) {
+                    if (p == null) continue;
+                    if (!p.isMultaPagada()) {         
+                        multasPendientes += p.getMultaGenerada();
+                    }
+                }
+            }
+            
 
         sb.append("Préstamos Activos:   ").append(totalActivos).append("\n");
         sb.append("Total Préstamos:     ").append(totalPrestamos).append("\n");
-        sb.append("Multas Pendientes:   Q 0.00\n\n");
+        sb.append("Multas Pendientes:   ").append(multasPendientes).append("\n");
 
         sb.append("PRÉSTAMOS ACTIVOS:\n");
         sb.append("__________________________________________\n");
