@@ -2,12 +2,14 @@ package controlador;
 
 import modelo.Cliente;
 import modelo.Empleado;
+import modelo.gestores.GestorPedidos;
 import modelo.gestores.GestorClientes;
 import modelo.gestores.GestorEmpleados;
 import modelo.gestores.GestorProductos;
 import modelo.gestores.GestorInventario;
 import modelo.gestores.GestorSucursales;
 import controlador.ControladorAdmin;
+import controlador.ControladorCajero;
 
 public class ControladorLogin {
 
@@ -16,7 +18,9 @@ public class ControladorLogin {
     private GestorProductos gestorProductos;
     private GestorInventario gestorInventario;
     private GestorSucursales gestorSucursales;
+    private GestorPedidos gestorPedidos;
     private ControladorAdmin controladorAdmin;
+    private ControladorCajero controladorCajero;
 
     public ControladorLogin(GestorEmpleados gestorEmpleados,
                             GestorClientes gestorClientes,
@@ -29,6 +33,7 @@ public class ControladorLogin {
         this.gestorProductos = gestorProductos;
         this.gestorInventario = gestorInventario;
         this.gestorSucursales = gestorSucursales;
+        this.gestorPedidos = new GestorPedidos();
         
         controladorAdmin = new ControladorAdmin(
                 this.gestorEmpleados,
@@ -37,14 +42,19 @@ public class ControladorLogin {
                 this.gestorInventario,
                 this.gestorSucursales
         );
+        
+        controladorCajero = new ControladorCajero(
+                this.gestorPedidos,
+                this.gestorClientes,
+                this.gestorProductos
+        );
 
         precargarUsuariosPorDefecto();
         controladorAdmin.cargarDatosIniciales();
 
         
     }
-    
-    
+       
 //=====================Obtener Datos =============================   
     public GestorEmpleados getGestorEmpleados() {
         return gestorEmpleados;
@@ -64,6 +74,14 @@ public class ControladorLogin {
     
     public GestorSucursales getGestorSucursales(){
         return gestorSucursales;
+    }
+    
+    public ControladorAdmin getControladorAdmin() {
+        return controladorAdmin;
+    }
+
+    public ControladorCajero getControladorCajero() {
+        return controladorCajero;
     }
 
 //=====================POR DEFECTO==================================
@@ -119,7 +137,6 @@ public class ControladorLogin {
             return null;
         }
 
-        // Buscar primero en empleados (admin, cajero, etc.)
         Empleado empleado = gestorEmpleados.buscarPorUsuario(usuario);
         if (empleado != null) {
             if (empleado.getContrasena().equals(contrasena)) {
@@ -136,7 +153,6 @@ public class ControladorLogin {
             }
         }
 
-        // Buscar en clientes
         Cliente cliente = buscarClientePorUsuario(usuario);
         if (cliente != null) {
             if (cliente.getContrasena().equals(contrasena)) {
@@ -150,7 +166,6 @@ public class ControladorLogin {
     }
 
     private Cliente buscarClientePorUsuario(String usuario) {
-        // Recorre la lista manualmente
         modelo.estructuras.NodoDoble actual = gestorClientes.getListaClientes().getCabeza();
 
         while (actual != null) {

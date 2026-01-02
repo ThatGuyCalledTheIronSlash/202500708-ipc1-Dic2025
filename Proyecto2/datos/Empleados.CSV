@@ -1,7 +1,4 @@
-idEmpleado,nombreCompleto,usuario,contraseña,dpi,fechaNacimiento,telefono,email,puesto,turno,sucursal,salarioBase,activo
-1,Administrador General,admin,admin123,0000000000000,01/01/1990,00000000,admin@restaurante.com,Gerente,Matutino,Sucursal Central,5000.0,true
-2,Cajero Principal,cajero1,caj123,1111111111111,02/02/1995,11111111,cajero@restaurante.com,Cajero,Matutino,Sucursal Central,3000.0,true
-3,Juan Pérez,jperez,jp123,1234567890101,,55551234,juan.perez@example.com,Cajero,Matutino,Sucursal Central,3500.0,true
-4,María López,mlopez,ml456,2345678901213,,55552345,maria.lopez@example.com,Mesero,Vespertino,Sucursal Zona 10,3200.5,true
-5,Carlos Gómez,cgomez,cg789,3456789012324,,55553456,carlos.gomez@example.com,Cocinero,Nocturno,Sucursal Central,4000.0,false
-6,Ana Rodríguez,arodriguez,ar321,4567890123435,,55554567,ana.rod@example.com,Gerente,Matutino,Sucursal Miraflores,5500.75,true
+Administrador General,admin,admin123,0000000000000,00000000,admin@restaurante.com,Gerente,Matutino,Sucursal Central,5000.0,true
+Cajero Principal,cajero1,caj123,1111111111111,11111111,cajero@restaurante.com,Cajero,Matutino,Sucursal Central,3000.0,true
+Administrador General,admin,admin123,0000000000000,00000000,admin@restaurante.com,Gerente,Matutino,Sucursal Central,5000.0,true
+Cajero Principal,cajero1,caj123,1111111111111,11111111,cajero@restaurante.com,Cajero,Matutino,Sucursal Central,3000.0,true

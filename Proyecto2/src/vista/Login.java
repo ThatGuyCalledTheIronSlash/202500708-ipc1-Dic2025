@@ -2,6 +2,8 @@ package vista;
 
 import controlador.ControladorLogin;
 import controlador.ControladorAdmin;
+import vista.admin.PanelAdmin;
+import vista.cajero.PanelCajero;
 import modelo.gestores.GestorClientes;
 import modelo.gestores.GestorEmpleados;
 import modelo.gestores.GestorProductos;
@@ -151,11 +153,8 @@ public class Login extends javax.swing.JFrame {
         String rol = controladorLogin.iniciarSesion(usuario, contrasena);
 
         if (rol == null) {
-            JOptionPane.showMessageDialog(this,
-                    "Usuario o contraseña incorrectos",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
+             JOptionPane.showMessageDialog(this, "Credenciales inválidas");
+             return;
         }
 
         JOptionPane.showMessageDialog(this,
@@ -164,23 +163,16 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.INFORMATION_MESSAGE);
 
         if (rol.equals("ADMIN")) {
-            controlador.ControladorAdmin controladorAdmin =
-                new controlador.ControladorAdmin(
-                                controladorLogin.getGestorEmpleados(),
-                                controladorLogin.getGestorClientes(),
-                                controladorLogin.getGestorProductos(),
-                                controladorLogin.getGestorInventario(),
-                                controladorLogin.getGestorSucursales()
-                        );
-                vista.admin.PanelAdmin admin = new vista.admin.PanelAdmin(controladorAdmin);
+            ControladorAdmin controladorAdmin = controladorLogin.getControladorAdmin();
+                PanelAdmin admin = new PanelAdmin(controladorAdmin);
                 admin.setVisible(true);
                 this.dispose();
         } else if (rol.equals("CAJERO")) {
-            // new PanelCajero().setVisible(true);
-            // this.dispose();
+                PanelCajero panel = new PanelCajero(controladorLogin.getControladorCajero());
+                panel.setVisible(true);
+                this.dispose();
         } else if (rol.equals("CLIENTE")) {
-            // new PanelCliente().setVisible(true);
-            // this.dispose();
+          //Pendiente
         }
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 

@@ -499,6 +499,7 @@ public class ControladorAdmin {
 //==========================================CARGA CSV=====================================
   
     public String cargarEmpleadosDesdeCSV(File archivo) {
+        
             StringBuilder reporte = new StringBuilder();
             int exitosos = 0;
             int conErrores = 0;
@@ -932,8 +933,8 @@ public class ControladorAdmin {
             }
         }
 
-    public String guardarEmpleadosCSV(File archivo) {
-        NodoDoble actual = gestorEmpleados.getListaEmpleados().getCabeza();
+        public String guardarEmpleadosCSV(File archivo) {
+            NodoDoble actual = gestorEmpleados.getListaEmpleados().getCabeza();
             if (actual == null) {
                 return "No hay empleados para guardar.";
             }
@@ -942,18 +943,14 @@ public class ControladorAdmin {
             try {
                 bw = new BufferedWriter(new FileWriter(archivo));
 
-                bw.write("idEmpleado,nombreCompleto,usuario,contraseña,dpi,fechaNacimiento,telefono,email,puesto,turno,sucursal,salarioBase,activo");
-                bw.newLine();
-
                 while (actual != null) {
                     Empleado e = (Empleado) actual.getDato();
 
-                    String linea = e.getIdEmpleado() + "," +
+                    String linea =
                             e.getNombreCompleto() + "," +
                             e.getUsuario() + "," +
                             e.getContrasena() + "," +
                             e.getDpi() + "," +
-                            e.getFechaNacimiento() + "," +
                             e.getTelefono() + "," +
                             e.getEmail() + "," +
                             e.getPuesto() + "," +
@@ -983,6 +980,7 @@ public class ControladorAdmin {
             }
         }
 
+
     public String guardarClientesCSV(File archivo) {
         NodoDoble actual = gestorClientes.getListaClientes().getCabeza();
             if (actual == null) {
@@ -993,14 +991,10 @@ public class ControladorAdmin {
             try {
                 bw = new BufferedWriter(new FileWriter(archivo));
 
-                bw.write("idCliente,nombreCompleto,direccionEntrega,usuario,contraseña,telefono,email,nivel,puntosAcumulados");
-                bw.newLine();
-
                 while (actual != null) {
                     Cliente c = (Cliente) actual.getDato();
 
-                    String linea = c.getIdCliente() + "," +
-                            c.getNombreCompleto() + "," +
+                    String linea = c.getNombreCompleto() + "," +
                             c.getDireccionEntrega() + "," +
                             c.getUsuario() + "," +
                             c.getContrasena() + "," +
@@ -1025,10 +1019,11 @@ public class ControladorAdmin {
                     try {
                         bw.close();
                     } catch (IOException ex) {
-                    }
                 }
             }
         }
+    }
+
     
     public String guardarSucursalesEnCSV(File archivo) {
         BufferedWriter bw = null;
