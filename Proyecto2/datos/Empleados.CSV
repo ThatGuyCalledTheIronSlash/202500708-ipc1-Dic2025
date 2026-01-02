@@ -1,0 +1,5 @@
+nombre,usuario,contrasena,dpi,telefono,email,puesto,turno,sucursal,salario,activo
+Juan Pérez,jperez,jp123,1234567890101,55551234,juan.perez@example.com,Cajero,Matutino,Sucursal Central,3500.00,Activo
+María López,mlopez,ml456,2345678901213,55552345,maria.lopez@example.com,Mesero,Vespertino,Sucursal Zona 10,3200.50,true
+Carlos Gómez,cgomez,cg789,3456789012324,55553456,carlos.gomez@example.com,Cocinero,Nocturno,Sucursal Central,4000.00,false
+Ana Rodríguez,arodriguez,ar321,4567890123435,55554567,ana.rod@example.com,Gerente,Matutino,Sucursal Miraflores,5500.75,Activo

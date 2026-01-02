@@ -1,0 +1,5 @@
+idCliente,nombreCompleto,direccionEntrega,usuario,contraseña,telefono,email,nivel,puntosAcumulados
+1,Cliente Ejemplo,Direccion de prueba,cliente1,cli123,22222222,cliente@correo.com,Regular,0
+2,Cliente Ejemplo,Direccion de prueba,cliente1,cli123,22222222,cliente@correo.com,Regular,0
+3,Ana López,Colonia Centro,alopez,ana123,55551234,ana@example.com,VIP,150
+4,Carlos Ruiz,Zona 10,cruiz,car123,55552345,carlos@example.com,Premium,80
